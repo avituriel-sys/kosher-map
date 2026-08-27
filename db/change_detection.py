@@ -99,21 +99,24 @@ def apply_collection_run(
 
     try:
         with conn.cursor() as cur:
-            for record in records:
-                seen_source_record_ids.add(record["source_record_id"])
-                is_new, changed_fields = _upsert_business(cur, record)
-                if is_new:
-                    records_new += 1
-                notable = changed_fields & set(NOTABLE_CHANGE_FIELDS)
-                if notable:
-                    notable_changes += 1
-                    logger.info(
-                        "%s: notable change on %s (%s): %s",
-                        source_id,
-                        record["source_record_id"],
-                        record.get("name_raw"),
-                        sorted(notable),
-                    )
+            for chunk in _chunked(records, _BATCH_SIZE):
+                for record in chunk:
+                    seen_source_record_ids.add(record["source_record_id"])
+                is_new_by_id, changed_fields_by_id = _upsert_batch(cur, source_id, chunk)
+                for record in chunk:
+                    sid = record["source_record_id"]
+                    if is_new_by_id[sid]:
+                        records_new += 1
+                    notable = changed_fields_by_id[sid] & set(NOTABLE_CHANGE_FIELDS)
+                    if notable:
+                        notable_changes += 1
+                        logger.info(
+                            "%s: notable change on %s (%s): %s",
+                            source_id,
+                            sid,
+                            record.get("name_raw"),
+                            sorted(notable),
+                        )
 
             records_absent = 0
             if is_full_census:
@@ -156,64 +159,109 @@ def apply_collection_run(
     )
 
 
-def _upsert_business(cur: psycopg.Cursor, record: dict) -> tuple[bool, set[str]]:
-    """Insert or update one business row. Returns (is_new, changed_fields).
+# Keeps individual statements a reasonable size and stays well clear of
+# PostgreSQL's ~65535-parameter-per-query wire protocol limit (21
+# columns/row means ~3100 rows before hitting it) - chosen with headroom
+# for the whole project's eventual size (spec section 14: tens of
+# cities), not just today's two sources.
+_BATCH_SIZE = 500
+
+
+def _chunked(items: list, size: int):
+    for i in range(0, len(items), size):
+        yield items[i : i + size]
+
+
+def _upsert_batch(
+    cur: psycopg.Cursor, source_id: str, records: list[dict]
+) -> tuple[dict[str, bool], dict[str, set[str]]]:
+    """Insert or update every record in one round trip (plus one more
+    for the pre-fetch below) instead of two round trips per record. That
+    matters at this project's scale: a full Tel Aviv sync is 1000+
+    records, and the original one-row-at-a-time version held a single
+    long transaction open long enough to lock-block an unrelated schema
+    migration during testing.
+
+    Returns (is_new_by_source_record_id, changed_fields_by_source_record_id).
 
     Revoked status is sticky (see module docstring): an incoming record
     that would set status="active" or "absent" over an existing
     status="revoked" row is applied to every other column but leaves
     status alone.
     """
+    ids = [r["source_record_id"] for r in records]
     cur.execute(
-        "select status, supervision_level, kosher_type from business "
-        "where source_id = %s and source_record_id = %s",
-        (record["source_id"], record["source_record_id"]),
+        "select source_record_id, status, supervision_level, kosher_type "
+        "from business where source_id = %s and source_record_id = any(%s)",
+        (source_id, ids),
     )
-    existing = cur.fetchone()
+    existing_by_id = {row[0]: row[1:] for row in cur.fetchall()}
 
-    values = {col: record.get(col) for col in _UPSERT_COLUMNS}
-    if existing is not None:
-        existing_status, existing_supervision, existing_kosher_type = existing
-        if existing_status == "revoked" and values["status"] != "revoked":
-            logger.warning(
-                "%s: source still lists %s as %s but it's marked revoked here - "
-                "keeping revoked (source may not have updated its own listing yet)",
-                record["source_id"],
-                record["source_record_id"],
-                values["status"],
-            )
-            values["status"] = "revoked"
+    is_new_by_id: dict[str, bool] = {}
+    changed_fields_by_id: dict[str, set[str]] = {}
+    rows: list[dict] = []
 
-        changed_fields = set()
-        if values["supervision_level"] != existing_supervision:
-            changed_fields.add("supervision_level")
-        if (values["kosher_type"] or []) != (existing_kosher_type or []):
-            changed_fields.add("kosher_type")
+    for record in records:
+        sid = record["source_record_id"]
+        values = {col: record.get(col) for col in _UPSERT_COLUMNS}
+        existing = existing_by_id.get(sid)
+        is_new_by_id[sid] = existing is None
+        changed_fields_by_id[sid] = set()
 
-        set_clause = ", ".join(f"{col} = %({col})s" for col in _UPSERT_COLUMNS)
-        cur.execute(
-            f"""
-            update business
-            set {set_clause}, last_seen = now(), status_changed_at =
-                case when status is distinct from %(status)s then now()
-                     else status_changed_at end
-            where source_id = %(source_id)s
-              and source_record_id = %(source_record_id)s
-            """,
-            values,
-        )
-        return False, changed_fields
+        if existing is not None:
+            existing_status, existing_supervision, existing_kosher_type = existing
+            if existing_status == "revoked" and values["status"] != "revoked":
+                logger.warning(
+                    "%s: source still lists %s as %s but it's marked revoked here - "
+                    "keeping revoked (source may not have updated its own listing yet)",
+                    source_id,
+                    sid,
+                    values["status"],
+                )
+                values["status"] = "revoked"
 
-    columns = ", ".join(_UPSERT_COLUMNS)
-    placeholders = ", ".join(f"%({col})s" for col in _UPSERT_COLUMNS)
+            if values["supervision_level"] != existing_supervision:
+                changed_fields_by_id[sid].add("supervision_level")
+            if (values["kosher_type"] or []) != (existing_kosher_type or []):
+                changed_fields_by_id[sid].add("kosher_type")
+
+        rows.append(values)
+
+    if not rows:
+        return is_new_by_id, changed_fields_by_id
+
+    columns = _UPSERT_COLUMNS
+    # psycopg needs distinct param names per row, so each row's dict is
+    # re-keyed with a per-row suffix rather than reusing %(col)s across
+    # rows. first_seen/last_seen/status_changed_at aren't parameterized
+    # at all - now() is correct for a fresh insert either way, and the
+    # ON CONFLICT branch below never reads them from `excluded`.
+    params: dict = {}
+    values_clauses = []
+    for i, row in enumerate(rows):
+        params.update({f"{col}_{i}": row[col] for col in columns})
+        placeholders = ", ".join(f"%({col}_{i})s" for col in columns)
+        values_clauses.append(f"({placeholders}, now(), now(), now())")
+    values_sql = ", ".join(values_clauses)
+
+    update_columns = [c for c in columns if c not in ("source_id", "source_record_id")]
+    set_clause = ", ".join(f"{col} = excluded.{col}" for col in update_columns)
     cur.execute(
         f"""
-        insert into business ({columns}, first_seen, last_seen, status_changed_at)
-        values ({placeholders}, now(), now(), now())
+        insert into business
+            ({", ".join(columns)}, first_seen, last_seen, status_changed_at)
+        values {values_sql}
+        on conflict (source_id, source_record_id) do update set
+            {set_clause},
+            last_seen = now(),
+            status_changed_at = case
+                when business.status is distinct from excluded.status then now()
+                else business.status_changed_at
+            end
         """,
-        values,
+        params,
     )
-    return True, set()
+    return is_new_by_id, changed_fields_by_id
 
 
 def _mark_missing_as_absent(

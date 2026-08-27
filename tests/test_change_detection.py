@@ -10,6 +10,7 @@ import uuid
 import pytest
 
 from db.change_detection import apply_collection_run
+from db.change_detection import _BATCH_SIZE
 from db.connection import get_connection
 
 
@@ -189,6 +190,33 @@ def test_notable_change_counted_for_supervision_level_change(conn, source_id):
         is_full_census=True,
     )
     assert result.notable_changes == 1
+
+
+def test_upsert_batching_spans_multiple_chunks_correctly(conn, source_id):
+    # _BATCH_SIZE rows per SQL statement - use enough records to force
+    # at least two chunks, so a bug scoped to "the last chunk" or "the
+    # first chunk" would actually get caught.
+    n = _BATCH_SIZE + 5
+    first_batch = [_record(source_id, f"biz-{i}") for i in range(n)]
+    result = apply_collection_run(conn, source_id, first_batch, is_full_census=True)
+    assert result.records_found == n
+    assert result.records_new == n
+
+    with conn.cursor() as cur:
+        cur.execute("select count(*) from business where source_id = %s", (source_id,))
+        assert cur.fetchone()[0] == n
+
+    # Re-run with the last record dropped and one changed - exercises
+    # update, absent-marking, and notable-change detection across the
+    # chunk boundary in the same pass.
+    second_batch = [_record(source_id, f"biz-{i}") for i in range(n - 1)]
+    second_batch[0] = _record(source_id, "biz-0", supervision_level="mehadrin")
+    result = apply_collection_run(conn, source_id, second_batch, is_full_census=True)
+    assert result.records_new == 0
+    assert result.records_absent == 1
+    assert result.notable_changes == 1
+    assert _fetch(conn, source_id, f"biz-{n - 1}")[0] == "absent"
+    assert _fetch(conn, source_id, "biz-0")[0] == "active"
 
 
 def test_failed_run_rolls_back_and_records_failure(conn, source_id):
