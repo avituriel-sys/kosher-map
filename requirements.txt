@@ -2,3 +2,5 @@ requests
 beautifulsoup4
 lxml
 pytest
+psycopg[binary]
+python-dotenv
