@@ -52,10 +52,10 @@ CITY = "נתניה"
 BASE_URL = "https://mdn.org.il/directory-kashrut/"
 
 # Spec section 11: identify the collector and give a contact address.
-# Swap the contact address for a project-owned one before real deployment.
 USER_AGENT = (
     "KosherMapBot/0.1 (public kashrut directory aggregator; "
-    "+mailto:avituriel@gmail.com)"
+    "+https://github.com/avituriel-sys/kosher-map; "
+    "mailto:avituriel@gmail.com)"
 )
 
 REQUEST_TIMEOUT_SECONDS = 30

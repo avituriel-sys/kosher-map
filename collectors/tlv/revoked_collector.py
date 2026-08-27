@@ -56,7 +56,8 @@ REVOKED_URL = "https://rabanut.co.il/%d7%a2%d7%a1%d7%a7%d7%99%d7%9d-%d7%a9%d7%9b
 
 USER_AGENT = (
     "KosherMapBot/0.1 (public kashrut directory aggregator; "
-    "+mailto:avituriel@gmail.com)"
+    "+https://github.com/avituriel-sys/kosher-map; "
+    "mailto:avituriel@gmail.com)"
 )
 REQUEST_TIMEOUT_SECONDS = 30
 

@@ -26,12 +26,12 @@ import requests
 
 # Nominatim's usage policy (https://operations.osmfoundation.org/policies/nominatim/)
 # caps unauthenticated use at 1 request/second and requires a real
-# identifying User-Agent. Swap the contact address for a project-owned
-# one before real deployment.
+# identifying User-Agent.
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 NOMINATIM_USER_AGENT = (
     "KosherMapBot/0.1 (public kashrut directory aggregator; "
-    "+mailto:avituriel@gmail.com)"
+    "+https://github.com/avituriel-sys/kosher-map; "
+    "mailto:avituriel@gmail.com)"
 )
 NOMINATIM_MIN_INTERVAL_SECONDS = 1.0
 

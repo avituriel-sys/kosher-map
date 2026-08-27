@@ -102,7 +102,8 @@ REGULAR_URL = f"{BASE_URL}?kashrut=322"
 
 USER_AGENT = (
     "KosherMapBot/0.1 (public kashrut directory aggregator; "
-    "+mailto:avituriel@gmail.com)"
+    "+https://github.com/avituriel-sys/kosher-map; "
+    "mailto:avituriel@gmail.com)"
 )
 
 REQUEST_TIMEOUT_SECONDS = 30
