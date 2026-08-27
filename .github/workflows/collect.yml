@@ -1,0 +1,61 @@
+name: Collect kashrut data
+
+# Weekly, not daily, while this project is still unannounced to the
+# source rabbinates - see spec section 11 on being a good-faith public
+# service. Revisit the cadence once there's been any contact with them,
+# or once it's clear how often their own lists actually change.
+#
+# Monday 03:00 UTC = ~05:00-06:00 Israel time depending on DST - early
+# morning local, low-traffic for the source sites.
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch: {}
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m db.migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  collect:
+    needs: migrate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        # Each source is independent (spec section 6.1) - one failing
+        # must not stop the others, and each still fails its own job
+        # (triggering GitHub's built-in failed-workflow email) rather
+        # than being silently swallowed.
+        source: [netanya, tlv, tlv_revoked]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m db.run_collector ${{ matrix.source }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # Spec section 7: geocode each address once, ever. The committed
+      # cache is what makes that true across runs, not just within one -
+      # without committing back here, every address discovered after
+      # today would get silently re-geocoded every week forever.
+      - name: Commit updated geocode cache
+        if: matrix.source == 'tlv'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/geocode_cache/tlv.json
+          git diff --cached --quiet || git commit -m "Update TLV geocode cache [skip ci]"
+          git push
