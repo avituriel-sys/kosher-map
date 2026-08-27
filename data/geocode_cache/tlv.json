@@ -1,0 +1,4952 @@
+{
+  "הברזל 32, תל אביב-יפו, ישראל": {
+    "lat": 32.1098402,
+    "lng": 34.8416718,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "השלושה 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0622,
+    "lng": 34.78975,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 88, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 51, תל אביב-יפו, ישראל": {
+    "lat": 32.06461,
+    "lng": 34.771304,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ויצמן 6, תל אביב-יפו, ישראל": {
+    "lat": 32.080088,
+    "lng": 34.78891,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קלמן מגן 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0711035,
+    "lng": 34.7870617,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "איינשטיין 10, תל אביב-יפו, ישראל": {
+    "lat": 32.11186,
+    "lng": 34.787389,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 62, תל אביב-יפו, ישראל": {
+    "lat": 32.079289,
+    "lng": 34.781491,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יצחק שדה 8, תל אביב-יפו, ישראל": {
+    "lat": 32.065253,
+    "lng": 34.785664,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 14, תל אביב-יפו, ישראל": {
+    "lat": 32.0747346,
+    "lng": 34.7682818,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אורי לסר 12, תל אביב-יפו, ישראל": {
+    "lat": 32.081376,
+    "lng": 34.7856177,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 8, תל אביב-יפו, ישראל": {
+    "lat": 32.068584,
+    "lng": 34.783489,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אהרון בקר 8, תל אביב-יפו, ישראל": {
+    "lat": 32.122882,
+    "lng": 34.816512,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אופנהיימר 13, תל אביב-יפו, ישראל": {
+    "lat": 32.120347,
+    "lng": 34.799934,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בני אפרים 209, תל אביב-יפו, ישראל": {
+    "lat": 32.1111322,
+    "lng": 34.8159891,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דוד מרכוס 13, תל אביב-יפו, ישראל": {
+    "lat": 32.1140622,
+    "lng": 34.8349438,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 7, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 50, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "ויצמן 20, תל אביב-יפו, ישראל": {
+    "lat": 32.0834192,
+    "lng": 34.7893331,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לה גווארדיה 76, תל אביב-יפו, ישראל": {
+    "lat": 32.058955,
+    "lng": 34.801019,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 30, תל אביב-יפו, ישראל": {
+    "lat": 32.0752405,
+    "lng": 34.7822687,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מבוא גרופית 2, תל אביב-יפו, ישראל": {
+    "lat": 32.1204016,
+    "lng": 34.8285724,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 152, תל אביב-יפו, ישראל": {
+    "lat": 32.079241,
+    "lng": 34.795072,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מעפילי אגוז, תל אביב-יפו, ישראל": {
+    "lat": 32.0545734,
+    "lng": 34.8098708,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "עמק ברכה 25, תל אביב-יפו, ישראל": {
+    "lat": 32.076306,
+    "lng": 34.798911,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלום אש 9, תל אביב-יפו, ישראל": {
+    "lat": 32.107038,
+    "lng": 34.820902,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גרינבוים 45, תל אביב-יפו, ישראל": {
+    "lat": 32.0419288,
+    "lng": 34.7658551,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "רבן גמליאל 28, תל אביב-יפו, ישראל": {
+    "lat": 32.069095,
+    "lng": 34.769284,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בזל 40, תל אביב-יפו, ישראל": {
+    "lat": 32.089724,
+    "lng": 34.779773,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הדר יוסף, תל אביב-יפו, ישראל": {
+    "lat": 32.1082546,
+    "lng": 34.8236424,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "איינשטיין 7, תל אביב-יפו, ישראל": {
+    "lat": 32.112382,
+    "lng": 34.787183,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 50, תל אביב-יפו, ישראל": {
+    "lat": 32.071276,
+    "lng": 34.769548,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דבורה הנביאה 121, תל אביב-יפו, ישראל": {
+    "lat": 32.113198,
+    "lng": 34.844295,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 11, תל אביב-יפו, ישראל": {
+    "lat": 32.0683303,
+    "lng": 34.7683716,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 94, תל אביב-יפו, ישראל": {
+    "lat": 32.0688716,
+    "lng": 34.7939972,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הצפירה 19, תל אביב-יפו, ישראל": {
+    "lat": 32.061103,
+    "lng": 34.782306,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יחזקאל קויפמן 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0630842,
+    "lng": 34.76211,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 96, תל אביב-יפו, ישראל": {
+    "lat": 32.0696154,
+    "lng": 34.7937823,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 47, תל אביב-יפו, ישראל": {
+    "lat": 32.0760828,
+    "lng": 34.7716281,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 77, תל אביב-יפו, ישראל": {
+    "lat": 32.0812073,
+    "lng": 34.7703569,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 206, תל אביב-יפו, ישראל": {
+    "lat": 32.0881389,
+    "lng": 34.7752044,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "גורדון 39, תל אביב-יפו, ישראל": {
+    "lat": 32.081962,
+    "lng": 34.773558,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0625439,
+    "lng": 34.7699465,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 158, תל אביב-יפו, ישראל": {
+    "lat": 32.080276,
+    "lng": 34.79588,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת יצחק 28, תל אביב-יפו, ישראל": {
+    "lat": 32.074134,
+    "lng": 34.799378,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "י.ל. פרץ 23, תל אביב-יפו, ישראל": {
+    "lat": 32.0852997,
+    "lng": 34.7818064,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "הכרמל 40, תל אביב-יפו, ישראל": {
+    "lat": 32.068052,
+    "lng": 34.768329,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מתחם שרונה, תל אביב-יפו, ישראל": {
+    "lat": 32.073253,
+    "lng": 34.786797,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הברזל 10, תל אביב-יפו, ישראל": {
+    "lat": 32.107131,
+    "lng": 34.837026,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 104, תל אביב-יפו, ישראל": {
+    "lat": 32.065129,
+    "lng": 34.772082,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 35, תל אביב-יפו, ישראל": {
+    "lat": 32.12461,
+    "lng": 34.804627,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 1, תל אביב-יפו, ישראל": {
+    "lat": 32.1254933,
+    "lng": 34.7984881,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 177, תל אביב-יפו, ישראל": {
+    "lat": 32.0852822,
+    "lng": 34.7743758,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ארליך 4, תל אביב-יפו, ישראל": {
+    "lat": 32.046485,
+    "lng": 34.753457,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 68, תל אביב-יפו, ישראל": {
+    "lat": 32.048445,
+    "lng": 34.792861,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קניון מרכז ויצמן, תל אביב-יפו, ישראל": {
+    "lat": 32.0814872,
+    "lng": 34.7901517,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "קניון עזריאלי, תל אביב-יפו, ישראל": {
+    "lat": 32.0747036,
+    "lng": 34.7919705,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "ישכון 37, תל אביב-יפו, ישראל": {
+    "lat": 32.068809,
+    "lng": 34.768046,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה המכבי 67, תל אביב-יפו, ישראל": {
+    "lat": 32.094016,
+    "lng": 34.791608,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חומה ומגדל 16, תל אביב-יפו, ישראל": {
+    "lat": 32.062634,
+    "lng": 34.786281,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חומה ומגדל 32, תל אביב-יפו, ישראל": {
+    "lat": 32.064131,
+    "lng": 34.787065,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלוף קלמן מגן 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0711035,
+    "lng": 34.7870617,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 11, תל אביב-יפו, ישראל": {
+    "lat": 32.052535,
+    "lng": 34.791243,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 35, תל אביב-יפו, ישראל": {
+    "lat": 32.051562,
+    "lng": 34.790191,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התחיה 22, תל אביב-יפו, ישראל": {
+    "lat": 32.049533,
+    "lng": 34.764483,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התחיה 26, תל אביב-יפו, ישראל": {
+    "lat": 32.049316,
+    "lng": 34.765297,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יורדי הסירה 3, תל אביב-יפו, ישראל": {
+    "lat": 32.096447,
+    "lng": 34.7742889,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יורדי הסירה 1, תל אביב-יפו, ישראל": {
+    "lat": 32.096468,
+    "lng": 34.773922,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרמנצקי 12, תל אביב-יפו, ישראל": {
+    "lat": 32.066607,
+    "lng": 34.794875,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הצורפים 18, תל אביב-יפו, ישראל": {
+    "lat": 32.053778,
+    "lng": 34.754078,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 84, תל אביב-יפו, ישראל": {
+    "lat": 32.041932,
+    "lng": 34.771818,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גני התערוכה, תל אביב-יפו, ישראל": {
+    "lat": 32.1054141,
+    "lng": 34.8084224,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 18, תל אביב-יפו, ישראל": {
+    "lat": 32.0771156,
+    "lng": 34.7691396,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יוסף קארו 30, תל אביב-יפו, ישראל": {
+    "lat": 32.070408,
+    "lng": 34.792146,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גרינבוים 41, תל אביב-יפו, ישראל": {
+    "lat": 32.040442,
+    "lng": 34.765681,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נס לגויים 53, תל אביב-יפו, ישראל": {
+    "lat": 32.043807,
+    "lng": 34.764822,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אימבר 14, תל אביב-יפו, ישראל": {
+    "lat": 32.0781575,
+    "lng": 34.7808715,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הירקון 79, תל אביב-יפו, ישראל": {
+    "lat": 32.0773989,
+    "lng": 34.7668201,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "האנגר 21, תל אביב-יפו, ישראל": {
+    "lat": 32.0997849,
+    "lng": 34.7744385,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "פרישמן 18, תל אביב-יפו, ישראל": {
+    "lat": 32.0798664,
+    "lng": 34.7698081,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרמנצקי 3, תל אביב-יפו, ישראל": {
+    "lat": 32.066964,
+    "lng": 34.794418,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוסלאן 13, תל אביב-יפו, ישראל": {
+    "lat": 32.0550461,
+    "lng": 34.754991,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 13, תל אביב-יפו, ישראל": {
+    "lat": 32.052873,
+    "lng": 34.790624,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 3, תל אביב-יפו, ישראל": {
+    "lat": 32.053452,
+    "lng": 34.790794,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברודצקי 43, תל אביב-יפו, ישראל": {
+    "lat": 32.111776,
+    "lng": 34.797624,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 4, תל אביב-יפו, ישראל": {
+    "lat": 32.052547,
+    "lng": 34.790697,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יום טוב 4, תל אביב-יפו, ישראל": {
+    "lat": 32.067934,
+    "lng": 34.767501,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יפת 65, תל אביב-יפו, ישראל": {
+    "lat": 32.047971,
+    "lng": 34.752526,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 7, תל אביב-יפו, ישראל": {
+    "lat": 32.052596,
+    "lng": 34.791039,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שינקין 18, תל אביב-יפו, ישראל": {
+    "lat": 32.069392,
+    "lng": 34.77223,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 300, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "ברנר 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0690519,
+    "lng": 34.7711551,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 12, תל אביב-יפו, ישראל": {
+    "lat": 32.0525849,
+    "lng": 34.7909329,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "כיכר דיזינגוף, תל אביב-יפו, ישראל": {
+    "lat": 32.0779938,
+    "lng": 34.7743493,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 121, תל אביב-יפו, ישראל": {
+    "lat": 32.071988,
+    "lng": 34.7888851,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פרישמן 42, תל אביב-יפו, ישראל": {
+    "lat": 32.0796798,
+    "lng": 34.773643,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ירמיהו 52, תל אביב-יפו, ישראל": {
+    "lat": 32.0949,
+    "lng": 34.778178,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הלל הזקן 18, תל אביב-יפו, ישראל": {
+    "lat": 32.069724,
+    "lng": 34.770082,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ויצמן 14, תל אביב-יפו, ישראל": {
+    "lat": 32.081289,
+    "lng": 34.789484,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 13, תל אביב-יפו, ישראל": {
+    "lat": 32.067346,
+    "lng": 34.783192,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "צ'לנוב 22, תל אביב-יפו, ישראל": {
+    "lat": 32.0576731,
+    "lng": 34.77493,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 18, תל אביב-יפו, ישראל": {
+    "lat": 32.070787,
+    "lng": 34.782512,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חשמונאים 119, תל אביב-יפו, ישראל": {
+    "lat": 32.0361437,
+    "lng": 34.7508846,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הנגב 11, תל אביב-יפו, ישראל": {
+    "lat": 32.061574,
+    "lng": 34.779395,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "כרמל 7, תל אביב-יפו, ישראל": {
+    "lat": 32.0555594,
+    "lng": 34.7564637,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "רידינג 26, תל אביב-יפו, ישראל": {
+    "lat": 32.1050861,
+    "lng": 34.7790248,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "לינקולן 9, תל אביב-יפו, ישראל": {
+    "lat": 32.067078,
+    "lng": 34.781747,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 126, תל אביב-יפו, ישראל": {
+    "lat": 32.084376,
+    "lng": 34.772402,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אוניברסיטת תל אביב, תל אביב-יפו, ישראל": {
+    "lat": 32.1123577,
+    "lng": 34.8050129,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "ידידיה פרנקל 4, תל אביב-יפו, ישראל": {
+    "lat": 32.0570522,
+    "lng": 34.7676648,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 8, תל אביב-יפו, ישראל": {
+    "lat": 32.0525849,
+    "lng": 34.7909329,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "שארית ישראל 9, תל אביב-יפו, ישראל": {
+    "lat": 32.052885,
+    "lng": 34.760865,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 54, תל אביב-יפו, ישראל": {
+    "lat": 32.130192,
+    "lng": 34.79034,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 5, תל אביב-יפו, ישראל": {
+    "lat": 32.067833,
+    "lng": 34.767783,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מח\"ל 24, תל אביב-יפו, ישראל": {
+    "lat": 32.049039,
+    "lng": 34.80353,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "השחר 8, תל אביב-יפו, ישראל": {
+    "lat": 32.063956,
+    "lng": 34.768825,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יד חרוצים 15, תל אביב-יפו, ישראל": {
+    "lat": 32.061892,
+    "lng": 34.783829,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 43, תל אביב-יפו, ישראל": {
+    "lat": 32.0781387,
+    "lng": 34.7684723,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 20, תל אביב-יפו, ישראל": {
+    "lat": 32.1078053,
+    "lng": 34.838592,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכישור 4, תל אביב-יפו, ישראל": {
+    "lat": 32.051003,
+    "lng": 34.7657,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הש\"ך 5, תל אביב-יפו, ישראל": {
+    "lat": 32.053492,
+    "lng": 34.770102,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רבי מאיר 21, תל אביב-יפו, ישראל": {
+    "lat": 32.069277,
+    "lng": 34.76865,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 83, תל אביב-יפו, ישראל": {
+    "lat": 32.0777722,
+    "lng": 34.76685,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 8, תל אביב-יפו, ישראל": {
+    "lat": 32.0627097,
+    "lng": 34.7699046,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דניאל 27, תל אביב-יפו, ישראל": {
+    "lat": 32.067598,
+    "lng": 34.766569,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 128, תל אביב-יפו, ישראל": {
+    "lat": 32.084632,
+    "lng": 34.772517,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 104, תל אביב-יפו, ישראל": {
+    "lat": 32.040512,
+    "lng": 34.774503,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אוריאל אקוסטה 7, תל אביב-יפו, ישראל": {
+    "lat": 32.057588,
+    "lng": 34.768909,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 73, תל אביב-יפו, ישראל": {
+    "lat": 32.050354,
+    "lng": 34.772326,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 12, תל אביב-יפו, ישראל": {
+    "lat": 32.107328,
+    "lng": 34.837489,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ג'ורג' וייז 20, תל אביב-יפו, ישראל": {
+    "lat": 32.1068196,
+    "lng": 34.8050327,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 48, תל אביב-יפו, ישראל": {
+    "lat": 32.0631601,
+    "lng": 34.7803411,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 25, תל אביב-יפו, ישראל": {
+    "lat": 32.1116915,
+    "lng": 34.8423394,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שאול המלך 2, תל אביב-יפו, ישראל": {
+    "lat": 32.075249,
+    "lng": 34.782202,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 1, תל אביב-יפו, ישראל": {
+    "lat": 32.06643,
+    "lng": 34.783384,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ארלוזורוב 188, תל אביב-יפו, ישראל": {
+    "lat": 32.0828983,
+    "lng": 34.7918018,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גרינבוים 37, תל אביב-יפו, ישראל": {
+    "lat": 32.040931,
+    "lng": 34.765698,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ויצמן 4, תל אביב-יפו, ישראל": {
+    "lat": 32.0782941,
+    "lng": 34.7886936,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קניון רמת אביב, תל אביב-יפו, ישראל": {
+    "lat": 32.1121687,
+    "lng": 34.795753,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 50, תל אביב-יפו, ישראל": {
+    "lat": 32.051443,
+    "lng": 34.789955,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מח\"ל 28, תל אביב-יפו, ישראל": {
+    "lat": 32.0491802,
+    "lng": 34.8062773,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה דיין 29, תל אביב-יפו, ישראל": {
+    "lat": 32.0617191,
+    "lng": 34.7998743,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הכרמל 43, תל אביב-יפו, ישראל": {
+    "lat": 32.069834,
+    "lng": 34.770241,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 60, תל אביב-יפו, ישראל": {
+    "lat": 32.064387,
+    "lng": 34.77605,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרוגי מלכות 7, תל אביב-יפו, ישראל": {
+    "lat": 32.109915,
+    "lng": 34.832765,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מל\"ן 2, תל אביב-יפו, ישראל": {
+    "lat": 32.069889,
+    "lng": 34.766511,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 126, תל אביב-יפו, ישראל": {
+    "lat": 32.071907,
+    "lng": 34.790224,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 106, תל אביב-יפו, ישראל": {
+    "lat": 32.040229,
+    "lng": 34.774574,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 14, תל אביב-יפו, ישראל": {
+    "lat": 32.070226,
+    "lng": 34.782799,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 33, תל אביב-יפו, ישראל": {
+    "lat": 32.124658,
+    "lng": 34.804388,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אליהו ברלין 13, תל אביב-יפו, ישראל": {
+    "lat": 32.1239768,
+    "lng": 34.7925821,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בזל 38, תל אביב-יפו, ישראל": {
+    "lat": 32.089756,
+    "lng": 34.779579,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית אל 14, תל אביב-יפו, ישראל": {
+    "lat": 32.118569,
+    "lng": 34.839794,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 267, תל אביב-יפו, ישראל": {
+    "lat": 32.0869192,
+    "lng": 34.7749068,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 161, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "ז'בוטינסקי 120, תל אביב-יפו, ישראל": {
+    "lat": 32.086887,
+    "lng": 34.788092,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה המכבי 40, תל אביב-יפו, ישראל": {
+    "lat": 32.093737,
+    "lng": 34.791385,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מרזוק ועזר 9, תל אביב-יפו, ישראל": {
+    "lat": 32.055274,
+    "lng": 34.757769,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה פרלוק 5, תל אביב-יפו, ישראל": {
+    "lat": 32.1143276,
+    "lng": 34.7911013,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פלורנטין 22, תל אביב-יפו, ישראל": {
+    "lat": 32.056175,
+    "lng": 34.7691696,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פרישמן 90, תל אביב-יפו, ישראל": {
+    "lat": 32.079293,
+    "lng": 34.779726,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0631234,
+    "lng": 34.7689027,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שינקין 53, תל אביב-יפו, ישראל": {
+    "lat": 32.0686114,
+    "lng": 34.7766398,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מרכוס דוד 14, תל אביב-יפו, ישראל": {
+    "lat": 32.113829,
+    "lng": 34.835062,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית אשל 34, תל אביב-יפו, ישראל": {
+    "lat": 32.053362,
+    "lng": 34.757102,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 23, תל אביב-יפו, ישראל": {
+    "lat": 32.052757,
+    "lng": 34.79156,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הארבעה 28, תל אביב-יפו, ישראל": {
+    "lat": 32.0700502,
+    "lng": 34.7865257,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הסוללים 5, תל אביב-יפו, ישראל": {
+    "lat": 32.0696326,
+    "lng": 34.795999,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 56, תל אביב-יפו, ישראל": {
+    "lat": 32.070584,
+    "lng": 34.769901,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 41, תל אביב-יפו, ישראל": {
+    "lat": 32.051815,
+    "lng": 34.791677,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 4, תל אביב-יפו, ישראל": {
+    "lat": 32.053459,
+    "lng": 34.790551,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נירים 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0624693,
+    "lng": 34.7905202,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 269, תל אביב-יפו, ישראל": {
+    "lat": 32.0881389,
+    "lng": 34.7752044,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 51, תל אביב-יפו, ישראל": {
+    "lat": 32.0611271,
+    "lng": 34.7913062,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 25, תל אביב-יפו, ישראל": {
+    "lat": 32.068527,
+    "lng": 34.782865,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "טאגור 30, תל אביב-יפו, ישראל": {
+    "lat": 32.116347,
+    "lng": 34.7972,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלוש 9, תל אביב-יפו, ישראל": {
+    "lat": 32.058508,
+    "lng": 34.763978,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 11, תל אביב-יפו, ישראל": {
+    "lat": 32.07753,
+    "lng": 34.768818,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 10, תל אביב-יפו, ישראל": {
+    "lat": 32.053131,
+    "lng": 34.790464,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקומה 44, תל אביב-יפו, ישראל": {
+    "lat": 32.051447,
+    "lng": 34.759679,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עולי ציון 17, תל אביב-יפו, ישראל": {
+    "lat": 32.05157,
+    "lng": 34.758535,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שטרן 5, תל אביב-יפו, ישראל": {
+    "lat": 32.056862,
+    "lng": 34.769668,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 43, תל אביב-יפו, ישראל": {
+    "lat": 32.059833,
+    "lng": 34.771958,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אברבנאל 45, תל אביב-יפו, ישראל": {
+    "lat": 32.055885,
+    "lng": 34.76719,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רכבת סבידור, תל אביב-יפו, ישראל": {
+    "lat": 32.081367,
+    "lng": 34.794199,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 100, תל אביב-יפו, ישראל": {
+    "lat": 32.041253,
+    "lng": 34.756903,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "צייטלין 22, תל אביב-יפו, ישראל": {
+    "lat": 32.078942,
+    "lng": 34.78533,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לאונרדו דה וינצ'י 2, תל אביב-יפו, ישראל": {
+    "lat": 32.071904,
+    "lng": 34.784852,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת יצחק 18, תל אביב-יפו, ישראל": {
+    "lat": 32.0740361,
+    "lng": 34.7978525,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הצפירה 10, תל אביב-יפו, ישראל": {
+    "lat": 32.060293,
+    "lng": 34.783024,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יצחק שדה 6, תל אביב-יפו, ישראל": {
+    "lat": 32.0651893,
+    "lng": 34.7852153,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 44, תל אביב-יפו, ישראל": {
+    "lat": 32.06277,
+    "lng": 34.778908,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ישכון 36, תל אביב-יפו, ישראל": {
+    "lat": 32.0685839,
+    "lng": 34.7681972,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 23, תל אביב-יפו, ישראל": {
+    "lat": 32.0683489,
+    "lng": 34.7829556,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פיכמן 6, תל אביב-יפו, ישראל": {
+    "lat": 32.109342,
+    "lng": 34.79345,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברודצקי 68, תל אביב-יפו, ישראל": {
+    "lat": 32.112533,
+    "lng": 34.798254,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלונסקי 6, תל אביב-יפו, ישראל": {
+    "lat": 32.11739,
+    "lng": 34.818893,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה דיין 66, תל אביב-יפו, ישראל": {
+    "lat": 32.058431,
+    "lng": 34.801144,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רציף העליה השניה 105, תל אביב-יפו, ישראל": {
+    "lat": 32.0559437,
+    "lng": 34.7556465,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "יד חרוצים 13, תל אביב-יפו, ישראל": {
+    "lat": 32.0619564,
+    "lng": 34.783623,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המנוע 5, תל אביב-יפו, ישראל": {
+    "lat": 32.050018,
+    "lng": 34.765778,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יום טוב 7, תל אביב-יפו, ישראל": {
+    "lat": 32.068074,
+    "lng": 34.767475,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בני אפרים 218, תל אביב-יפו, ישראל": {
+    "lat": 32.113947,
+    "lng": 34.81713,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ירמיהו 35, תל אביב-יפו, ישראל": {
+    "lat": 32.095024,
+    "lng": 34.777184,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחמני 21, תל אביב-יפו, ישראל": {
+    "lat": 32.066094,
+    "lng": 34.774698,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "צה\"ל 71, תל אביב-יפו, ישראל": {
+    "lat": 32.121743,
+    "lng": 34.834761,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 2, תל אביב-יפו, ישראל": {
+    "lat": 32.06949,
+    "lng": 34.77021,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בני דן 36, תל אביב-יפו, ישראל": {
+    "lat": 32.095565,
+    "lng": 34.788342,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 27, תל אביב-יפו, ישראל": {
+    "lat": 32.124929,
+    "lng": 34.803568,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הדר יוסף 12, תל אביב-יפו, ישראל": {
+    "lat": 32.109508,
+    "lng": 34.818091,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 82, תל אביב-יפו, ישראל": {
+    "lat": 32.081884,
+    "lng": 34.781483,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 9, תל אביב-יפו, ישראל": {
+    "lat": 32.107289,
+    "lng": 34.836361,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אברבנאל 56, תל אביב-יפו, ישראל": {
+    "lat": 32.057006,
+    "lng": 34.767038,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לבונטין 19, תל אביב-יפו, ישראל": {
+    "lat": 32.0621384,
+    "lng": 34.7760468,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "עולי ציון 6, תל אביב-יפו, ישראל": {
+    "lat": 32.053716,
+    "lng": 34.755982,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 4, תל אביב-יפו, ישראל": {
+    "lat": 32.1067122,
+    "lng": 34.8361454,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך נמיר 149, תל אביב-יפו, ישראל": {
+    "lat": 32.100842,
+    "lng": 34.792192,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 61, תל אביב-יפו, ישראל": {
+    "lat": 32.078647,
+    "lng": 34.781133,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שבטי ישראל 17, תל אביב-יפו, ישראל": {
+    "lat": 32.0490819,
+    "lng": 34.7575145,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יום טוב 10, תל אביב-יפו, ישראל": {
+    "lat": 32.068174,
+    "lng": 34.767711,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עמק ברכה 35, תל אביב-יפו, ישראל": {
+    "lat": 32.075757,
+    "lng": 34.800433,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 33, תל אביב-יפו, ישראל": {
+    "lat": 32.110552,
+    "lng": 34.841516,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 75, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "יאשה חפץ 9, תל אביב-יפו, ישראל": {
+    "lat": 32.116554,
+    "lng": 34.788142,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 39, תל אביב-יפו, ישראל": {
+    "lat": 32.061878,
+    "lng": 34.772547,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 61, תל אביב-יפו, ישראל": {
+    "lat": 32.063171,
+    "lng": 34.775241,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 32, תל אביב-יפו, ישראל": {
+    "lat": 32.063223,
+    "lng": 34.772861,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברוריה 19, תל אביב-יפו, ישראל": {
+    "lat": 32.077997,
+    "lng": 34.7986282,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלאות 23, תל אביב-יפו, ישראל": {
+    "lat": 32.109168,
+    "lng": 34.829862,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 148, תל אביב-יפו, ישראל": {
+    "lat": 32.089296,
+    "lng": 34.782746,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 30, תל אביב-יפו, ישראל": {
+    "lat": 32.0655981,
+    "lng": 34.7706239,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 132, תל אביב-יפו, ישראל": {
+    "lat": 32.0745846,
+    "lng": 34.7922603,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 6, תל אביב-יפו, ישראל": {
+    "lat": 32.077693,
+    "lng": 34.768011,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה דיין 2, תל אביב-יפו, ישראל": {
+    "lat": 32.062687,
+    "lng": 34.799999,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 183, תל אביב-יפו, ישראל": {
+    "lat": 32.085708,
+    "lng": 34.774455,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 48, תל אביב-יפו, ישראל": {
+    "lat": 32.065752,
+    "lng": 34.786607,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 250, תל אביב-יפו, ישראל": {
+    "lat": 32.092414,
+    "lng": 34.773467,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 106, תל אביב-יפו, ישראל": {
+    "lat": 32.047984,
+    "lng": 34.776992,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אורי צבי גרינברג 25, תל אביב-יפו, ישראל": {
+    "lat": 32.1303188,
+    "lng": 34.7925413,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שינקין 44, תל אביב-יפו, ישראל": {
+    "lat": 32.068696,
+    "lng": 34.775055,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה וילנסקי 13, תל אביב-יפו, ישראל": {
+    "lat": 32.127973,
+    "lng": 34.835421,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית אשל 3, תל אביב-יפו, ישראל": {
+    "lat": 32.054317,
+    "lng": 34.756536,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 19, תל אביב-יפו, ישראל": {
+    "lat": 32.068306,
+    "lng": 34.766736,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 64, תל אביב-יפו, ישראל": {
+    "lat": 32.079661,
+    "lng": 34.781492,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "סמטת השוק 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0603792,
+    "lng": 34.771747,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מאיר יערי 19, תל אביב-יפו, ישראל": {
+    "lat": 32.100054,
+    "lng": 34.787583,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לה גווארדיה 66, תל אביב-יפו, ישראל": {
+    "lat": 32.058896,
+    "lng": 34.798773,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 60, תל אביב-יפו, ישראל": {
+    "lat": 32.067033,
+    "lng": 34.787052,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הנחושת 3, תל אביב-יפו, ישראל": {
+    "lat": 32.1096964,
+    "lng": 34.8381999,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "החלוצים 2, תל אביב-יפו, ישראל": {
+    "lat": 32.060447,
+    "lng": 34.773359,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "וסרמן 1, תל אביב-יפו, ישראל": {
+    "lat": 32.054758,
+    "lng": 34.762563,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יורדי הסירה 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0961886,
+    "lng": 34.7742117,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 56, תל אביב-יפו, ישראל": {
+    "lat": 32.069225,
+    "lng": 34.769802,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת יצחק 32, תל אביב-יפו, ישראל": {
+    "lat": 32.073975,
+    "lng": 34.79994,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 138, תל אביב-יפו, ישראל": {
+    "lat": 32.0884975,
+    "lng": 34.7825791,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קויפמן יחזקאל 12, תל אביב-יפו, ישראל": {
+    "lat": 32.0610674,
+    "lng": 34.7607569,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "גרץ 11, תל אביב-יפו, ישראל": {
+    "lat": 32.085854,
+    "lng": 34.773753,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ויצמן 18, תל אביב-יפו, ישראל": {
+    "lat": 32.0816497,
+    "lng": 34.7893388,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הלוחמים 1, תל אביב-יפו, ישראל": {
+    "lat": 32.037409,
+    "lng": 34.761609,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 31, תל אביב-יפו, ישראל": {
+    "lat": 32.110287,
+    "lng": 34.841116,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קויפמן יחזקאל 10, תל אביב-יפו, ישראל": {
+    "lat": 32.06485,
+    "lng": 34.762867,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 99, תל אביב-יפו, ישראל": {
+    "lat": 32.0798417,
+    "lng": 34.768149,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 22, תל אביב-יפו, ישראל": {
+    "lat": 32.052564,
+    "lng": 34.790274,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 42, תל אביב-יפו, ישראל": {
+    "lat": 32.068142,
+    "lng": 34.768446,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פנחס בן יאיר 8, תל אביב-יפו, ישראל": {
+    "lat": 32.054441,
+    "lng": 34.756989,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נמל תל אביב, תל אביב-יפו, ישראל": {
+    "lat": 32.0986505,
+    "lng": 34.775517,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 32, תל אביב-יפו, ישראל": {
+    "lat": 32.051778,
+    "lng": 34.768099,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 46, תל אביב-יפו, ישראל": {
+    "lat": 32.0595101,
+    "lng": 34.7728557,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 123, תל אביב-יפו, ישראל": {
+    "lat": 32.0752097,
+    "lng": 34.7955477,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הפטיש 9, תל אביב-יפו, ישראל": {
+    "lat": 32.051521,
+    "lng": 34.77193,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שאול המלך 4, תל אביב-יפו, ישראל": {
+    "lat": 32.075248,
+    "lng": 34.782657,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 121, תל אביב-יפו, ישראל": {
+    "lat": 32.0831625,
+    "lng": 34.7685671,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 69, תל אביב-יפו, ישראל": {
+    "lat": 32.080276,
+    "lng": 34.769822,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 26, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "יחיא קאפח 3, תל אביב-יפו, ישראל": {
+    "lat": 32.068107,
+    "lng": 34.767135,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 105, תל אביב-יפו, ישראל": {
+    "lat": 32.053389,
+    "lng": 34.770746,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 1, תל אביב-יפו, ישראל": {
+    "lat": 32.069232,
+    "lng": 34.770361,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה דיין 34, תל אביב-יפו, ישראל": {
+    "lat": 32.049329,
+    "lng": 34.799775,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הזרם 13, תל אביב-יפו, ישראל": {
+    "lat": 32.0501074,
+    "lng": 34.7660483,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "כיכר קדומים 14, תל אביב-יפו, ישראל": {
+    "lat": 32.0542184,
+    "lng": 34.7517544,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "מל\"ן 18, תל אביב-יפו, ישראל": {
+    "lat": 32.069507,
+    "lng": 34.767303,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים חבשוש 22, תל אביב-יפו, ישראל": {
+    "lat": 32.0690574,
+    "lng": 34.766628,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אלנבי 88, תל אביב-יפו, ישראל": {
+    "lat": 32.066831,
+    "lng": 34.771317,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 85, תל אביב-יפו, ישראל": {
+    "lat": 32.0881389,
+    "lng": 34.7752044,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 53, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הכרמל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.065736,
+    "lng": 34.76557,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מרחביה 14, תל אביב-יפו, ישראל": {
+    "lat": 32.059639,
+    "lng": 34.77195,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מקוה ישראל 5, תל אביב-יפו, ישראל": {
+    "lat": 32.062738,
+    "lng": 34.775931,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נגבה 1, תל אביב-יפו, ישראל": {
+    "lat": 32.054599,
+    "lng": 34.793297,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 7, תל אביב-יפו, ישראל": {
+    "lat": 32.066911,
+    "lng": 34.783292,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראש פינה 27, תל אביב-יפו, ישראל": {
+    "lat": 32.059006,
+    "lng": 34.783016,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 46, תל אביב-יפו, ישראל": {
+    "lat": 32.068436,
+    "lng": 34.768792,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שביל המפעל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.05191,
+    "lng": 34.773228,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 1, תל אביב-יפו, ישראל": {
+    "lat": 32.053601,
+    "lng": 34.790836,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה סנה רמת השרון 199, תל אביב-יפו, ישראל": {
+    "lat": 32.1272135,
+    "lng": 34.8274493,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הרב יוסף צוברי 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0511376,
+    "lng": 34.8072381,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "האצ\"ל 38, תל אביב-יפו, ישראל": {
+    "lat": 32.0924087,
+    "lng": 34.7858614,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 55, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אילת 45, תל אביב-יפו, ישראל": {
+    "lat": 32.058526,
+    "lng": 34.765068,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 84, תל אביב-יפו, ישראל": {
+    "lat": 32.059802,
+    "lng": 34.772385,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 13, תל אביב-יפו, ישראל": {
+    "lat": 32.0525849,
+    "lng": 34.7909329,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "לוינסקי 53, תל אביב-יפו, ישראל": {
+    "lat": 32.059632,
+    "lng": 34.77294,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 76, תל אביב-יפו, ישראל": {
+    "lat": 32.04334,
+    "lng": 34.76973,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 155, תל אביב-יפו, ישראל": {
+    "lat": 32.084511,
+    "lng": 34.769206,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 8, תל אביב-יפו, ישראל": {
+    "lat": 32.072074,
+    "lng": 34.782064,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 10, תל אביב-יפו, ישראל": {
+    "lat": 32.069233,
+    "lng": 34.783136,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "השלושה 11, תל אביב-יפו, ישראל": {
+    "lat": 32.062095,
+    "lng": 34.791035,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התעשיה 12, תל אביב-יפו, ישראל": {
+    "lat": 32.0670779,
+    "lng": 34.7865163,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קלמן מגן 7, תל אביב-יפו, ישראל": {
+    "lat": 32.071337,
+    "lng": 34.786547,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 14, תל אביב-יפו, ישראל": {
+    "lat": 32.06278,
+    "lng": 34.770688,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אחד העם 52, תל אביב-יפו, ישראל": {
+    "lat": 32.064558,
+    "lng": 34.774194,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 65, תל אביב-יפו, ישראל": {
+    "lat": 32.068097,
+    "lng": 34.771172,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 224, תל אביב-יפו, ישראל": {
+    "lat": 32.0869192,
+    "lng": 34.7749068,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דרך שלמה 53, תל אביב-יפו, ישראל": {
+    "lat": 32.055066,
+    "lng": 34.767099,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הארבעה 6, תל אביב-יפו, ישראל": {
+    "lat": 32.0702875,
+    "lng": 34.7833122,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ויצמן 53, תל אביב-יפו, ישראל": {
+    "lat": 32.084902,
+    "lng": 34.789127,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 40, תל אביב-יפו, ישראל": {
+    "lat": 32.0616119,
+    "lng": 34.7720085,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לינקולן 16, תל אביב-יפו, ישראל": {
+    "lat": 32.066501,
+    "lng": 34.781838,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה מרגוזה 14, תל אביב-יפו, ישראל": {
+    "lat": 32.05197,
+    "lng": 34.755443,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 47, תל אביב-יפו, ישראל": {
+    "lat": 32.051443,
+    "lng": 34.791692,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 155, תל אביב-יפו, ישראל": {
+    "lat": 32.078269,
+    "lng": 34.797148,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיציס 23, תל אביב-יפו, ישראל": {
+    "lat": 32.107989,
+    "lng": 34.822138,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 24, תל אביב-יפו, ישראל": {
+    "lat": 32.052421,
+    "lng": 34.791315,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 3, תל אביב-יפו, ישראל": {
+    "lat": 32.052691,
+    "lng": 34.79065,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 161, תל אביב-יפו, ישראל": {
+    "lat": 32.07878,
+    "lng": 34.797961,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שאול המלך 39, תל אביב-יפו, ישראל": {
+    "lat": 32.0778913,
+    "lng": 34.790694,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הנגב 10, תל אביב-יפו, ישראל": {
+    "lat": 32.06156,
+    "lng": 34.778808,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "החלוצים 18, תל אביב-יפו, ישראל": {
+    "lat": 32.059248,
+    "lng": 34.773047,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 38, תל אביב-יפו, ישראל": {
+    "lat": 32.0596604,
+    "lng": 34.7721077,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רזיאל 5, תל אביב-יפו, ישראל": {
+    "lat": 32.0565014,
+    "lng": 34.7589309,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 72, תל אביב-יפו, ישראל": {
+    "lat": 32.067158,
+    "lng": 34.779737,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 144, תל אביב-יפו, ישראל": {
+    "lat": 32.077632,
+    "lng": 34.793041,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מעון 4, תל אביב-יפו, ישראל": {
+    "lat": 32.0559972,
+    "lng": 34.76688,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עמיעד 14, תל אביב-יפו, ישראל": {
+    "lat": 32.053306,
+    "lng": 34.755811,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ירמיהו 45, תל אביב-יפו, ישראל": {
+    "lat": 32.095105,
+    "lng": 34.777948,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית הבד 6, תל אביב-יפו, ישראל": {
+    "lat": 32.060802,
+    "lng": 34.77031,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרכבת 28, תל אביב-יפו, ישראל": {
+    "lat": 32.062366,
+    "lng": 34.779503,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שוקן 30, תל אביב-יפו, ישראל": {
+    "lat": 32.051658,
+    "lng": 34.772028,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 68, תל אביב-יפו, ישראל": {
+    "lat": 32.057963,
+    "lng": 34.77075,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 87, תל אביב-יפו, ישראל": {
+    "lat": 32.0659832,
+    "lng": 34.7722291,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 11, תל אביב-יפו, ישראל": {
+    "lat": 32.1075,
+    "lng": 34.836679,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברודצקי 19, תל אביב-יפו, ישראל": {
+    "lat": 32.1081087,
+    "lng": 34.7976663,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 145, תל אביב-יפו, ישראל": {
+    "lat": 32.087535,
+    "lng": 34.773068,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ההשכלה 1, תל אביב-יפו, ישראל": {
+    "lat": 32.06496,
+    "lng": 34.795945,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 196, תל אביב-יפו, ישראל": {
+    "lat": 32.089661,
+    "lng": 34.774059,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 112, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "ישראל גורי 34, תל אביב-יפו, ישראל": {
+    "lat": 32.0468108,
+    "lng": 34.7807614,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "משה דיין 76, תל אביב-יפו, ישראל": {
+    "lat": 32.0617191,
+    "lng": 34.7998743,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "שביל המרץ 1, תל אביב-יפו, ישראל": {
+    "lat": 32.051938,
+    "lng": 34.773126,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מסילת ישרים 15, תל אביב-יפו, ישראל": {
+    "lat": 32.049632,
+    "lng": 34.775905,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 12, תל אביב-יפו, ישראל": {
+    "lat": 32.0623233,
+    "lng": 34.7699763,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 15, תל אביב-יפו, ישראל": {
+    "lat": 32.0632619,
+    "lng": 34.7711996,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 6, תל אביב-יפו, ישראל": {
+    "lat": 32.0688486,
+    "lng": 34.7838136,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דבורה הנביאה 124, תל אביב-יפו, ישראל": {
+    "lat": 32.1133172,
+    "lng": 34.841848,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 15, תל אביב-יפו, ישראל": {
+    "lat": 32.125016,
+    "lng": 34.801487,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דוד אלעזר 22, תל אביב-יפו, ישראל": {
+    "lat": 32.071814,
+    "lng": 34.787841,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 119, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 57, תל אביב-יפו, ישראל": {
+    "lat": 32.050793,
+    "lng": 34.791848,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 44, תל אביב-יפו, ישראל": {
+    "lat": 32.050657,
+    "lng": 34.791638,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 24, תל אביב-יפו, ישראל": {
+    "lat": 32.049227,
+    "lng": 34.761991,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בבלי 17, תל אביב-יפו, ישראל": {
+    "lat": 32.0942771,
+    "lng": 34.7984076,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלברט מנדלר 6, תל אביב-יפו, ישראל": {
+    "lat": 32.072802,
+    "lng": 34.787026,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 26, תל אביב-יפו, ישראל": {
+    "lat": 32.052385,
+    "lng": 34.790187,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לח\"י 85, תל אביב-יפו, ישראל": {
+    "lat": 32.047492,
+    "lng": 34.796907,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קויפמן יחזקאל 6, תל אביב-יפו, ישראל": {
+    "lat": 32.063998,
+    "lng": 34.762479,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 107, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אחד העם 12, תל אביב-יפו, ישראל": {
+    "lat": 32.064909,
+    "lng": 34.774537,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 112, תל אביב-יפו, ישראל": {
+    "lat": 32.0376674,
+    "lng": 34.7756814,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 53, תל אביב-יפו, ישראל": {
+    "lat": 32.062088,
+    "lng": 34.7917262,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת יצחק 20, תל אביב-יפו, ישראל": {
+    "lat": 32.0739275,
+    "lng": 34.7982192,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 70, תל אביב-יפו, ישראל": {
+    "lat": 32.04824,
+    "lng": 34.792946,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "השומר 7, תל אביב-יפו, ישראל": {
+    "lat": 32.068444,
+    "lng": 34.769832,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "צ'לנוב 21, תל אביב-יפו, ישראל": {
+    "lat": 32.057603,
+    "lng": 34.775121,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 21, תל אביב-יפו, ישראל": {
+    "lat": 32.052347,
+    "lng": 34.790434,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פלורנטין 5, תל אביב-יפו, ישראל": {
+    "lat": 32.05629,
+    "lng": 34.767719,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 3, תל אביב-יפו, ישראל": {
+    "lat": 32.069003,
+    "lng": 34.770188,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 7, תל אביב-יפו, ישראל": {
+    "lat": 32.053254,
+    "lng": 34.790714,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 35, תל אביב-יפו, ישראל": {
+    "lat": 32.069509,
+    "lng": 34.769846,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 146, תל אביב-יפו, ישראל": {
+    "lat": 32.0778351,
+    "lng": 34.7944395,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הדר יוסף 16, תל אביב-יפו, ישראל": {
+    "lat": 32.10924,
+    "lng": 34.818397,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 76, תל אביב-יפו, ישראל": {
+    "lat": 32.047897,
+    "lng": 34.793273,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 49, תל אביב-יפו, ישראל": {
+    "lat": 32.051306,
+    "lng": 34.791728,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית אל 12, תל אביב-יפו, ישראל": {
+    "lat": 32.118275,
+    "lng": 34.839634,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הקשת 3, תל אביב-יפו, ישראל": {
+    "lat": 32.04177,
+    "lng": 34.774678,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך שלמה 43, תל אביב-יפו, ישראל": {
+    "lat": 32.055106,
+    "lng": 34.766466,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דניאל 29, תל אביב-יפו, ישראל": {
+    "lat": 32.0673648,
+    "lng": 34.7668895,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מל\"ן 29, תל אביב-יפו, ישראל": {
+    "lat": 32.069154,
+    "lng": 34.767999,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן אביגדור 3, תל אביב-יפו, ישראל": {
+    "lat": 32.067553,
+    "lng": 34.787689,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שבזי 67, תל אביב-יפו, ישראל": {
+    "lat": 32.063672,
+    "lng": 34.76834,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 17, תל אביב-יפו, ישראל": {
+    "lat": 32.108075,
+    "lng": 34.837838,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 167, תל אביב-יפו, ישראל": {
+    "lat": 32.0858591,
+    "lng": 34.7701454,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 1, תל אביב-יפו, ישראל": {
+    "lat": 32.052711,
+    "lng": 34.790598,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 79, תל אביב-יפו, ישראל": {
+    "lat": 32.04945,
+    "lng": 34.774125,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 100, תל אביב-יפו, ישראל": {
+    "lat": 32.055952,
+    "lng": 34.770701,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לבונטין 30, תל אביב-יפו, ישראל": {
+    "lat": 32.063378,
+    "lng": 34.7766096,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה המכבי 54, תל אביב-יפו, ישראל": {
+    "lat": 32.093937,
+    "lng": 34.792695,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 26, תל אביב-יפו, ישראל": {
+    "lat": 32.076796,
+    "lng": 34.769742,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יד חרוצים 14, תל אביב-יפו, ישראל": {
+    "lat": 32.0617073,
+    "lng": 34.7831325,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 43, תל אביב-יפו, ישראל": {
+    "lat": 32.076264,
+    "lng": 34.771282,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 6, תל אביב-יפו, ישראל": {
+    "lat": 32.060243,
+    "lng": 34.784664,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "סמטת הכרמל 27, תל אביב-יפו, ישראל": {
+    "lat": 32.0684554,
+    "lng": 34.7662068,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "שד' רוקח, תל אביב-יפו, ישראל": {
+    "lat": 32.104601,
+    "lng": 34.810684,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "מרחביה 6, תל אביב-יפו, ישראל": {
+    "lat": 32.0602434,
+    "lng": 34.772115,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ה' באייר 12, תל אביב-יפו, ישראל": {
+    "lat": 32.085757,
+    "lng": 34.788674,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חנוך 52, תל אביב-יפו, ישראל": {
+    "lat": 32.051554,
+    "lng": 34.790539,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מזא\"ה 79, תל אביב-יפו, ישראל": {
+    "lat": 32.064882,
+    "lng": 34.781912,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 125, תל אביב-יפו, ישראל": {
+    "lat": 32.051662,
+    "lng": 34.770315,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 125, תל אביב-יפו, ישראל": {
+    "lat": 32.088333,
+    "lng": 34.782188,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברודצקי 15, תל אביב-יפו, ישראל": {
+    "lat": 32.106598,
+    "lng": 34.797414,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 134, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "משה וילנסקי 17, תל אביב-יפו, ישראל": {
+    "lat": 32.12809,
+    "lng": 34.835436,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חשמונאים 103, תל אביב-יפו, ישראל": {
+    "lat": 32.0361437,
+    "lng": 34.7508846,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הנחושת 4, תל אביב-יפו, ישראל": {
+    "lat": 32.1096439,
+    "lng": 34.8391271,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 88, תל אביב-יפו, ישראל": {
+    "lat": 32.06679,
+    "lng": 34.793052,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ישראל גורי 35, תל אביב-יפו, ישראל": {
+    "lat": 32.046596,
+    "lng": 34.7806471,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 285, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 14, תל אביב-יפו, ישראל": {
+    "lat": 32.072716,
+    "lng": 34.782101,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנורת המאור 4, תל אביב-יפו, ישראל": {
+    "lat": 32.074576,
+    "lng": 34.796218,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחל איילון 37, תל אביב-יפו, ישראל": {
+    "lat": 32.064336,
+    "lng": 34.788343,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך השלום 101, תל אביב-יפו, ישראל": {
+    "lat": 32.061077,
+    "lng": 34.805806,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 63, תל אביב-יפו, ישראל": {
+    "lat": 32.079695,
+    "lng": 34.769439,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 38, תל אביב-יפו, ישראל": {
+    "lat": 32.067788,
+    "lng": 34.767984,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "צרעה 3, תל אביב-יפו, ישראל": {
+    "lat": 32.047106,
+    "lng": 34.809256,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מעפילי אגוז 59, תל אביב-יפו, ישראל": {
+    "lat": 32.053051,
+    "lng": 34.810238,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראול ולנברג 14, תל אביב-יפו, ישראל": {
+    "lat": 32.108992,
+    "lng": 34.836735,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 134, תל אביב-יפו, ישראל": {
+    "lat": 32.075096,
+    "lng": 34.795877,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ההגנה 58, תל אביב-יפו, ישראל": {
+    "lat": 32.054048,
+    "lng": 34.788698,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מקוה ישראל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.061789,
+    "lng": 34.773715,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 9, תל אביב-יפו, ישראל": {
+    "lat": 32.067975,
+    "lng": 34.767945,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 32, תל אביב-יפו, ישראל": {
+    "lat": 32.052141,
+    "lng": 34.790112,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דב הוז 31, תל אביב-יפו, ישראל": {
+    "lat": 32.0822271,
+    "lng": 34.7723842,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 78, תל אביב-יפו, ישראל": {
+    "lat": 32.043263,
+    "lng": 34.77011,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ניסים אלוני 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0888285,
+    "lng": 34.7972928,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פנקס 48, תל אביב-יפו, ישראל": {
+    "lat": 32.090762,
+    "lng": 34.789138,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוי אשכול 50, תל אביב-יפו, ישראל": {
+    "lat": 32.1086875,
+    "lng": 34.7890292,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שתולים 70, תל אביב-יפו, ישראל": {
+    "lat": 32.042641,
+    "lng": 34.795779,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברזיל 17, תל אביב-יפו, ישראל": {
+    "lat": 32.1116289,
+    "lng": 34.7969889,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הדר יוסף 14, תל אביב-יפו, ישראל": {
+    "lat": 32.109376,
+    "lng": 34.818246,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דניאל 25, תל אביב-יפו, ישראל": {
+    "lat": 32.067756,
+    "lng": 34.7662,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אל נקוה 78, תל אביב-יפו, ישראל": {
+    "lat": 32.0475888,
+    "lng": 34.8013329,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "התנופה 4, תל אביב-יפו, ישראל": {
+    "lat": 32.051211,
+    "lng": 34.773358,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 45, תל אביב-יפו, ישראל": {
+    "lat": 32.052417,
+    "lng": 34.767514,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 150, תל אביב-יפו, ישראל": {
+    "lat": 32.046479,
+    "lng": 34.785008,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 61, תל אביב-יפו, ישראל": {
+    "lat": 32.075614,
+    "lng": 34.766495,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מזא\"ה 6, תל אביב-יפו, ישראל": {
+    "lat": 32.067013,
+    "lng": 34.772111,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "איינשטיין 64, תל אביב-יפו, ישראל": {
+    "lat": 32.113021,
+    "lng": 34.800354,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרברט סמואל 54, תל אביב-יפו, ישראל": {
+    "lat": 32.0729388,
+    "lng": 34.7648881,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבולעפיה 11, תל אביב-יפו, ישראל": {
+    "lat": 32.053058,
+    "lng": 34.769502,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מקווה ישראל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0626942,
+    "lng": 34.7780441,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 72, תל אביב-יפו, ישראל": {
+    "lat": 32.066245,
+    "lng": 34.784201,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "טרומפלדור 11, תל אביב-יפו, ישראל": {
+    "lat": 32.0756,
+    "lng": 34.767427,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחמני 67, תל אביב-יפו, ישראל": {
+    "lat": 32.064368,
+    "lng": 34.78106,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רזיאל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.056852,
+    "lng": 34.759473,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 35, תל אביב-יפו, ישראל": {
+    "lat": 32.064654,
+    "lng": 34.785584,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התחיה 16, תל אביב-יפו, ישראל": {
+    "lat": 32.0499343,
+    "lng": 34.7635298,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית אשל 5, תל אביב-יפו, ישראל": {
+    "lat": 32.054038,
+    "lng": 34.756806,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ריב\"ל 13, תל אביב-יפו, ישראל": {
+    "lat": 32.062763,
+    "lng": 34.782928,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 4, תל אביב-יפו, ישראל": {
+    "lat": 32.0682063,
+    "lng": 34.7833754,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראול ולנברג 20, תל אביב-יפו, ישראל": {
+    "lat": 32.1105162,
+    "lng": 34.8376966,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 11, תל אביב-יפו, ישראל": {
+    "lat": 32.052978,
+    "lng": 34.79063,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ויצמן 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0775686,
+    "lng": 34.7891042,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 220, תל אביב-יפו, ישראל": {
+    "lat": 32.089675,
+    "lng": 34.772424,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרכבת 29, תל אביב-יפו, ישראל": {
+    "lat": 32.0625518,
+    "lng": 34.7798161,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "לילינבלום 9, תל אביב-יפו, ישראל": {
+    "lat": 32.0621549,
+    "lng": 34.7687182,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 35, תל אביב-יפו, ישראל": {
+    "lat": 32.077186,
+    "lng": 34.768087,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יבנה 42, תל אביב-יפו, ישראל": {
+    "lat": 32.0634497,
+    "lng": 34.7742483,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 84, תל אביב-יפו, ישראל": {
+    "lat": 32.0773737,
+    "lng": 34.7675992,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שביל האטד 5, תל אביב-יפו, ישראל": {
+    "lat": 32.0602295,
+    "lng": 34.7673312,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בן יהודה 87, תל אביב-יפו, ישראל": {
+    "lat": 32.0825078,
+    "lng": 34.771092,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0737311,
+    "lng": 34.7656181,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 287, תל אביב-יפו, ישראל": {
+    "lat": 32.0940939,
+    "lng": 34.7735059,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרברט סמואל 86, תל אביב-יפו, ישראל": {
+    "lat": 32.077058,
+    "lng": 34.766667,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דוד רזיאל 22, תל אביב-יפו, ישראל": {
+    "lat": 32.055292,
+    "lng": 34.756161,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נס ציונה 6, תל אביב-יפו, ישראל": {
+    "lat": 32.074558,
+    "lng": 34.767076,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "זמנהוף 1, תל אביב-יפו, ישראל": {
+    "lat": 32.078041,
+    "lng": 34.774823,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 51, תל אביב-יפו, ישראל": {
+    "lat": 32.074384,
+    "lng": 34.766275,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 20, תל אביב-יפו, ישראל": {
+    "lat": 32.0709216,
+    "lng": 34.7823202,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה המכבי 65, תל אביב-יפו, ישראל": {
+    "lat": 32.093999,
+    "lng": 34.791496,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 60, תל אביב-יפו, ישראל": {
+    "lat": 32.062207,
+    "lng": 34.771965,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ארלוזרוב 17, תל אביב-יפו, ישראל": {
+    "lat": 32.0873626,
+    "lng": 34.7740264,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "רזיאל 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0566621,
+    "lng": 34.759357,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 54, תל אביב-יפו, ישראל": {
+    "lat": 32.059176,
+    "lng": 34.773834,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראול ולנברג 18, תל אביב-יפו, ישראל": {
+    "lat": 32.1094733,
+    "lng": 34.837568,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נוריאל 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0525849,
+    "lng": 34.7909329,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "וולפסון 9, תל אביב-יפו, ישראל": {
+    "lat": 32.058083,
+    "lng": 34.77012,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 38, תל אביב-יפו, ישראל": {
+    "lat": 32.051516,
+    "lng": 34.791437,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 98, תל אביב-יפו, ישראל": {
+    "lat": 32.056171,
+    "lng": 34.770702,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 37, תל אביב-יפו, ישראל": {
+    "lat": 32.065894,
+    "lng": 34.7828366,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גרוסמן 25, תל אביב-יפו, ישראל": {
+    "lat": 32.04099,
+    "lng": 34.765811,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יד חרוצים 11, תל אביב-יפו, ישראל": {
+    "lat": 32.0620476,
+    "lng": 34.7828577,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אברהם אבן שושן 1, תל אביב-יפו, ישראל": {
+    "lat": 32.050845,
+    "lng": 34.753728,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מרחביה 7, תל אביב-יפו, ישראל": {
+    "lat": 32.060146,
+    "lng": 34.77225,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מסילת ישרים 41, תל אביב-יפו, ישראל": {
+    "lat": 32.050741,
+    "lng": 34.776477,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "טולוז 8, תל אביב-יפו, ישראל": {
+    "lat": 32.039871,
+    "lng": 34.748077,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 44, תל אביב-יפו, ישראל": {
+    "lat": 32.051599,
+    "lng": 34.789952,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ריב\"ל 7, תל אביב-יפו, ישראל": {
+    "lat": 32.062831,
+    "lng": 34.782228,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "צ'לנוב 5, תל אביב-יפו, ישראל": {
+    "lat": 32.059767,
+    "lng": 34.775952,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 52, תל אביב-יפו, ישראל": {
+    "lat": 32.045833,
+    "lng": 34.767176,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "טאגור 32, תל אביב-יפו, ישראל": {
+    "lat": 32.117372,
+    "lng": 34.797514,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "סלומון 7, תל אביב-יפו, ישראל": {
+    "lat": 32.061559,
+    "lng": 34.779896,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קרליבך 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0665386,
+    "lng": 34.7833375,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "תרמ\"ב 37, תל אביב-יפו, ישראל": {
+    "lat": 32.067965,
+    "lng": 34.767891,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נמל יפו, תל אביב-יפו, ישראל": {
+    "lat": 32.053985,
+    "lng": 34.750271,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אילת 22, תל אביב-יפו, ישראל": {
+    "lat": 32.057742,
+    "lng": 34.763809,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ה' באייר 10, תל אביב-יפו, ישראל": {
+    "lat": 32.086108,
+    "lng": 34.788351,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דניאל פריש 1, תל אביב-יפו, ישראל": {
+    "lat": 32.074489,
+    "lng": 34.782439,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שד' רוקח 101, תל אביב-יפו, ישראל": {
+    "lat": 32.107454,
+    "lng": 34.814433,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 55, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "חיים ויטל 9, תל אביב-יפו, ישראל": {
+    "lat": 32.0564658,
+    "lng": 34.7679444,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 15, תל אביב-יפו, ישראל": {
+    "lat": 32.077407,
+    "lng": 34.769289,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 228, תל אביב-יפו, ישראל": {
+    "lat": 32.092081,
+    "lng": 34.774778,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המחוגה 13, תל אביב-יפו, ישראל": {
+    "lat": 32.0572212,
+    "lng": 34.7666439,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 125, תל אביב-יפו, ישראל": {
+    "lat": 32.0730925,
+    "lng": 34.7893649,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 8, תל אביב-יפו, ישראל": {
+    "lat": 32.053302,
+    "lng": 34.790507,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פנחס רוזן 72, תל אביב-יפו, ישראל": {
+    "lat": 32.1145575,
+    "lng": 34.8257793,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 147, תל אביב-יפו, ישראל": {
+    "lat": 32.0858351,
+    "lng": 34.7725074,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מקוה ישראל 1, תל אביב-יפו, ישראל": {
+    "lat": 32.062563,
+    "lng": 34.775277,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 61, תל אביב-יפו, ישראל": {
+    "lat": 32.063744,
+    "lng": 34.771692,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 45, תל אביב-יפו, ישראל": {
+    "lat": 32.070403,
+    "lng": 34.770404,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 1, תל אביב-יפו, ישראל": {
+    "lat": 32.1066986,
+    "lng": 34.8348566,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה מרגוזה 4, תל אביב-יפו, ישראל": {
+    "lat": 32.05306,
+    "lng": 34.7571,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 57, תל אביב-יפו, ישראל": {
+    "lat": 32.0595317,
+    "lng": 34.77326,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 108, תל אביב-יפו, ישראל": {
+    "lat": 32.0654266,
+    "lng": 34.783224,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "התקווה 15, תל אביב-יפו, ישראל": {
+    "lat": 32.052765,
+    "lng": 34.790598,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 41, תל אביב-יפו, ישראל": {
+    "lat": 32.076312,
+    "lng": 34.77116,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 64, תל אביב-יפו, ישראל": {
+    "lat": 32.067664,
+    "lng": 34.78729,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פנחס רוזן 19, תל אביב-יפו, ישראל": {
+    "lat": 32.1128113,
+    "lng": 34.8253707,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אנילביץ 56, תל אביב-יפו, ישראל": {
+    "lat": 32.063594,
+    "lng": 34.790039,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראול ולנברג 12, תל אביב-יפו, ישראל": {
+    "lat": 32.108398,
+    "lng": 34.836173,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 19, תל אביב-יפו, ישראל": {
+    "lat": 32.1251801,
+    "lng": 34.8023292,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שביל המפעל 4, תל אביב-יפו, ישראל": {
+    "lat": 32.051266,
+    "lng": 34.773032,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 45, תל אביב-יפו, ישראל": {
+    "lat": 32.0881389,
+    "lng": 34.7752044,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דרך שלמה 54, תל אביב-יפו, ישראל": {
+    "lat": 32.0547301,
+    "lng": 34.7689298,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלבים 7, תל אביב-יפו, ישראל": {
+    "lat": 32.050124,
+    "lng": 34.764057,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נתן 4, תל אביב-יפו, ישראל": {
+    "lat": 32.052339,
+    "lng": 34.790964,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים בר לב 151, תל אביב-יפו, ישראל": {
+    "lat": 32.0469372,
+    "lng": 34.7992679,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "היתד 2, תל אביב-יפו, ישראל": {
+    "lat": 32.049411,
+    "lng": 34.76465,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 33, תל אביב-יפו, ישראל": {
+    "lat": 32.076669,
+    "lng": 34.770584,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראול ולנברג 24, תל אביב-יפו, ישראל": {
+    "lat": 32.1111966,
+    "lng": 34.8390004,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן אביגדור 19, תל אביב-יפו, ישראל": {
+    "lat": 32.067027,
+    "lng": 34.790964,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 17, תל אביב-יפו, ישראל": {
+    "lat": 32.0616762,
+    "lng": 34.7703805,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרברט סמואל 78, תל אביב-יפו, ישראל": {
+    "lat": 32.0760598,
+    "lng": 34.7662017,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שטריקר 46, תל אביב-יפו, ישראל": {
+    "lat": 32.093536,
+    "lng": 34.788113,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 89, תל אביב-יפו, ישראל": {
+    "lat": 32.0827708,
+    "lng": 34.7712232,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אברבנאל 35, תל אביב-יפו, ישראל": {
+    "lat": 32.056603,
+    "lng": 34.767252,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "כפר שלם 28, תל אביב-יפו, ישראל": {
+    "lat": 32.051864,
+    "lng": 34.8025485,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "בן צבי 34, תל אביב-יפו, ישראל": {
+    "lat": 32.048258,
+    "lng": 34.763828,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 36, תל אביב-יפו, ישראל": {
+    "lat": 32.048254,
+    "lng": 34.764102,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שפ\"ר 2, תל אביב-יפו, ישראל": {
+    "lat": 32.067856,
+    "lng": 34.768099,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ראול ולנברג 32, תל אביב-יפו, ישראל": {
+    "lat": 32.1167738,
+    "lng": 34.8437936,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 19, תל אביב-יפו, ישראל": {
+    "lat": 32.052887,
+    "lng": 34.791525,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 36, תל אביב-יפו, ישראל": {
+    "lat": 32.076371,
+    "lng": 34.770538,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 8, תל אביב-יפו, ישראל": {
+    "lat": 32.062619,
+    "lng": 34.769876,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 124, תל אביב-יפו, ישראל": {
+    "lat": 32.0869162,
+    "lng": 34.7822126,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לה גווארדיה 64, תל אביב-יפו, ישראל": {
+    "lat": 32.058896,
+    "lng": 34.798392,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הארבעה 14, תל אביב-יפו, ישראל": {
+    "lat": 32.070299,
+    "lng": 34.784581,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אברבנאל 17, תל אביב-יפו, ישראל": {
+    "lat": 32.057901,
+    "lng": 34.767111,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ישראל בק 41, תל אביב-יפו, ישראל": {
+    "lat": 32.0686534,
+    "lng": 34.7880861,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "עולי ציון 8, תל אביב-יפו, ישראל": {
+    "lat": 32.05357,
+    "lng": 34.756111,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 46, תל אביב-יפו, ישראל": {
+    "lat": 32.061729,
+    "lng": 34.773303,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלמה המלך 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0766501,
+    "lng": 34.7767805,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים לבנון 2, תל אביב-יפו, ישראל": {
+    "lat": 32.1034077,
+    "lng": 34.7963224,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הארבעה 13, תל אביב-יפו, ישראל": {
+    "lat": 32.070517,
+    "lng": 34.785382,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים לבנון 30, תל אביב-יפו, ישראל": {
+    "lat": 32.1157444,
+    "lng": 34.8012739,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דב האוזנר 3, תל אביב-יפו, ישראל": {
+    "lat": 32.1103013,
+    "lng": 34.7900448,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.047919,
+    "lng": 34.793905,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 24, תל אביב-יפו, ישראל": {
+    "lat": 32.1089801,
+    "lng": 34.8401937,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 70, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אלנבי 79, תל אביב-יפו, ישראל": {
+    "lat": 32.066798,
+    "lng": 34.771728,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 95, תל אביב-יפו, ישראל": {
+    "lat": 32.048856,
+    "lng": 34.775696,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 13, תל אביב-יפו, ישראל": {
+    "lat": 32.077392,
+    "lng": 34.769118,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בירנית 16, תל אביב-יפו, ישראל": {
+    "lat": 32.044019,
+    "lng": 34.804164,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחל הבשור 3, תל אביב-יפו, ישראל": {
+    "lat": 32.039182,
+    "lng": 34.756926,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים ויטל 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0570791,
+    "lng": 34.7679312,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פרישמן 16, תל אביב-יפו, ישראל": {
+    "lat": 32.079808,
+    "lng": 34.76942,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לסקוב 4, תל אביב-יפו, ישראל": {
+    "lat": 32.071155,
+    "lng": 34.782406,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 123, תל אביב-יפו, ישראל": {
+    "lat": 32.08795,
+    "lng": 34.782134,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אש שלום 9, תל אביב-יפו, ישראל": {
+    "lat": 32.107038,
+    "lng": 34.820902,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "היכל נוקיה, תל אביב-יפו, ישראל": {
+    "lat": 32.0620465,
+    "lng": 34.7904545,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הנחושת 1, תל אביב-יפו, ישראל": {
+    "lat": 32.108762,
+    "lng": 34.838787,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 79, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 2, תל אביב-יפו, ישראל": {
+    "lat": 32.054156,
+    "lng": 34.791826,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 113, תל אביב-יפו, ישראל": {
+    "lat": 32.062766,
+    "lng": 34.773452,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 24, תל אביב-יפו, ישראל": {
+    "lat": 32.074021,
+    "lng": 34.781964,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 88, תל אביב-יפו, ישראל": {
+    "lat": 32.082527,
+    "lng": 34.781497,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שינקין 19, תל אביב-יפו, ישראל": {
+    "lat": 32.069312,
+    "lng": 34.773502,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ידידיה פרנקל 57, תל אביב-יפו, ישראל": {
+    "lat": 32.057036,
+    "lng": 34.772668,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המלך ג'ורג' 23, תל אביב-יפו, ישראל": {
+    "lat": 32.07139,
+    "lng": 34.772555,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חנוך 37, תל אביב-יפו, ישראל": {
+    "lat": 32.05166,
+    "lng": 34.790586,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 4, תל אביב-יפו, ישראל": {
+    "lat": 32.053468,
+    "lng": 34.790969,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "החלוצים 4, תל אביב-יפו, ישראל": {
+    "lat": 32.060319,
+    "lng": 34.773324,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 19, תל אביב-יפו, ישראל": {
+    "lat": 32.052493,
+    "lng": 34.790479,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בושם 62, תל אביב-יפו, ישראל": {
+    "lat": 32.044629,
+    "lng": 34.802061,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 73, תל אביב-יפו, ישראל": {
+    "lat": 32.062297,
+    "lng": 34.772271,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התערוכה 3, תל אביב-יפו, ישראל": {
+    "lat": 32.0978246,
+    "lng": 34.7748707,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פיין 5, תל אביב-יפו, ישראל": {
+    "lat": 32.060203,
+    "lng": 34.779825,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 49, תל אביב-יפו, ישראל": {
+    "lat": 32.062344,
+    "lng": 34.773975,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הלוחמים 11, תל אביב-יפו, ישראל": {
+    "lat": 32.036909,
+    "lng": 34.760996,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רמב\"ם 2, תל אביב-יפו, ישראל": {
+    "lat": 32.06812,
+    "lng": 34.768399,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 94, תל אביב-יפו, ישראל": {
+    "lat": 32.083045,
+    "lng": 34.781521,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התחיה 15, תל אביב-יפו, ישראל": {
+    "lat": 32.049783,
+    "lng": 34.764577,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שוקן 22, תל אביב-יפו, ישראל": {
+    "lat": 32.0525079,
+    "lng": 34.7721417,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 25, תל אביב-יפו, ישראל": {
+    "lat": 32.0769397,
+    "lng": 34.7699515,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עולי ציון 5, תל אביב-יפו, ישראל": {
+    "lat": 32.0537,
+    "lng": 34.756221,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה דיין 32, תל אביב-יפו, ישראל": {
+    "lat": 32.049175,
+    "lng": 34.799669,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 17, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בן יהודה 232, תל אביב-יפו, ישראל": {
+    "lat": 32.092754,
+    "lng": 34.774986,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך לוד 91, תל אביב-יפו, ישראל": {
+    "lat": 32.0417399,
+    "lng": 34.8207768,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "דרך שלמה 100, תל אביב-יפו, ישראל": {
+    "lat": 32.05483,
+    "lng": 34.774808,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים לבנון 10, תל אביב-יפו, ישראל": {
+    "lat": 32.104621,
+    "lng": 34.799251,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אחד העם 38, תל אביב-יפו, ישראל": {
+    "lat": 32.064011,
+    "lng": 34.772436,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 21, תל אביב-יפו, ישראל": {
+    "lat": 32.0770649,
+    "lng": 34.769718,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 84, תל אביב-יפו, ישראל": {
+    "lat": 32.082018,
+    "lng": 34.781498,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "על פרשת דרכים 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0832016,
+    "lng": 34.7962419,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 156, תל אביב-יפו, ישראל": {
+    "lat": 32.050394,
+    "lng": 34.76931,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מרדכי בנטוב 3, תל אביב-יפו, ישראל": {
+    "lat": 32.043318,
+    "lng": 34.769079,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 34, תל אביב-יפו, ישראל": {
+    "lat": 32.1100628,
+    "lng": 34.8422585,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מוזיר 3, תל אביב-יפו, ישראל": {
+    "lat": 32.089029,
+    "lng": 34.785417,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 56, תל אביב-יפו, ישראל": {
+    "lat": 32.066679,
+    "lng": 34.786961,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 38, תל אביב-יפו, ישראל": {
+    "lat": 32.0645061,
+    "lng": 34.7861616,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מאפו 9, תל אביב-יפו, ישראל": {
+    "lat": 32.080758,
+    "lng": 34.769572,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מח\"ל 20, תל אביב-יפו, ישראל": {
+    "lat": 32.048856,
+    "lng": 34.810518,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 71, תל אביב-יפו, ישראל": {
+    "lat": 32.0827759,
+    "lng": 34.7806588,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 154, תל אביב-יפו, ישראל": {
+    "lat": 32.079383,
+    "lng": 34.795503,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הנרייטה סולד 1, תל אביב-יפו, ישראל": {
+    "lat": 32.078095,
+    "lng": 34.791134,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יפת 16, תל אביב-יפו, ישראל": {
+    "lat": 32.05402,
+    "lng": 34.755215,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המסגר 45, תל אביב-יפו, ישראל": {
+    "lat": 32.066653,
+    "lng": 34.786573,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יום טוב 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0679,
+    "lng": 34.767349,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אחד העם 13, תל אביב-יפו, ישראל": {
+    "lat": 32.063849,
+    "lng": 34.770789,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עולי ציון 3, תל אביב-יפו, ישראל": {
+    "lat": 32.053976,
+    "lng": 34.755988,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רבי חנינא 3, תל אביב-יפו, ישראל": {
+    "lat": 32.053003,
+    "lng": 34.755721,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "סנפיר 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0525692,
+    "lng": 34.8081354,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 59, תל אביב-יפו, ישראל": {
+    "lat": 32.0629843,
+    "lng": 34.7750524,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גולומב 64, תל אביב-יפו, ישראל": {
+    "lat": 32.054275,
+    "lng": 34.782935,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 7, תל אביב-יפו, ישראל": {
+    "lat": 32.067867,
+    "lng": 34.767825,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 64, תל אביב-יפו, ישראל": {
+    "lat": 32.048946,
+    "lng": 34.792591,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 6, תל אביב-יפו, ישראל": {
+    "lat": 32.053368,
+    "lng": 34.790519,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 98, תל אביב-יפו, ישראל": {
+    "lat": 32.0700073,
+    "lng": 34.7941937,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הארבעה 21, תל אביב-יפו, ישראל": {
+    "lat": 32.0705297,
+    "lng": 34.7872761,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 4, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "יצחק שדה 34, תל אביב-יפו, ישראל": {
+    "lat": 32.06491,
+    "lng": 34.787638,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הצורפים 15, תל אביב-יפו, ישראל": {
+    "lat": 32.053831,
+    "lng": 34.753904,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 92, תל אביב-יפו, ישראל": {
+    "lat": 32.08286,
+    "lng": 34.781496,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים לבנון 55, תל אביב-יפו, ישראל": {
+    "lat": 32.111054,
+    "lng": 34.801342,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוסלאן 30, תל אביב-יפו, ישראל": {
+    "lat": 32.054715,
+    "lng": 34.755434,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בראלי 18, תל אביב-יפו, ישראל": {
+    "lat": 32.1040829,
+    "lng": 34.791758,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 39, תל אביב-יפו, ישראל": {
+    "lat": 32.076387,
+    "lng": 34.771064,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שארית ישראל 31, תל אביב-יפו, ישראל": {
+    "lat": 32.052284,
+    "lng": 34.763392,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חובבי ציון 33, תל אביב-יפו, ישראל": {
+    "lat": 32.076953,
+    "lng": 34.770156,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 43, תל אביב-יפו, ישראל": {
+    "lat": 32.051699,
+    "lng": 34.791676,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 189, תל אביב-יפו, ישראל": {
+    "lat": 32.086272,
+    "lng": 34.774599,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פנחס רוזן 67, תל אביב-יפו, ישראל": {
+    "lat": 32.1146232,
+    "lng": 34.8249799,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן צבי 35, תל אביב-יפו, ישראל": {
+    "lat": 32.048926,
+    "lng": 34.764096,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 28, תל אביב-יפו, ישראל": {
+    "lat": 32.076729,
+    "lng": 34.769875,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 23, תל אביב-יפו, ישראל": {
+    "lat": 32.07704,
+    "lng": 34.769858,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 27, תל אביב-יפו, ישראל": {
+    "lat": 32.076918,
+    "lng": 34.770032,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 49, תל אביב-יפו, ישראל": {
+    "lat": 32.059705,
+    "lng": 34.772572,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פנקס 31, תל אביב-יפו, ישראל": {
+    "lat": 32.091112,
+    "lng": 34.787301,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך ההגנה 135, תל אביב-יפו, ישראל": {
+    "lat": 32.0568286,
+    "lng": 34.8037066,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בן יהודה 73, תל אביב-יפו, ישראל": {
+    "lat": 32.080849,
+    "lng": 34.770185,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ידידיה פרנקל 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0570302,
+    "lng": 34.7672773,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 177, תל אביב-יפו, ישראל": {
+    "lat": 32.09013,
+    "lng": 34.773849,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שושנה פרסיץ 15, תל אביב-יפו, ישראל": {
+    "lat": 32.1368632,
+    "lng": 34.797952,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "מבצע קדש 38, תל אביב-יפו, ישראל": {
+    "lat": 32.1132756,
+    "lng": 34.8180458,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלוש 42, תל אביב-יפו, ישראל": {
+    "lat": 32.05935,
+    "lng": 34.766085,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 59, תל אביב-יפו, ישראל": {
+    "lat": 32.059501,
+    "lng": 34.773505,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן סרוק 11, תל אביב-יפו, ישראל": {
+    "lat": 32.08683,
+    "lng": 34.7836551,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 69, תל אביב-יפו, ישראל": {
+    "lat": 32.0818162,
+    "lng": 34.7805831,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פילון 5, תל אביב-יפו, ישראל": {
+    "lat": 32.082324,
+    "lng": 34.777051,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 110, תל אביב-יפו, ישראל": {
+    "lat": 32.084596,
+    "lng": 34.781811,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יום טוב 3, תל אביב-יפו, ישראל": {
+    "lat": 32.067961,
+    "lng": 34.767387,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברזאני 4, תל אביב-יפו, ישראל": {
+    "lat": 32.126728,
+    "lng": 34.796868,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 145, תל אביב-יפו, ישראל": {
+    "lat": 32.0933178,
+    "lng": 34.773511,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 136, תל אביב-יפו, ישראל": {
+    "lat": 32.0654778,
+    "lng": 34.7829737,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הירקון 169, תל אביב-יפו, ישראל": {
+    "lat": 32.0859813,
+    "lng": 34.7701938,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שינקין 27, תל אביב-יפו, ישראל": {
+    "lat": 32.069186,
+    "lng": 34.774197,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הארבעה 16, תל אביב-יפו, ישראל": {
+    "lat": 32.070295,
+    "lng": 34.784752,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חיים לבנון 26, תל אביב-יפו, ישראל": {
+    "lat": 32.105763,
+    "lng": 34.800695,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "פרי אליעזר 10, תל אביב-יפו, ישראל": {
+    "lat": 32.086479,
+    "lng": 34.769713,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקווה 18, תל אביב-יפו, ישראל": {
+    "lat": 32.052791,
+    "lng": 34.790306,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מתחם התחנה 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0588351,
+    "lng": 34.7617375,
+    "confidence": "low",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 75, תל אביב-יפו, ישראל": {
+    "lat": 32.062037,
+    "lng": 34.772354,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 9, תל אביב-יפו, ישראל": {
+    "lat": 32.077607,
+    "lng": 34.768702,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "רוטשילד 45, תל אביב-יפו, ישראל": {
+    "lat": 32.0622106,
+    "lng": 34.8058007,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "התקוה 4, תל אביב-יפו, ישראל": {
+    "lat": 32.053459,
+    "lng": 34.790551,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 19, תל אביב-יפו, ישראל": {
+    "lat": 32.0703814,
+    "lng": 34.7643152,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אופנהיימר 11, תל אביב-יפו, ישראל": {
+    "lat": 32.12003,
+    "lng": 34.799562,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 217, תל אביב-יפו, ישראל": {
+    "lat": 32.089108,
+    "lng": 34.775319,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 28, תל אביב-יפו, ישראל": {
+    "lat": 32.1092993,
+    "lng": 34.8410782,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 36, תל אביב-יפו, ישראל": {
+    "lat": 32.067666,
+    "lng": 34.767884,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 24, תל אביב-יפו, ישראל": {
+    "lat": 32.06073,
+    "lng": 34.770284,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שלבים 14, תל אביב-יפו, ישראל": {
+    "lat": 32.050873,
+    "lng": 34.765087,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דבורה הנביאה 126, תל אביב-יפו, ישראל": {
+    "lat": 32.113296,
+    "lng": 34.842221,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שארית ישראל 37, תל אביב-יפו, ישראל": {
+    "lat": 32.0517594,
+    "lng": 34.7642582,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "הארבעה 2, תל אביב-יפו, ישראל": {
+    "lat": 32.0703169,
+    "lng": 34.7829342,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עולי הגרדום 48, תל אביב-יפו, ישראל": {
+    "lat": 32.113198,
+    "lng": 34.836773,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יפת 14, תל אביב-יפו, ישראל": {
+    "lat": 32.054095,
+    "lng": 34.755327,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מנחם בגין 112, תל אביב-יפו, ישראל": {
+    "lat": 32.0707018,
+    "lng": 34.7892272,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לויטן 1, תל אביב-יפו, ישראל": {
+    "lat": 32.119039,
+    "lng": 34.79576,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אלנבי 49, תל אביב-יפו, ישראל": {
+    "lat": 32.07008,
+    "lng": 34.77056,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 105, תל אביב-יפו, ישראל": {
+    "lat": 32.0908154,
+    "lng": 34.7758683,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "נחלת יצחק 5, תל אביב-יפו, ישראל": {
+    "lat": 32.075252,
+    "lng": 34.796431,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "סלומון 2, תל אביב-יפו, ישראל": {
+    "lat": 32.059621,
+    "lng": 34.778604,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קינג ג'ורג' 51, תל אביב-יפו, ישראל": {
+    "lat": 32.0751788,
+    "lng": 34.7761781,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "תוצרת הארץ 8, תל אביב-יפו, ישראל": {
+    "lat": 32.073003,
+    "lng": 34.796789,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קויפמן יחזקאל 4, תל אביב-יפו, ישראל": {
+    "lat": 32.060794,
+    "lng": 34.759248,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דובנוב 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0750294,
+    "lng": 34.7838325,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הברזל 5, תל אביב-יפו, ישראל": {
+    "lat": 32.106882,
+    "lng": 34.835564,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה המכבי 83, תל אביב-יפו, ישראל": {
+    "lat": 32.09421,
+    "lng": 34.792871,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מרמורק 10, תל אביב-יפו, ישראל": {
+    "lat": 32.0714723,
+    "lng": 34.7801664,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 76, תל אביב-יפו, ישראל": {
+    "lat": 32.065426,
+    "lng": 34.792758,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ארלוזורוב 55, תל אביב-יפו, ישראל": {
+    "lat": 32.086092,
+    "lng": 34.778949,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 159, תל אביב-יפו, ישראל": {
+    "lat": 32.091909,
+    "lng": 34.782841,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית אלפא 4, תל אביב-יפו, ישראל": {
+    "lat": 32.065611,
+    "lng": 34.78783,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 65, תל אביב-יפו, ישראל": {
+    "lat": 32.059267,
+    "lng": 34.774287,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 79, תל אביב-יפו, ישראל": {
+    "lat": 32.081361,
+    "lng": 34.770485,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ברזיל 15, תל אביב-יפו, ישראל": {
+    "lat": 32.1116021,
+    "lng": 34.7968154,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "טאגור 38, תל אביב-יפו, ישראל": {
+    "lat": 32.1174,
+    "lng": 34.797785,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבן גבירול 48, תל אביב-יפו, ישראל": {
+    "lat": 32.077353,
+    "lng": 34.781521,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מלכי ישראל 8, תל אביב-יפו, ישראל": {
+    "lat": 32.0793468,
+    "lng": 34.7808235,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קיבוץ גלויות 110, תל אביב-יפו, ישראל": {
+    "lat": 32.0542162,
+    "lng": 34.7629575,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 12, תל אביב-יפו, ישראל": {
+    "lat": 32.0773507,
+    "lng": 34.7687564,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יוסף יקותיאלי 1, תל אביב-יפו, ישראל": {
+    "lat": 32.1011356,
+    "lng": 34.7754599,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אבא אחימאיר 23, תל אביב-יפו, ישראל": {
+    "lat": 32.125059,
+    "lng": 34.803163,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ישכון 29, תל אביב-יפו, ישראל": {
+    "lat": 32.069027,
+    "lng": 34.76765,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מזל דגים 1, תל אביב-יפו, ישראל": {
+    "lat": 32.053497,
+    "lng": 34.751206,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יגאל אלון 65, תל אביב-יפו, ישראל": {
+    "lat": 32.065766,
+    "lng": 34.792307,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 171, תל אביב-יפו, ישראל": {
+    "lat": 32.08969,
+    "lng": 34.773732,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "מל\"ן 43, תל אביב-יפו, ישראל": {
+    "lat": 32.068772,
+    "lng": 34.768691,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת בנימין 99, תל אביב-יפו, ישראל": {
+    "lat": 32.059996,
+    "lng": 34.772621,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ריב\"ל 10, תל אביב-יפו, ישראל": {
+    "lat": 32.062622,
+    "lng": 34.782105,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דבורה הנביאה 128, תל אביב-יפו, ישראל": {
+    "lat": 32.112753,
+    "lng": 34.842969,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "החרש 8, תל אביב-יפו, ישראל": {
+    "lat": 32.056097,
+    "lng": 34.783691,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן יהודה 41, תל אביב-יפו, ישראל": {
+    "lat": 32.077823,
+    "lng": 34.768349,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הלוי 47, תל אביב-יפו, ישראל": {
+    "lat": 32.062207,
+    "lng": 34.773589,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הירקון 115, תל אביב-יפו, ישראל": {
+    "lat": 32.081094,
+    "lng": 34.768202,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הכרמל 29, תל אביב-יפו, ישראל": {
+    "lat": 32.067916,
+    "lng": 34.767328,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 73, תל אביב-יפו, ישראל": {
+    "lat": 32.049544,
+    "lng": 34.792514,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יום טוב 25, תל אביב-יפו, ישראל": {
+    "lat": 32.068757,
+    "lng": 34.768191,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 50, תל אביב-יפו, ישראל": {
+    "lat": 32.059407,
+    "lng": 34.773309,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "לוינסקי 51, תל אביב-יפו, ישראל": {
+    "lat": 32.059668,
+    "lng": 34.772737,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "נחלת יצחק 22, תל אביב-יפו, ישראל": {
+    "lat": 32.074378,
+    "lng": 34.7986565,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בן שפרוט 1, תל אביב-יפו, ישראל": {
+    "lat": 32.086085,
+    "lng": 34.784151,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "היסוד 5, תל אביב-יפו, ישראל": {
+    "lat": 32.051471,
+    "lng": 34.767118,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "החשמונאים 91, תל אביב-יפו, ישראל": {
+    "lat": 32.069753,
+    "lng": 34.7830543,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "קניון עזריאלי קומה 2, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "וולטר מוזס 9, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "חשמונאים 88, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 76, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שטיינשנידר 9, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "תחנה מרכזית, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "צבי נישרי 6, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "האצל 54, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "המבשר 14, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 83, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "המבשר 17, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 2, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "נורית קדמן 8, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "העליה 53, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "חשמונאים 96, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קניון עזריאלי קומה 3, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "רבינצקי 7, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קניון עזריאלי קומה 1, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קרית עתידים בנין 3, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "מגרשי התערוכה 1, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "ארלוזורוב , פ\"ת 38, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 6, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' יהודית 7, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 29, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "נתן אלטרמן 13, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "תחנה מרכזית קומה 4, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "גן העצמאות 1, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "המבשר 22, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' רוקח 80, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' יהודית 13, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קרית עתידים 1, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "רבינו חננאל 27, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' בן ציון 25, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "המבשר 18, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "רבינו חננאל 20, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "יהודה נח מוזס, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "משה מטלון 47, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "סימטת הכרמל 37, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קפלן משרד הביטחון, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "פיגוטו 20, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "זלמן שזר 11, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "האנגר 14, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "העליה 30, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "חרותינו 11, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "לאה גולדברג 15, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "אוניברסיטת תל אביב בית גילמן, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 64, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 31, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קומפורט 14, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "המבשר 3, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 47, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "יעקב אפטר 9, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' יהודית 33, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "דרך השלום 51, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "אהרן בקר 8, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "טשרנחובסקי 6, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 67, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "העליה 24, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "חשמונאים 90, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 62, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 33, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' וושינגטון 32, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "טשרנחובסקי 2, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "לילנבלום 33, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "בנין מדעי החברה והמנהל, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "כהנמן, ב\"ב 129, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "יצחק אלפסי 20, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "חשמונאים 95, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "יוסף שפרינצק 15, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "חשמונאים 98, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' החייל 2, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' יהודית 27, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "לילנבלום 1, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "תחנה מרכזית קומה 6, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "אלנקווה 80, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "סימטת הכרמל 35, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "קרית שאול בית עלמין, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 71, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "המבשר 4, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  }
+}
