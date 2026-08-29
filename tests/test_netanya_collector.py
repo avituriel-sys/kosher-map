@@ -177,3 +177,30 @@ def test_map_supervision_unknown_value_warns_and_falls_back(caplog):
         result = collector._map_supervision("משהו חדש שלא ראינו")
     assert result == "unknown"
     assert any("unmapped supervision_level" in m for m in caplog.messages)
+
+
+@pytest.mark.parametrize(
+    "address_raw, expected_city",
+    [
+        ("7 סמילנסקי, נתניה, Israel", "נתניה"),
+        # A real, live finding (2026-08-29): the council also certifies
+        # some businesses in neighbouring Kfar Yona - these must not be
+        # mislabeled as Netanya just because the source is Netanya's.
+        ("10 וייצמן, כפר יונה, Israel", "כפר יונה"),
+        # A handful of live records publish the city in English rather
+        # than Hebrew - normalizes to match everything else.
+        ("17 Sderot Giborei Israel, Netanya, Israel", "נתניה"),
+        # Blank street address (spec section 6.2) - still parses city
+        # correctly even with an empty first segment.
+        (", נתניה, Israel", "נתניה"),
+    ],
+)
+def test_city_from_address(address_raw, expected_city):
+    assert collector._city_from_address(address_raw) == expected_city
+
+
+def test_city_from_address_falls_back_and_warns_on_unrecognized_format(caplog):
+    with caplog.at_level("WARNING"):
+        city = collector._city_from_address("some address with no country suffix")
+    assert city == collector.CITY
+    assert any("could not find a city" in m for m in caplog.messages)

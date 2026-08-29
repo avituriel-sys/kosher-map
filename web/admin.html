@@ -151,6 +151,17 @@ async function showApp() {
   initMap();
 }
 
+const KOSHER_COLORS = { meat: "#dc2626", dairy_parve: "#2563eb", mixed: "#f97316", unknown: "#9ca3af" };
+function kosherColorKey(kosherTypeArray) {
+  const types = kosherTypeArray || [];
+  const hasMeat = types.includes("meat");
+  const hasDairy = types.includes("dairy") || types.includes("parve");
+  if (hasMeat && hasDairy) return "mixed";
+  if (hasMeat) return "meat";
+  if (hasDairy) return "dairy_parve";
+  return "unknown";
+}
+
 function initMap() {
   map = new maplibregl.Map({
     container: "map",
@@ -159,6 +170,138 @@ function initMap() {
     zoom: 10.5
   });
   map.addControl(new maplibregl.NavigationControl(), "top-left");
+  map.on("load", loadAllPins);
+}
+
+// PostgREST defaults to capping a response at 1000 rows even without an
+// explicit .limit() - fetch in pages so all ~1700+ businesses actually
+// load rather than silently truncating.
+async function fetchAllBusinesses() {
+  const pageSize = 1000;
+  let all = [];
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await sb
+      .from("business")
+      .select("source_id, source_record_id, name_raw, address_raw, city, category_canonical, kosher_type, supervision_level, lat, lng, phone")
+      .eq("status", "active")
+      .range(from, from + pageSize - 1);
+    if (error) throw error;
+    all = all.concat(data);
+    if (data.length < pageSize) break;
+  }
+  return all;
+}
+
+async function fetchOverriddenIds() {
+  const { data, error } = await sb.from("business_override").select("source_id, source_record_id");
+  if (error) throw error;
+  return new Set(data.map(r => `${r.source_id}|${r.source_record_id}`));
+}
+
+async function loadAllPins() {
+  setStatus("טוען עסקים למפה...");
+  let rows, overriddenIds;
+  try {
+    [rows, overriddenIds] = await Promise.all([fetchAllBusinesses(), fetchOverriddenIds()]);
+  } catch (e) {
+    setStatus("שגיאה בטעינת עסקים למפה: " + e.message, true);
+    return;
+  }
+  setStatus("");
+
+  const geojson = {
+    type: "FeatureCollection",
+    features: rows.filter(r => r.lat != null && r.lng != null).map(r => ({
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [r.lng, r.lat] },
+      properties: {
+        ...r,
+        kosher_color: kosherColorKey(r.kosher_type),
+        overridden: overriddenIds.has(`${r.source_id}|${r.source_record_id}`)
+      }
+    }))
+  };
+
+  map.addSource("all-businesses", {
+    type: "geojson",
+    data: geojson,
+    cluster: true,
+    clusterMaxZoom: 17,
+    clusterRadius: 40
+  });
+
+  map.addLayer({
+    id: "admin-clusters",
+    type: "circle",
+    source: "all-businesses",
+    filter: ["has", "point_count"],
+    paint: {
+      "circle-color": "#6d28d9",
+      "circle-opacity": 0.85,
+      "circle-radius": ["step", ["get", "point_count"], 14, 20, 20, 100, 26],
+      "circle-stroke-width": 2,
+      "circle-stroke-color": "#fff"
+    }
+  });
+  map.addLayer({
+    id: "admin-cluster-count",
+    type: "symbol",
+    source: "all-businesses",
+    filter: ["has", "point_count"],
+    layout: { "text-field": "{point_count_abbreviated}", "text-size": 12, "text-font": ["Noto Sans Regular"] },
+    paint: { "text-color": "#fff" }
+  });
+  map.addLayer({
+    id: "admin-points",
+    type: "circle",
+    source: "all-businesses",
+    filter: ["!", ["has", "point_count"]],
+    paint: {
+      "circle-radius": 6,
+      "circle-color": [
+        "match", ["get", "kosher_color"],
+        "meat", KOSHER_COLORS.meat,
+        "dairy_parve", KOSHER_COLORS.dairy_parve,
+        "mixed", KOSHER_COLORS.mixed,
+        KOSHER_COLORS.unknown
+      ],
+      // Overridden businesses get a heavier black ring so it's obvious
+      // at a glance which pins already have a saved correction.
+      "circle-stroke-width": ["case", ["get", "overridden"], 3, 1.5],
+      "circle-stroke-color": ["case", ["get", "overridden"], "#000", "#fff"]
+    }
+  });
+
+  map.on("click", "admin-clusters", (e) => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ["admin-clusters"] });
+    const clusterId = features[0].properties.cluster_id;
+    map.getSource("all-businesses").getClusterExpansionZoom(clusterId, (err, zoom) => {
+      if (err) return;
+      map.easeTo({ center: features[0].geometry.coordinates, zoom });
+    });
+  });
+  map.on("click", "admin-points", (e) => {
+    const p = e.features[0].properties;
+    selectBusiness({
+      source_id: p.source_id,
+      source_record_id: p.source_record_id,
+      name_raw: p.name_raw,
+      address_raw: p.address_raw,
+      city: p.city,
+      category_canonical: p.category_canonical,
+      // MapLibre JSON-stringifies array/object feature properties -
+      // parse it back rather than treating it as a plain string.
+      kosher_type: p.kosher_type ? JSON.parse(p.kosher_type) : null,
+      supervision_level: p.supervision_level,
+      lat: p.lat,
+      lng: p.lng,
+      phone: p.phone
+    });
+  });
+  map.on("mouseenter", "admin-points", () => map.getCanvas().style.cursor = "pointer");
+  map.on("mouseleave", "admin-points", () => map.getCanvas().style.cursor = "");
+  map.on("mouseenter", "admin-clusters", () => map.getCanvas().style.cursor = "pointer");
+  map.on("mouseleave", "admin-clusters", () => map.getCanvas().style.cursor = "");
 }
 
 let searchTimer;

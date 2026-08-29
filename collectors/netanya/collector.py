@@ -51,6 +51,19 @@ CERTIFYING_AUTHORITY = "הרבנות הראשית נתניה"
 CITY = "נתניה"
 BASE_URL = "https://mdn.org.il/directory-kashrut/"
 
+# Every published address_raw ends "..., <city>, Israel" (confirmed
+# against all 605 live records during a 2026-08-29 audit) - the city
+# named there is not always Netanya. The council apparently also
+# certifies some businesses in neighbouring כפר יונה (Kfar Yona), and a
+# handful of Netanya addresses are published in English/transliterated
+# rather than Hebrew. Deriving city from the address rather than
+# hardcoding CITY fixes both: businesses genuinely in Kfar Yona get
+# labelled correctly, and English "Netanya" normalizes to the Hebrew
+# spelling used everywhere else. Extend _CITY_NORMALIZE if more
+# spelling variants turn up.
+_ADDRESS_CITY_RE = re.compile(r",\s*([^,]+),\s*Israel$")
+_CITY_NORMALIZE = {"Netanya": CITY}
+
 # Spec section 11: identify the collector and give a contact address.
 USER_AGENT = (
     "KosherMapBot/0.1 (public kashrut directory aggregator; "
@@ -327,6 +340,20 @@ def _map_supervision(supervision_raw: str | None) -> str:
     return canonical
 
 
+def _city_from_address(address_raw: str) -> str:
+    match = _ADDRESS_CITY_RE.search(address_raw)
+    if match is None:
+        logger.warning(
+            "netanya: could not find a city in address_raw %r - "
+            "falling back to %r (health alert per spec section 5.3)",
+            address_raw,
+            CITY,
+        )
+        return CITY
+    city = match.group(1).strip()
+    return _CITY_NORMALIZE.get(city, city)
+
+
 def _to_canonical_record(card: _RawCard) -> dict:
     name_clean, branch = _clean_name(card.name_raw)
     slug = urllib.parse.unquote(card.source_url.rstrip("/").rsplit("/", 1)[-1])
@@ -345,7 +372,7 @@ def _to_canonical_record(card: _RawCard) -> dict:
         "certifying_authority": CERTIFYING_AUTHORITY,
         "additional_hechsher": None,
         "address_raw": card.address_raw,
-        "city": CITY,
+        "city": _city_from_address(card.address_raw),
         "lat": card.lat,
         "lng": card.lng,
         "location_source": "published" if card.lat is not None else None,
