@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<title>ניהול - עסקים כשרים</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: system-ui, sans-serif; direction: rtl; }
+  #login { max-width: 320px; margin: 80px auto; padding: 24px; }
+  #login input { display: block; width: 100%; box-sizing: border-box; padding: 8px; margin: 6px 0 14px; font-size: 14px; }
+  #login button, .btn { padding: 8px 16px; font-size: 14px; cursor: pointer; }
+  #app { display: none; height: 100%; }
+  #sidebar {
+    position: absolute; top: 0; right: 0; width: 340px; height: 100%;
+    background: #fafafa; border-left: 1px solid #ddd; overflow-y: auto;
+    box-sizing: border-box; padding: 12px; z-index: 1;
+  }
+  #map { position: absolute; top: 0; left: 0; right: 340px; height: 100%; }
+  #topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; color: #555; }
+  #search { width: 100%; box-sizing: border-box; padding: 8px; font-size: 14px; margin-bottom: 8px; }
+  #results { list-style: none; margin: 0; padding: 0; max-height: 200px; overflow-y: auto; border: 1px solid #eee; }
+  #results li { padding: 6px 8px; font-size: 13px; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+  #results li:hover { background: #eef; }
+  #detail { margin-top: 14px; border-top: 1px solid #ddd; padding-top: 12px; }
+  #detail label { display: block; font-size: 12px; color: #555; margin: 8px 0 2px; }
+  #detail input[type=text], #detail select, #detail textarea {
+    width: 100%; box-sizing: border-box; padding: 6px; font-size: 13px;
+  }
+  #detail textarea { resize: vertical; min-height: 40px; }
+  .checkrow label { display: inline-block; width: auto; margin-inline-end: 10px; font-size: 13px; color: #222; }
+  .checkrow input { width: auto; }
+  #detail .actions { margin-top: 14px; display: flex; gap: 8px; }
+  #status { font-size: 12px; color: #555; margin-top: 8px; min-height: 16px; }
+  #override-badge {
+    display: inline-block; background: #f97316; color: #fff; font-size: 11px;
+    padding: 2px 6px; border-radius: 4px; margin-inline-start: 6px;
+  }
+  .hint { font-size: 11px; color: #888; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div id="login">
+  <h2>כניסת מנהל</h2>
+  <input id="login-email" type="text" placeholder="אימייל" autocomplete="username" />
+  <input id="login-password" type="password" placeholder="סיסמה" autocomplete="current-password" />
+  <button class="btn" onclick="doLogin()">כניסה</button>
+  <div id="login-status" style="color:#c00; font-size:13px; margin-top:10px;"></div>
+</div>
+
+<div id="app">
+  <div id="map"></div>
+  <div id="sidebar">
+    <div id="topbar">
+      <span id="who"></span>
+      <button class="btn" onclick="doLogout()">יציאה</button>
+    </div>
+    <input id="search" type="text" placeholder="חיפוש עסק לפי שם או כתובת..." oninput="onSearchInput()" />
+    <ul id="results"></ul>
+
+    <div id="detail" style="display:none">
+      <h3 id="detail-name"></h3>
+      <div class="hint" id="detail-source"></div>
+
+      <label>קטגוריה</label>
+      <select id="f-category"></select>
+
+      <label>סוג כשרות</label>
+      <div class="checkrow">
+        <label><input type="checkbox" id="f-meat" /> בשרי</label>
+        <label><input type="checkbox" id="f-dairy" /> חלבי</label>
+        <label><input type="checkbox" id="f-parve" /> פרווה</label>
+      </div>
+
+      <label>סוג השגחה</label>
+      <select id="f-supervision">
+        <option value="">-- ללא שינוי --</option>
+        <option value="regular">רגילה</option>
+        <option value="mehadrin">מהדרין</option>
+        <option value="badatz">בד"ץ</option>
+        <option value="unknown">לא ידוע</option>
+      </select>
+
+      <label>שם מתוקן</label>
+      <input type="text" id="f-name" />
+
+      <label>טלפון מתוקן</label>
+      <input type="text" id="f-phone" />
+
+      <label>מיקום (גררו את הסמן על המפה כדי לתקן)</label>
+      <div class="hint" id="f-latlng"></div>
+
+      <label>הערה (למה תוקן)</label>
+      <textarea id="f-note"></textarea>
+
+      <div class="actions">
+        <button class="btn" onclick="saveOverride()">שמירה</button>
+        <button class="btn" id="clear-btn" onclick="clearOverride()" style="display:none">איפוס תיקון</button>
+      </div>
+      <div id="status"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://ybztptqixzyqgojuqtab.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlienRwdHFpeHp5cWdvanVxdGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NTg4NjQsImV4cCI6MjEwMzQzNDg2NH0.yRgXKOZa-LAmyTyGKQE4xflxMsSxTA2neZwdaWojavQ";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const CATEGORY_OPTIONS = [
+  "restaurant", "cafe", "pizzeria", "falafel_shawarma", "bakery_patisserie",
+  "ice_cream", "sushi_asian", "butcher", "fishmonger", "delicatessen",
+  "grocery_supermarket", "greengrocer", "nuts_dried_fruit", "catering",
+  "event_hall", "hotel", "institutional_kitchen", "factory", "other"
+];
+
+let map, marker, current; // current = the selected business row (from `business`)
+let currentOverride = null; // existing override row, or null
+
+function setStatus(msg, isError) {
+  const el = document.getElementById("status");
+  el.textContent = msg;
+  el.style.color = isError ? "#c00" : "#555";
+}
+
+async function doLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    document.getElementById("login-status").textContent = error.message;
+    return;
+  }
+  showApp();
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  location.reload();
+}
+
+async function showApp() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return;
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("who").textContent = session.user.email;
+  initMap();
+}
+
+function initMap() {
+  map = new maplibregl.Map({
+    container: "map",
+    style: "https://tiles.openfreemap.org/styles/liberty",
+    center: [34.82, 32.15],
+    zoom: 10.5
+  });
+  map.addControl(new maplibregl.NavigationControl(), "top-left");
+}
+
+let searchTimer;
+function onSearchInput() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(runSearch, 300);
+}
+
+async function runSearch() {
+  const q = document.getElementById("search").value.trim();
+  const resultsEl = document.getElementById("results");
+  if (q.length < 2) { resultsEl.innerHTML = ""; return; }
+
+  const { data, error } = await sb
+    .from("business")
+    .select("source_id, source_record_id, name_raw, address_raw, city, category_canonical, kosher_type, supervision_level, lat, lng, phone")
+    .or(`name_raw.ilike.%${q}%,address_raw.ilike.%${q}%`)
+    .eq("status", "active")
+    .limit(25);
+
+  if (error) { setStatus("שגיאת חיפוש: " + error.message, true); return; }
+
+  resultsEl.innerHTML = "";
+  for (const row of data) {
+    const li = document.createElement("li");
+    li.textContent = `${row.name_raw} — ${row.address_raw}, ${row.city}`;
+    li.onclick = () => selectBusiness(row);
+    resultsEl.appendChild(li);
+  }
+}
+
+async function selectBusiness(row) {
+  current = row;
+  setStatus("");
+
+  const { data: overrideRows, error } = await sb
+    .from("business_override")
+    .select("*")
+    .eq("source_id", row.source_id)
+    .eq("source_record_id", row.source_record_id)
+    .maybeSingle();
+  if (error) { setStatus("שגיאה בטעינת תיקון קיים: " + error.message, true); return; }
+  currentOverride = overrideRows || null;
+
+  document.getElementById("detail").style.display = "block";
+  document.getElementById("detail-name").textContent = row.name_raw +
+    (currentOverride ? "" : "");
+  document.getElementById("detail-name").innerHTML = row.name_raw +
+    (currentOverride ? ' <span id="override-badge">יש תיקון</span>' : "");
+  document.getElementById("detail-source").textContent =
+    `${row.source_id} / ${row.source_record_id} — ${row.address_raw}, ${row.city}`;
+
+  const catSel = document.getElementById("f-category");
+  catSel.innerHTML = CATEGORY_OPTIONS.map(c => `<option value="${c}">${c}</option>`).join("");
+  catSel.value = currentOverride?.category_canonical || row.category_canonical || "other";
+
+  const kosherType = currentOverride?.kosher_type || row.kosher_type || [];
+  document.getElementById("f-meat").checked = kosherType.includes("meat");
+  document.getElementById("f-dairy").checked = kosherType.includes("dairy");
+  document.getElementById("f-parve").checked = kosherType.includes("parve");
+
+  document.getElementById("f-supervision").value = currentOverride?.supervision_level || "";
+  document.getElementById("f-name").value = currentOverride?.name_clean || row.name_raw || "";
+  document.getElementById("f-phone").value = currentOverride?.phone || row.phone || "";
+  document.getElementById("f-note").value = currentOverride?.note || "";
+  document.getElementById("clear-btn").style.display = currentOverride ? "inline-block" : "none";
+
+  const lat = currentOverride?.lat ?? row.lat;
+  const lng = currentOverride?.lng ?? row.lng;
+  placeMarker(lat, lng);
+}
+
+// If a business has no position at all (e.g. an address that never
+// geocoded), there's still no marker to drag by default - placed one
+// as a "placeholder" at the map's current center instead, distinct
+// from a real position until the admin actually drags it. Without that
+// distinction, clicking Save without touching the marker would silently
+// record the arbitrary center-of-map point as a real position.
+let markerIsPlaceholder = false;
+
+function placeMarker(lat, lng) {
+  if (marker) { marker.remove(); marker = null; }
+  markerIsPlaceholder = (lat == null || lng == null);
+
+  const center = map.getCenter();
+  const initialLat = markerIsPlaceholder ? center.lat : lat;
+  const initialLng = markerIsPlaceholder ? center.lng : lng;
+
+  document.getElementById("f-latlng").textContent = markerIsPlaceholder
+    ? "אין מיקום נוכחי - גררו את הסמן למיקום הנכון כדי להוסיף"
+    : `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+  marker = new maplibregl.Marker({ draggable: true, color: markerIsPlaceholder ? "#9ca3af" : "#dc2626" })
+    .setLngLat([initialLng, initialLat])
+    .addTo(map);
+  marker.on("dragend", () => {
+    markerIsPlaceholder = false;
+    const pos = marker.getLngLat();
+    document.getElementById("f-latlng").textContent = `${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}`;
+  });
+  if (!markerIsPlaceholder) map.flyTo({ center: [lng, lat], zoom: 17 });
+}
+
+// Only stores a field in the override if it actually differs from the
+// original scraped value - editing a field back to match the source
+// removes that field's override rather than storing a no-op.
+function diffOrNull(newVal, originalVal) {
+  if (newVal === "" || newVal === undefined) return null;
+  if (JSON.stringify(newVal) === JSON.stringify(originalVal)) return null;
+  return newVal;
+}
+
+async function saveOverride() {
+  if (!current) return;
+  const pos = (marker && !markerIsPlaceholder) ? marker.getLngLat() : null;
+
+  const kosherType = [];
+  if (document.getElementById("f-meat").checked) kosherType.push("meat");
+  if (document.getElementById("f-dairy").checked) kosherType.push("dairy");
+  if (document.getElementById("f-parve").checked) kosherType.push("parve");
+
+  const payload = {
+    source_id: current.source_id,
+    source_record_id: current.source_record_id,
+    lat: pos ? diffOrNull(pos.lat, current.lat) : null,
+    lng: pos ? diffOrNull(pos.lng, current.lng) : null,
+    category_canonical: diffOrNull(document.getElementById("f-category").value, current.category_canonical),
+    kosher_type: diffOrNull(kosherType.length ? kosherType : null, current.kosher_type),
+    supervision_level: diffOrNull(document.getElementById("f-supervision").value || null, current.supervision_level),
+    name_clean: diffOrNull(document.getElementById("f-name").value, current.name_raw),
+    phone: diffOrNull(document.getElementById("f-phone").value, current.phone),
+    note: document.getElementById("f-note").value || null,
+    updated_at: new Date().toISOString()
+  };
+
+  const hasAnyOverride = ["lat", "lng", "name_clean", "category_canonical", "kosher_type", "supervision_level", "phone"]
+    .some(k => payload[k] !== null);
+
+  if (!hasAnyOverride) {
+    // Nothing actually differs from source anymore - clear any
+    // existing override instead of trying to insert an empty row
+    // (the database rejects that with a CHECK constraint anyway).
+    await clearOverride();
+    return;
+  }
+
+  const { error } = await sb.from("business_override").upsert(payload, { onConflict: "source_id,source_record_id" });
+  if (error) { setStatus("שגיאת שמירה: " + error.message, true); return; }
+  setStatus("נשמר בהצלחה ✓");
+  selectBusiness(current); // refresh badge/state
+}
+
+async function clearOverride() {
+  if (!current) return;
+  const { error } = await sb
+    .from("business_override")
+    .delete()
+    .eq("source_id", current.source_id)
+    .eq("source_record_id", current.source_record_id);
+  if (error) { setStatus("שגיאה באיפוס: " + error.message, true); return; }
+  setStatus("התיקון אופס ✓");
+  selectBusiness(current);
+}
+
+sb.auth.getSession().then(({ data: { session } }) => {
+  if (session) showApp();
+});
+</script>
+</body>
+</html>
