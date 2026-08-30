@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="map-common.js"></script>
 <style>
   html, body { margin: 0; padding: 0; height: 100%; font-family: system-ui, sans-serif; }
   #map { position: absolute; inset: 0; }
@@ -55,127 +56,12 @@ maplibregl.setRTLTextPlugin(
 // stays - not food-related, not confusing.
 const BASE_MAP_POI_LAYERS = ["poi_r1", "poi_r7", "poi_r20"];
 
-// Primary visual signal is kashrut, not business category (this is a
-// kosher map, not a generic restaurant finder) - color says what you
-// can eat there, shape says what kind of place it is.
-const KOSHER_COLORS = { meat: "#dc2626", dairy_parve: "#2563eb", mixed: "#f97316", unknown: "#9ca3af" };
-// Takes the real array as parsed straight from businesses.json (not
-// MapLibre's JSON-stringified feature.properties form - that
-// stringification only happens once a value has passed through a
-// GeoJSON source, and this runs before that).
-function kosherColorKey(kosherTypeArray) {
-  const types = kosherTypeArray || [];
-  const hasMeat = types.includes("meat");
-  const hasDairy = types.includes("dairy") || types.includes("parve");
-  if (hasMeat && hasDairy) return "mixed";
-  if (hasMeat) return "meat";
-  if (hasDairy) return "dairy_parve";
-  return "unknown";
-}
-
-// Broad category groups (spec's own suggested eating-out vs
-// food-shopping split) rather than 18 near-identical emoji - shape is a
-// secondary signal here, so it should read at a glance, not require
-// squinting to tell 🥐 from 🍞.
-const EATING_OUT = new Set([
-  "restaurant", "cafe", "pizzeria", "falafel_shawarma", "sushi_asian",
-  "ice_cream", "catering", "institutional_kitchen", "hotel", "event_hall"
-]);
-const FOOD_SHOPPING = new Set([
-  "butcher", "fishmonger", "delicatessen", "grocery_supermarket",
-  "greengrocer", "nuts_dried_fruit", "bakery_patisserie", "factory"
-]);
-const SHAPE_ICONS = { eating_out: "🍴", food_shopping: "🛒", other: "📍" };
-function shapeKey(categoryCanonical) {
-  if (EATING_OUT.has(categoryCanonical)) return "eating_out";
-  if (FOOD_SHOPPING.has(categoryCanonical)) return "food_shopping";
-  return "other";
-}
-
-const CATEGORY_HE = {
-  restaurant: "מסעדה", cafe: "בית קפה", pizzeria: "פיצרייה",
-  falafel_shawarma: "פלאפל/שווארמה", bakery_patisserie: "מאפייה/קונדיטוריה",
-  ice_cream: "גלידה", sushi_asian: "מטבח אסייתי", butcher: "איטליז",
-  fishmonger: "חנות דגים", delicatessen: "מעדנייה", grocery_supermarket: "מרכול",
-  greengrocer: "ירקות ופירות", nuts_dried_fruit: "פיצוחים", catering: "קייטרינג",
-  event_hall: "אולם אירועים", hotel: "בית מלון", institutional_kitchen: "מטבח מוסדי",
-  factory: "מפעל", other: "אחר"
-};
-const SUPERVISION_HE = { regular: "רגילה", mehadrin: "מהדרין", badatz: 'בד"ץ', unknown: "לא ידוע" };
-
-// Google-Maps-style badge-on-a-pin: white circle with the category
-// glyph, colored ring, small pointed tail anchored to the exact
-// coordinate. Rendered to canvas (not MapLibre's icon/sprite system)
-// so it can use real color emoji and simple 2D drawing instead of
-// needing a sprite sheet asset.
-function makeBadgeIcon(emoji, color) {
-  const w = 46, h = 60;
-  const canvas = document.createElement("canvas");
-  canvas.width = w; canvas.height = h;
-  const ctx = canvas.getContext("2d");
-  const cx = w / 2, cy = 20, r = 17;
-
-  ctx.beginPath();
-  ctx.moveTo(cx - r * 0.55, cy + r * 0.78);
-  ctx.lineTo(cx, h - 2);
-  ctx.lineTo(cx + r * 0.55, cy + r * 0.78);
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fillStyle = "#fff";
-  ctx.fill();
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = color;
-  ctx.stroke();
-
-  ctx.font = `19px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(emoji, cx, cy + 1);
-
-  return ctx.getImageData(0, 0, w, h);
-}
-
-// Businesses that share (near-)identical coordinates - typically a
-// mall, an office building, or any address where the geocoder can only
-// resolve to the building as a whole - get spread into a small rosette
-// once you're zoomed in close enough to matter. Without this they sit
-// exactly on top of each other and only the topmost one is visible or
-// clickable, no matter how far you zoom (zooming in never changes the
-// pixel distance between two points with identical lat/lng).
-function spreadCoincidentPoints(rows) {
-  const groups = new Map();
-  for (const r of rows) {
-    const key = r.lat.toFixed(5) + "," + r.lng.toFixed(5); // ~1m buckets
-    (groups.get(key) || groups.set(key, []).get(key)).push(r);
-  }
-  const METERS_PER_DEG_LAT = 111320;
-  const SPREAD_RADIUS_METERS = 14;
-  for (const group of groups.values()) {
-    if (group.length === 1) {
-      group[0]._lat = group[0].lat;
-      group[0]._lng = group[0].lng;
-      continue;
-    }
-    const metersPerDegLng = METERS_PER_DEG_LAT * Math.cos(group[0].lat * Math.PI / 180);
-    group.forEach((r, i) => {
-      const angle = (2 * Math.PI * i) / group.length;
-      r._lat = r.lat + (SPREAD_RADIUS_METERS * Math.sin(angle)) / METERS_PER_DEG_LAT;
-      r._lng = r.lng + (SPREAD_RADIUS_METERS * Math.cos(angle)) / metersPerDegLng;
-    });
-  }
-  return rows;
-}
-
 function businessPopupHtml(p) {
   const kosherType = p.kosher_type ? JSON.parse(p.kosher_type).join(", ") : "-";
   const supervision = SUPERVISION_HE[p.supervision_level] || "-";
   const category = CATEGORY_HE[p.category_canonical] || p.category_canonical || "";
   return `
-    <div class="popup-title">${SHAPE_ICONS[shapeKey(p.category_canonical)]} ${p.name_raw}</div>
+    <div class="popup-title">${categoryIcon(p.category_canonical)} ${p.name_raw}</div>
     <div class="popup-row">${category}</div>
     <div class="popup-row">${p.address_raw}, ${p.city}</div>
     <div class="popup-row">כשרות: ${kosherType} · השגחה: ${supervision}</div>
@@ -193,15 +79,11 @@ fetch("businesses.json")
 
     const geojson = {
       type: "FeatureCollection",
-      features: rows.map(r => {
-        const colorKey = kosherColorKey(r.kosher_type);
-        const shape = shapeKey(r.category_canonical);
-        return {
-          type: "Feature",
-          geometry: { type: "Point", coordinates: [r._lng, r._lat] },
-          properties: { ...r, icon_id: `${colorKey}__${shape}` }
-        };
-      })
+      features: rows.map(r => ({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [r._lng, r._lat] },
+        properties: { ...r, icon_id: badgeIconId(r) }
+      }))
     };
 
     const map = new maplibregl.Map({
@@ -219,11 +101,7 @@ fetch("businesses.json")
         if (map.getLayer(layerId)) map.setLayoutProperty(layerId, "visibility", "none");
       }
 
-      for (const colorKey of Object.keys(KOSHER_COLORS)) {
-        for (const shape of Object.keys(SHAPE_ICONS)) {
-          map.addImage(`${colorKey}__${shape}`, makeBadgeIcon(SHAPE_ICONS[shape], KOSHER_COLORS[colorKey]));
-        }
-      }
+      registerBadgeImages(map);
 
       map.addSource("businesses", {
         type: "geojson",
@@ -233,74 +111,7 @@ fetch("businesses.json")
         clusterRadius: 40
       });
 
-      map.addLayer({
-        id: "clusters",
-        type: "circle",
-        source: "businesses",
-        filter: ["has", "point_count"],
-        paint: {
-          "circle-color": "#6d28d9",
-          "circle-opacity": 0.85,
-          "circle-radius": ["step", ["get", "point_count"], 16, 20, 22, 100, 28],
-          "circle-stroke-width": 2,
-          "circle-stroke-color": "#fff"
-        }
-      });
-      map.addLayer({
-        id: "cluster-count",
-        type: "symbol",
-        source: "businesses",
-        filter: ["has", "point_count"],
-        layout: {
-          "text-field": "{point_count_abbreviated}",
-          "text-size": 13,
-          "text-font": ["Noto Sans Regular"]
-        },
-        paint: { "text-color": "#fff" }
-      });
-
-      // The badge-on-pin is the only unclustered marker now (replaces
-      // the old plain dot + separate emoji layer) - always visible
-      // (icon-allow-overlap: true) since with spreadCoincidentPoints
-      // above, letting MapLibre's default collision detection hide an
-      // "overlapping" badge would just recreate the original hidden-
-      // business problem this was built to fix.
-      map.addLayer({
-        id: "points-badge",
-        type: "symbol",
-        source: "businesses",
-        filter: ["!", ["has", "point_count"]],
-        layout: {
-          "icon-image": ["get", "icon_id"],
-          "icon-size": 0.75,
-          "icon-anchor": "bottom",
-          "icon-allow-overlap": true
-        }
-      });
-
-      // Name label - only at close/street-level zoom, per your choice
-      // of "icons + names, names only at the closest zoom levels".
-      map.addLayer({
-        id: "points-label",
-        type: "symbol",
-        source: "businesses",
-        filter: ["!", ["has", "point_count"]],
-        minzoom: 15.5,
-        layout: {
-          "text-field": ["get", "name_raw"],
-          "text-font": ["Noto Sans Regular"],
-          "text-size": 12,
-          "text-anchor": "top",
-          "text-offset": [0, 0.9],
-          "text-allow-overlap": false,
-          "text-optional": true
-        },
-        paint: {
-          "text-color": "#1f2937",
-          "text-halo-color": "#fff",
-          "text-halo-width": 1.4
-        }
-      });
+      addBusinessLayers(map, "businesses");
 
       map.on("click", "clusters", (e) => {
         const features = map.queryRenderedFeatures(e.point, { layers: ["clusters"] });

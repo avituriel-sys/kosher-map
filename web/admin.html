@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="map-common.js"></script>
 <style>
   html, body { margin: 0; padding: 0; height: 100%; font-family: system-ui, sans-serif; direction: rtl; }
   #login { max-width: 320px; margin: 80px auto; padding: 24px; }
@@ -151,16 +152,10 @@ async function showApp() {
   initMap();
 }
 
-const KOSHER_COLORS = { meat: "#dc2626", dairy_parve: "#2563eb", mixed: "#f97316", unknown: "#9ca3af" };
-function kosherColorKey(kosherTypeArray) {
-  const types = kosherTypeArray || [];
-  const hasMeat = types.includes("meat");
-  const hasDairy = types.includes("dairy") || types.includes("parve");
-  if (hasMeat && hasDairy) return "mixed";
-  if (hasMeat) return "meat";
-  if (hasDairy) return "dairy_parve";
-  return "unknown";
-}
+maplibregl.setRTLTextPlugin(
+  "https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js",
+  true
+);
 
 function initMap() {
   map = new maplibregl.Map({
@@ -209,18 +204,22 @@ async function loadAllPins() {
   }
   setStatus("");
 
+  const withCoords = rows.filter(r => r.lat != null && r.lng != null);
+  spreadCoincidentPoints(withCoords);
+
   const geojson = {
     type: "FeatureCollection",
-    features: rows.filter(r => r.lat != null && r.lng != null).map(r => ({
+    features: withCoords.map(r => ({
       type: "Feature",
-      geometry: { type: "Point", coordinates: [r.lng, r.lat] },
-      properties: {
-        ...r,
-        kosher_color: kosherColorKey(r.kosher_type),
-        overridden: overriddenIds.has(`${r.source_id}|${r.source_record_id}`)
-      }
+      geometry: { type: "Point", coordinates: [r._lng, r._lat] },
+      properties: (() => {
+        const overridden = overriddenIds.has(`${r.source_id}|${r.source_record_id}`);
+        return { ...r, icon_id: badgeIconId(r, overridden), overridden };
+      })()
     }))
   };
+
+  registerBadgeImages(map);
 
   map.addSource("all-businesses", {
     type: "geojson",
@@ -230,57 +229,21 @@ async function loadAllPins() {
     clusterRadius: 40
   });
 
-  map.addLayer({
-    id: "admin-clusters",
-    type: "circle",
-    source: "all-businesses",
-    filter: ["has", "point_count"],
-    paint: {
-      "circle-color": "#6d28d9",
-      "circle-opacity": 0.85,
-      "circle-radius": ["step", ["get", "point_count"], 14, 20, 20, 100, 26],
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#fff"
-    }
-  });
-  map.addLayer({
-    id: "admin-cluster-count",
-    type: "symbol",
-    source: "all-businesses",
-    filter: ["has", "point_count"],
-    layout: { "text-field": "{point_count_abbreviated}", "text-size": 12, "text-font": ["Noto Sans Regular"] },
-    paint: { "text-color": "#fff" }
-  });
-  map.addLayer({
-    id: "admin-points",
-    type: "circle",
-    source: "all-businesses",
-    filter: ["!", ["has", "point_count"]],
-    paint: {
-      "circle-radius": 6,
-      "circle-color": [
-        "match", ["get", "kosher_color"],
-        "meat", KOSHER_COLORS.meat,
-        "dairy_parve", KOSHER_COLORS.dairy_parve,
-        "mixed", KOSHER_COLORS.mixed,
-        KOSHER_COLORS.unknown
-      ],
-      // Overridden businesses get a heavier black ring so it's obvious
-      // at a glance which pins already have a saved correction.
-      "circle-stroke-width": ["case", ["get", "overridden"], 3, 1.5],
-      "circle-stroke-color": ["case", ["get", "overridden"], "#000", "#fff"]
-    }
-  });
+  // Same badges as the public map (addBusinessLayers) - a business that
+  // already has a saved correction gets a black ring baked into its
+  // badge icon (see badgeIconId/makeBadgeIcon) so it's visible at a
+  // glance without opening it.
+  addBusinessLayers(map, "all-businesses");
 
-  map.on("click", "admin-clusters", (e) => {
-    const features = map.queryRenderedFeatures(e.point, { layers: ["admin-clusters"] });
+  map.on("click", "clusters", (e) => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ["clusters"] });
     const clusterId = features[0].properties.cluster_id;
     map.getSource("all-businesses").getClusterExpansionZoom(clusterId, (err, zoom) => {
       if (err) return;
       map.easeTo({ center: features[0].geometry.coordinates, zoom });
     });
   });
-  map.on("click", "admin-points", (e) => {
+  map.on("click", "points-badge", (e) => {
     const p = e.features[0].properties;
     selectBusiness({
       source_id: p.source_id,
@@ -298,10 +261,10 @@ async function loadAllPins() {
       phone: p.phone
     });
   });
-  map.on("mouseenter", "admin-points", () => map.getCanvas().style.cursor = "pointer");
-  map.on("mouseleave", "admin-points", () => map.getCanvas().style.cursor = "");
-  map.on("mouseenter", "admin-clusters", () => map.getCanvas().style.cursor = "pointer");
-  map.on("mouseleave", "admin-clusters", () => map.getCanvas().style.cursor = "");
+  map.on("mouseenter", "points-badge", () => map.getCanvas().style.cursor = "pointer");
+  map.on("mouseleave", "points-badge", () => map.getCanvas().style.cursor = "");
+  map.on("mouseenter", "clusters", () => map.getCanvas().style.cursor = "pointer");
+  map.on("mouseleave", "clusters", () => map.getCanvas().style.cursor = "");
 }
 
 let searchTimer;
