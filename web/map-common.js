@@ -48,8 +48,20 @@ function kosherColorKey(kosherTypeArray) {
 }
 
 // Compact, closer to Google's proportions (roughly as wide as tall,
-// short tail) than the taller/narrower badge from the first pass.
+// short, stubby tail) - basically a circle with a small pointed nub at
+// the bottom, per the Google Maps reference: the circle should read as
+// the dominant shape, not a long teardrop.
 //
+// These are shared constants (not just makeBadgeIcon locals) because
+// the label layer (in addBusinessLayers, below) needs to know exactly
+// where the circle's visual center sits relative to the anchor point
+// too, to line the name up with the circle instead of the coordinate.
+const BADGE_W = 34, BADGE_H = 38, BADGE_CX = BADGE_W / 2, BADGE_CY = 14, BADGE_R = 13;
+// How much the badge image is scaled when rendered on the map - shared
+// with the label layer's offset math in addBusinessLayers so the two
+// stay in sync if this ever changes.
+const ICON_SIZE = 0.85;
+
 // `ringed` draws an extra outer ring (admin UI only: marks a business
 // that already has a saved correction). It has to be baked into the
 // icon image itself rather than drawn as a separate MapLibre circle
@@ -59,16 +71,15 @@ function kosherColorKey(kosherTypeArray) {
 // coordinate), so a separately-drawn ring would end up centered on the
 // tail tip instead of the circle and never actually line up.
 function makeBadgeIcon(emoji, color, ringed) {
-  const w = 40, h = 48;
   const canvas = document.createElement("canvas");
-  canvas.width = w; canvas.height = h;
+  canvas.width = BADGE_W; canvas.height = BADGE_H;
   const ctx = canvas.getContext("2d");
-  const cx = w / 2, cy = 16, r = 15;
+  const cx = BADGE_CX, cy = BADGE_CY, r = BADGE_R;
 
   ctx.beginPath();
-  ctx.moveTo(cx - r * 0.5, cy + r * 0.82);
-  ctx.lineTo(cx, h - 2);
-  ctx.lineTo(cx + r * 0.5, cy + r * 0.82);
+  ctx.moveTo(cx - r * 0.42, cy + r * 0.9);
+  ctx.lineTo(cx, BADGE_H - 1);
+  ctx.lineTo(cx + r * 0.42, cy + r * 0.9);
   ctx.closePath();
   ctx.fillStyle = color;
   ctx.fill();
@@ -89,12 +100,12 @@ function makeBadgeIcon(emoji, color, ringed) {
     ctx.stroke();
   }
 
-  ctx.font = `17px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+  ctx.font = `15px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(emoji, cx, cy + 1);
 
-  return ctx.getImageData(0, 0, w, h);
+  return ctx.getImageData(0, 0, BADGE_W, BADGE_H);
 }
 
 function registerBadgeImages(map) {
@@ -186,15 +197,25 @@ function addBusinessLayers(map, sourceId, opts) {
     filter: ["!", ["has", "point_count"]],
     layout: {
       "icon-image": ["get", "icon_id"],
-      "icon-size": 0.85,
+      "icon-size": ICON_SIZE,
       "icon-anchor": "bottom",
       "icon-allow-overlap": true
     }
   });
 
-  // Google-style: name beside the pin (left or right, whichever avoids
-  // collisions), bold, not below it - only once zoomed in close enough
-  // that showing every name wouldn't just be noise.
+  // Google-style: name beside the pin, bold, vertically centered on the
+  // circle - not below it, and not centered on the coordinate itself.
+  //
+  // text-variable-anchor/text-radial-offset (the first attempt) centers
+  // the label on the *anchor point*, which is the pin's tail tip
+  // (icon-anchor: "bottom" puts the coordinate there, not at the
+  // circle). That put the label noticeably low, next to the tail
+  // instead of the circle. A fixed text-anchor + text-offset lets the
+  // vertical component be tuned independently: the offset below is
+  // derived from BADGE_CY/BADGE_H/BADGE_R (the same numbers
+  // makeBadgeIcon uses) and ICON_SIZE (the scale factor the badge
+  // layer renders at, below), converted from pixels to ems
+  // (text-offset's unit) at this layer's text-size of 12.
   map.addLayer({
     id: idPrefix + "points-label",
     type: "symbol",
@@ -205,9 +226,11 @@ function addBusinessLayers(map, sourceId, opts) {
       "text-field": ["get", "name_raw"],
       "text-font": ["Noto Sans Bold"],
       "text-size": 12,
-      "text-variable-anchor": ["left", "right"],
-      "text-radial-offset": 1.0,
-      "text-justify": "auto",
+      "text-anchor": "left",
+      "text-offset": [
+        ((BADGE_R * ICON_SIZE) + 4) / 12,
+        -((BADGE_H - 1 - BADGE_CY) * ICON_SIZE) / 12
+      ],
       "text-allow-overlap": false,
       "text-optional": true
     },
