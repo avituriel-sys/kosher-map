@@ -4948,5 +4948,35 @@
     "lng": null,
     "confidence": null,
     "out_of_bounds": false
+  },
+  "שמואל ברקאי 49, תל אביב-יפו, ישראל": {
+    "lat": 32.1233179,
+    "lng": 34.8073423,
+    "confidence": "medium",
+    "out_of_bounds": false
+  },
+  "המרץ 1, תל אביב-יפו, ישראל": {
+    "lat": 32.051938,
+    "lng": 34.773126,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה המכבי 62, תל אביב-יפו, ישראל": {
+    "lat": 32.09405,
+    "lng": 34.793228,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הרצל 146, תל אביב-יפו, ישראל": {
+    "lat": 32.0517918,
+    "lng": 34.7700546,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "עולי ציון 13, תל אביב-יפו, ישראל": {
+    "lat": 32.052663,
+    "lng": 34.757226,
+    "confidence": "high",
+    "out_of_bounds": false
   }
 }
