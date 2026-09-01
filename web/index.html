@@ -14,12 +14,24 @@
     position: absolute; top: 12px; right: 12px; z-index: 1;
     background: white; border-radius: 10px; padding: 12px 16px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.15); direction: rtl; font-size: 14px;
-    max-width: 260px;
+    max-width: 270px; max-height: calc(100vh - 40px); overflow-y: auto;
   }
   #panel h1 { font-size: 16px; margin: 0 0 6px; }
   #panel .count { color: #555; margin-bottom: 8px; }
-  .legend-row { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .filter-title { font-weight: 700; font-size: 13px; margin: 10px 0 4px; cursor: pointer; }
+  .legend-row { display: flex; align-items: center; gap: 6px; margin: 3px 0; cursor: pointer; user-select: none; }
+  .legend-row.inactive { opacity: 0.35; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .category-actions { display: flex; gap: 8px; margin: 4px 0 6px; }
+  .category-actions button {
+    font-size: 11px; padding: 2px 8px; cursor: pointer; border: 1px solid #ccc;
+    border-radius: 4px; background: #f5f5f5;
+  }
+  .category-group-title { font-size: 15px; margin: 6px 0 2px; }
+  .category-row { display: flex; align-items: center; gap: 6px; font-size: 12.5px; margin: 2px 0 2px 10px; cursor: pointer; }
+  .category-row input { cursor: pointer; }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
   .maplibregl-popup-content { direction: rtl; text-align: right; font-family: system-ui, sans-serif; max-height: 320px; overflow-y: auto; }
   .popup-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
   .popup-row { font-size: 13px; color: #333; margin: 2px 0; }
@@ -34,10 +46,21 @@
 <div id="panel">
   <h1>עסקים כשרים</h1>
   <div class="count" id="count">טוען...</div>
-  <div class="legend-row"><span class="dot" style="background:#dc2626"></span> בשרי</div>
-  <div class="legend-row"><span class="dot" style="background:#2563eb"></span> חלבי / פרווה</div>
-  <div class="legend-row"><span class="dot" style="background:#f97316"></span> בשרי וחלבי (מטבח מעורב)</div>
-  <div class="legend-row"><span class="dot" style="background:#9ca3af"></span> לא ידוע</div>
+
+  <div class="filter-title">סוג כשרות</div>
+  <div class="legend-row" data-kosher="meat"><span class="dot" style="background:#dc2626"></span> בשרי</div>
+  <div class="legend-row" data-kosher="dairy_parve"><span class="dot" style="background:#2563eb"></span> חלבי / פרווה</div>
+  <div class="legend-row" data-kosher="mixed"><span class="dot" style="background:#f97316"></span> בשרי וחלבי (מטבח מעורב)</div>
+  <div class="legend-row" data-kosher="unknown"><span class="dot" style="background:#9ca3af"></span> לא ידוע</div>
+
+  <details open>
+    <summary class="filter-title">קטגוריה ▾</summary>
+    <div class="category-actions">
+      <button type="button" id="cat-select-all">בחר הכל</button>
+      <button type="button" id="cat-clear-all">נקה הכל</button>
+    </div>
+    <div id="category-list"></div>
+  </details>
 </div>
 <script>
 // Hebrew/Arabic text otherwise renders in logical (unreordered) order -
@@ -71,13 +94,105 @@ function businessPopupHtml(p) {
   `;
 }
 
+// Filter state - kosher-type colors and categories currently shown.
+// Both start "everything on"; populated for real once businesses.json
+// loads and we know which categories actually occur in the data.
+const activeKosherColors = new Set(["meat", "dairy_parve", "mixed", "unknown"]);
+let activeCategories = new Set();
+let fullGeojson = null; // the unfiltered FeatureCollection, kept so filtering never needs to re-fetch
+
+function passesFilters(properties) {
+  return activeKosherColors.has(kosherColorKey(properties.kosher_type))
+    && activeCategories.has(properties.category_canonical);
+}
+
+function applyFilters(map) {
+  const filteredFeatures = fullGeojson.features.filter(f => passesFilters(f.properties));
+  map.getSource("businesses").setData({ type: "FeatureCollection", features: filteredFeatures });
+
+  const total = fullGeojson.features.length;
+  const shown = filteredFeatures.length;
+  document.getElementById("count").textContent = shown === total
+    ? total.toLocaleString("he") + " עסקים פעילים"
+    : `${shown.toLocaleString("he")} מתוך ${total.toLocaleString("he")} עסקים`;
+}
+
+function wireKosherToggles(map) {
+  document.querySelectorAll(".legend-row[data-kosher]").forEach(row => {
+    row.addEventListener("click", () => {
+      const key = row.dataset.kosher;
+      if (activeKosherColors.has(key)) {
+        activeKosherColors.delete(key);
+        row.classList.add("inactive");
+      } else {
+        activeKosherColors.add(key);
+        row.classList.remove("inactive");
+      }
+      applyFilters(map);
+    });
+  });
+}
+
+// Grouped by the same icon shapes already on the map (fork/croissant/
+// bed/cart/pin, in that order - CATEGORY_ICONS_MAP's own key order) so
+// the list reads as an extension of what the pins already show, even
+// though every one of the ~18 actual category_canonical values here is
+// its own filter, not just the four broad shapes.
+function buildCategoryFilterUI(map, presentCategories) {
+  activeCategories = new Set(presentCategories);
+
+  const presentSet = new Set(presentCategories);
+  const groups = new Map(); // emoji -> [category, ...]
+  for (const [cat, emoji] of Object.entries(CATEGORY_ICONS_MAP)) {
+    if (!presentSet.has(cat)) continue;
+    if (!groups.has(emoji)) groups.set(emoji, []);
+    groups.get(emoji).push(cat);
+  }
+
+  const container = document.getElementById("category-list");
+  container.innerHTML = "";
+  for (const [emoji, cats] of groups) {
+    const groupTitle = document.createElement("div");
+    groupTitle.className = "category-group-title";
+    groupTitle.textContent = emoji;
+    container.appendChild(groupTitle);
+
+    cats.sort((a, b) => (CATEGORY_HE[a] || a).localeCompare(CATEGORY_HE[b] || b, "he"));
+    for (const cat of cats) {
+      const label = document.createElement("label");
+      label.className = "category-row";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = true;
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) activeCategories.add(cat); else activeCategories.delete(cat);
+        applyFilters(map);
+      });
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(" " + (CATEGORY_HE[cat] || cat)));
+      container.appendChild(label);
+    }
+  }
+
+  document.getElementById("cat-select-all").addEventListener("click", () => {
+    activeCategories = new Set(presentCategories);
+    container.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = true);
+    applyFilters(map);
+  });
+  document.getElementById("cat-clear-all").addEventListener("click", () => {
+    activeCategories.clear();
+    container.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
+    applyFilters(map);
+  });
+}
+
 fetch("businesses.json")
   .then(r => r.json())
   .then(rows => {
     document.getElementById("count").textContent = rows.length.toLocaleString("he") + " עסקים פעילים";
     spreadCoincidentPoints(rows);
 
-    const geojson = {
+    fullGeojson = {
       type: "FeatureCollection",
       features: rows.map(r => ({
         type: "Feature",
@@ -105,13 +220,17 @@ fetch("businesses.json")
 
       map.addSource("businesses", {
         type: "geojson",
-        data: geojson,
+        data: fullGeojson,
         cluster: true,
         clusterMaxZoom: 17,
         clusterRadius: 40
       });
 
       addBusinessLayers(map, "businesses");
+
+      const presentCategories = [...new Set(rows.map(r => r.category_canonical))];
+      buildCategoryFilterUI(map, presentCategories);
+      wireKosherToggles(map);
 
       map.on("click", "clusters", (e) => {
         const features = map.queryRenderedFeatures(e.point, { layers: ["clusters"] });
