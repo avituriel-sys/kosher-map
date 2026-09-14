@@ -4978,5 +4978,59 @@
     "lng": 34.757226,
     "confidence": "high",
     "out_of_bounds": false
+  },
+  "נחלת בנימין 68, תל אביב-יפו, ישראל": {
+    "lat": 32.061255,
+    "lng": 34.772392,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שטרית 2, תל אביב-יפו, ישראל": {
+    "lat": 32.1061039,
+    "lng": 34.8166269,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יורדי הסירה 4, תל אביב-יפו, ישראל": {
+    "lat": 32.096232,
+    "lng": 34.773694,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יצחק שדה 27, תל אביב-יפו, ישראל": {
+    "lat": 32.065203,
+    "lng": 34.787788,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "גבעון 22, תל אביב-יפו, ישראל": {
+    "lat": 32.069669,
+    "lng": 34.785972,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "חשמונאים 89, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "מנחם בגין 21, תל אביב-יפו, ישראל": {
+    "lat": 32.0635477,
+    "lng": 34.7794789,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שד' ירושלים 5, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "טשרנחובסקי 8, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
   }
 }
