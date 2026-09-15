@@ -35,7 +35,7 @@ def export() -> int:
                     coalesce(o.category_canonical, b.category_canonical) as category_canonical,
                     coalesce(o.kosher_type, b.kosher_type) as kosher_type,
                     coalesce(o.supervision_level, b.supervision_level) as supervision_level,
-                    b.address_raw,
+                    coalesce(o.address_raw, b.address_raw) as address_raw,
                     b.city,
                     coalesce(o.lat, b.lat) as lat,
                     coalesce(o.lng, b.lng) as lng,

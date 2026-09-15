@@ -25,6 +25,7 @@ _QUERY = """
         coalesce(o.category_canonical, b.category_canonical) as category_canonical,
         coalesce(o.kosher_type, b.kosher_type) as kosher_type,
         coalesce(o.supervision_level, b.supervision_level) as supervision_level,
+        coalesce(o.address_raw, b.address_raw) as address_raw,
         coalesce(o.lat, b.lat) as lat,
         coalesce(o.lng, b.lng) as lng,
         coalesce(o.phone, b.phone) as phone
@@ -108,7 +109,7 @@ def test_no_override_falls_back_to_business_values(conn, source_id):
     assert rows == [{
         "source_id": source_id, "source_record_id": "biz-1", "name_raw": "Original Name",
         "category_canonical": "restaurant", "kosher_type": ["meat"], "supervision_level": "regular",
-        "lat": 32.0, "lng": 34.0, "phone": "050-0000000",
+        "address_raw": "1 Test St", "lat": 32.0, "lng": 34.0, "phone": "050-0000000",
     }]
 
 
@@ -118,6 +119,15 @@ def test_override_position_wins_over_scraped_position(conn, source_id):
     rows = _fetch(conn, source_id)
     assert rows[0]["lat"] == 32.5
     assert rows[0]["lng"] == 34.5
+    # Non-overridden fields still come from the scraped row.
+    assert rows[0]["name_raw"] == "Original Name"
+
+
+def test_override_address_wins_over_scraped_address(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    _insert_override(conn, source_id, "biz-1", address_raw="2 Test St", note="corrected street number")
+    rows = _fetch(conn, source_id)
+    assert rows[0]["address_raw"] == "2 Test St"
     # Non-overridden fields still come from the scraped row.
     assert rows[0]["name_raw"] == "Original Name"
 
