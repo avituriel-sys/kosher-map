@@ -208,6 +208,11 @@ fetch("businesses.json")
       zoom: 10.5
     });
     map.addControl(new maplibregl.NavigationControl(), "top-left");
+    map.addControl(new maplibregl.GeolocateControl({
+      positionOptions: { enableHighAccuracy: true },
+      trackUserLocation: true,
+      showUserHeading: true
+    }), "top-left");
     window._map = map; // exposed for debugging in the browser console
     map.on("error", (e) => console.error("maplibre error", e && e.error ? e.error.message : e));
 
