@@ -8,6 +8,7 @@
 <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet" />
 <script src="map-common.js"></script>
+<script src="admin-common.js"></script>
 <style>
   html, body { margin: 0; padding: 0; height: 100%; font-family: system-ui, sans-serif; direction: rtl; }
   #login { max-width: 320px; margin: 80px auto; padding: 24px; }
@@ -57,7 +58,10 @@
   <div id="sidebar">
     <div id="topbar">
       <span id="who"></span>
-      <button class="btn" onclick="doLogout()">יציאה</button>
+      <span>
+        <a href="admin-anomalies.html">אנומליות</a>
+        <button class="btn" onclick="doLogout()">יציאה</button>
+      </span>
     </div>
     <input id="search" type="text" placeholder="חיפוש עסק לפי שם או כתובת..." oninput="onSearchInput()" />
     <ul id="results"></ul>
@@ -88,6 +92,9 @@
       <label>שם מתוקן</label>
       <input type="text" id="f-name" />
 
+      <label>כתובת מתוקנת</label>
+      <input type="text" id="f-address" />
+
       <label>טלפון מתוקן</label>
       <input type="text" id="f-phone" />
 
@@ -107,10 +114,6 @@
 </div>
 
 <script>
-const SUPABASE_URL = "https://ybztptqixzyqgojuqtab.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlienRwdHFpeHp5cWdvanVxdGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NTg4NjQsImV4cCI6MjEwMzQzNDg2NH0.yRgXKOZa-LAmyTyGKQE4xflxMsSxTA2neZwdaWojavQ";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 const CATEGORY_OPTIONS = [
   "restaurant", "cafe", "pizzeria", "falafel_shawarma", "bakery_patisserie",
   "ice_cream", "sushi_asian", "butcher", "fishmonger", "delicatessen",
@@ -125,31 +128,6 @@ function setStatus(msg, isError) {
   const el = document.getElementById("status");
   el.textContent = msg;
   el.style.color = isError ? "#c00" : "#555";
-}
-
-async function doLogin() {
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value;
-  const { error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    document.getElementById("login-status").textContent = error.message;
-    return;
-  }
-  showApp();
-}
-
-async function doLogout() {
-  await sb.auth.signOut();
-  location.reload();
-}
-
-async function showApp() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) return;
-  document.getElementById("login").style.display = "none";
-  document.getElementById("app").style.display = "block";
-  document.getElementById("who").textContent = session.user.email;
-  initMap();
 }
 
 maplibregl.setRTLTextPlugin(
@@ -328,6 +306,7 @@ async function selectBusiness(row) {
 
   document.getElementById("f-supervision").value = currentOverride?.supervision_level || "";
   document.getElementById("f-name").value = currentOverride?.name_clean || row.name_raw || "";
+  document.getElementById("f-address").value = currentOverride?.address_raw || row.address_raw || "";
   document.getElementById("f-phone").value = currentOverride?.phone || row.phone || "";
   document.getElementById("f-note").value = currentOverride?.note || "";
   document.getElementById("clear-btn").style.display = currentOverride ? "inline-block" : "none";
@@ -395,12 +374,13 @@ async function saveOverride() {
     kosher_type: diffOrNull(kosherType.length ? kosherType : null, current.kosher_type),
     supervision_level: diffOrNull(document.getElementById("f-supervision").value || null, current.supervision_level),
     name_clean: diffOrNull(document.getElementById("f-name").value, current.name_raw),
+    address_raw: diffOrNull(document.getElementById("f-address").value, current.address_raw),
     phone: diffOrNull(document.getElementById("f-phone").value, current.phone),
     note: document.getElementById("f-note").value || null,
     updated_at: new Date().toISOString()
   };
 
-  const hasAnyOverride = ["lat", "lng", "name_clean", "category_canonical", "kosher_type", "supervision_level", "phone"]
+  const hasAnyOverride = ["lat", "lng", "name_clean", "address_raw", "category_canonical", "kosher_type", "supervision_level", "phone"]
     .some(k => payload[k] !== null);
 
   if (!hasAnyOverride) {
@@ -429,9 +409,7 @@ async function clearOverride() {
   selectBusiness(current);
 }
 
-sb.auth.getSession().then(({ data: { session } }) => {
-  if (session) showApp();
-});
+initAdminAuth(() => { initMap(); });
 </script>
 </body>
 </html>

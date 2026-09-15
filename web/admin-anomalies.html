@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<title>אנומליות - עסקים כשרים</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="admin-common.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; font-family: system-ui, sans-serif; direction: rtl; background: #fafafa; }
+  #login { max-width: 320px; margin: 80px auto; padding: 24px; }
+  #login input { display: block; width: 100%; box-sizing: border-box; padding: 8px; margin: 6px 0 14px; font-size: 14px; }
+  #login button, .btn { padding: 8px 16px; font-size: 14px; cursor: pointer; }
+  #app { display: none; max-width: 860px; margin: 0 auto; padding: 16px; }
+  #topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 13px; color: #555; }
+  #progress { font-size: 13px; color: #333; margin-bottom: 16px; padding: 10px 14px; background: #eef2ff; border-radius: 6px; }
+  .business-group { background: #fff; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+  .business-header { padding: 10px 14px; background: #f3f4f6; border-bottom: 1px solid #ddd; }
+  .business-header h3 { margin: 0 0 2px; font-size: 15px; }
+  .business-header .hint { font-size: 12px; color: #777; }
+  .anomaly-row { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; }
+  .anomaly-row:last-child { border-bottom: none; }
+  .field-label { font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+  .values { display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+  .value-box { flex: 1; min-width: 200px; padding: 8px 10px; border-radius: 6px; font-size: 14px; }
+  .value-box.ours { background: #fef2f2; }
+  .value-box.external { background: #f0fdf4; }
+  .value-box .tag { font-size: 11px; color: #666; margin-bottom: 3px; }
+  .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .actions button { font-size: 13px; padding: 6px 12px; cursor: pointer; }
+  .actions input[type=text] { font-size: 13px; padding: 6px; flex: 1; min-width: 160px; }
+  .source-link { font-size: 12px; }
+  .empty-state { text-align: center; color: #888; padding: 40px 0; }
+  .not-found-section { margin-top: 28px; }
+  .not-found-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: #fff; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
+  .not-found-row button { font-size: 12px; padding: 4px 10px; cursor: pointer; }
+  h2 { font-size: 16px; margin: 24px 0 10px; }
+</style>
+</head>
+<body>
+
+<div id="login">
+  <h2>כניסת מנהל</h2>
+  <input id="login-email" type="text" placeholder="אימייל" autocomplete="username" />
+  <input id="login-password" type="password" placeholder="סיסמה" autocomplete="current-password" />
+  <button class="btn" onclick="doLogin()">כניסה</button>
+  <div id="login-status" style="color:#c00; font-size:13px; margin-top:10px;"></div>
+</div>
+
+<div id="app">
+  <div id="topbar">
+    <span id="who"></span>
+    <span>
+      <a href="admin.html">מפת ניהול</a>
+      <button class="btn" onclick="doLogout()">יציאה</button>
+    </span>
+  </div>
+
+  <div id="progress"></div>
+
+  <h2>אנומליות ממתינות</h2>
+  <div id="groups"></div>
+
+  <div class="not-found-section">
+    <h2>עסקים שלא נמצאו במקור חיצוני</h2>
+    <div id="not-found-list"></div>
+  </div>
+</div>
+
+<script>
+// Fields the DB constraint allows (business_anomaly_field_name_ck) -
+// keep in sync with db/migrations/006_sanity_check.sql.
+const FIELD_LABELS = { name: "שם", address: "כתובת", phone: "טלפון" };
+const FIELD_TO_OVERRIDE_COL = { name: "name_clean", address: "address_raw", phone: "phone" };
+
+async function loadAnomalies() {
+  // Pending anomalies, oldest-first (created_at asc) so the list order
+  // is stable across sessions - this is what makes "handle a few today,
+  // pick up the rest tomorrow" work without any separate progress
+  // tracking: whatever's still 'pending' is exactly what's left.
+  const { data: anomalies, error } = await sb
+    .from("business_anomaly")
+    .select("*, sanity_check:sanity_check_id(external_url, checked_at)")
+    .eq("status", "pending")
+    .order("created_at", { ascending: true });
+  if (error) { document.getElementById("progress").textContent = "שגיאה בטעינה: " + error.message; return; }
+
+  const businessIds = [...new Set(anomalies.map(a => `${a.source_id}|${a.source_record_id}`))];
+  const businesses = await fetchBusinesses(businessIds);
+
+  renderProgress(anomalies, businessIds);
+  renderGroups(anomalies, businesses);
+
+  await loadNotFound();
+}
+
+async function fetchBusinesses(pairKeys) {
+  const map = {};
+  if (pairKeys.length === 0) return map;
+  // PostgREST has no direct "IN (pairs)" filter, so pull all active
+  // businesses referenced by any pending anomaly and match client-side -
+  // pending anomaly counts are small (a manageable review queue by
+  // design), so this stays cheap.
+  const sourceIds = [...new Set(pairKeys.map(k => k.split("|")[0]))];
+  const { data, error } = await sb
+    .from("business")
+    .select("source_id, source_record_id, name_raw, address_raw, city, phone")
+    .in("source_id", sourceIds);
+  if (error) throw error;
+  for (const row of data) {
+    map[`${row.source_id}|${row.source_record_id}`] = row;
+  }
+  return map;
+}
+
+function renderProgress(anomalies, businessIds) {
+  document.getElementById("progress").textContent =
+    `${anomalies.length} אנומליות ממתינות, על פני ${businessIds.length} עסקים`;
+}
+
+function renderGroups(anomalies, businesses) {
+  const groupsEl = document.getElementById("groups");
+  groupsEl.innerHTML = "";
+
+  if (anomalies.length === 0) {
+    groupsEl.innerHTML = '<div class="empty-state">אין אנומליות ממתינות 🎉</div>';
+    return;
+  }
+
+  const byBusiness = new Map();
+  for (const a of anomalies) {
+    const key = `${a.source_id}|${a.source_record_id}`;
+    if (!byBusiness.has(key)) byBusiness.set(key, []);
+    byBusiness.get(key).push(a);
+  }
+
+  for (const [key, rows] of byBusiness) {
+    const biz = businesses[key];
+    const group = document.createElement("div");
+    group.className = "business-group";
+
+    const header = document.createElement("div");
+    header.className = "business-header";
+    header.innerHTML = `<h3>${biz ? biz.name_raw : key}</h3>
+      <div class="hint">${biz ? `${biz.address_raw}, ${biz.city}` : ""} — ${rows[0].source_id} / ${rows[0].source_record_id}</div>`;
+    group.appendChild(header);
+
+    for (const a of rows) {
+      group.appendChild(renderAnomalyRow(a, biz));
+    }
+    groupsEl.appendChild(group);
+  }
+}
+
+function renderAnomalyRow(a, biz) {
+  const row = document.createElement("div");
+  row.className = "anomaly-row";
+  const url = a.sanity_check?.external_url;
+
+  row.innerHTML = `
+    <div class="field-label">${FIELD_LABELS[a.field_name] || a.field_name}</div>
+    <div class="values">
+      <div class="value-box ours"><div class="tag">אצלנו</div>${escapeHtml(a.our_value ?? "(ריק)")}</div>
+      <div class="value-box external"><div class="tag">במקור חיצוני</div>${escapeHtml(a.external_value ?? "(ריק)")}</div>
+    </div>
+    <div class="actions">
+      <button data-action="external">להשתמש בערך החיצוני</button>
+      <button data-action="ours">להשאיר את שלנו</button>
+      <input type="text" placeholder="תיקון ידני..." data-manual-input />
+      <button data-action="manual">שמירת תיקון ידני</button>
+      ${url ? `<a class="source-link" href="${url}" target="_blank" rel="noopener">מקור ↗</a>` : ""}
+    </div>
+  `;
+
+  row.querySelector('[data-action="external"]').onclick = () => resolveAnomaly(a, biz, "accepted_external", a.external_value);
+  row.querySelector('[data-action="ours"]').onclick = () => resolveAnomaly(a, biz, "kept_ours", null);
+  row.querySelector('[data-action="manual"]').onclick = () => {
+    const val = row.querySelector('[data-manual-input]').value.trim();
+    if (!val) return;
+    resolveAnomaly(a, biz, "manual_fix", val);
+  };
+
+  return row;
+}
+
+function escapeHtml(s) {
+  const div = document.createElement("div");
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+// Resolving means two things happen together: business_override gets
+// the corrected value (accepted_external/manual_fix only - "kept ours"
+// writes no override, since nothing about our data is changing), and
+// the anomaly itself is marked resolved so it drops off this list.
+async function resolveAnomaly(anomaly, biz, status, valueToStore) {
+  if (status !== "kept_ours" && valueToStore != null) {
+    const overrideCol = FIELD_TO_OVERRIDE_COL[anomaly.field_name];
+    const { data: existing, error: fetchErr } = await sb
+      .from("business_override")
+      .select("*")
+      .eq("source_id", anomaly.source_id)
+      .eq("source_record_id", anomaly.source_record_id)
+      .maybeSingle();
+    if (fetchErr) { alert("שגיאה בטעינת תיקון קיים: " + fetchErr.message); return; }
+
+    const payload = existing || { source_id: anomaly.source_id, source_record_id: anomaly.source_record_id };
+    payload[overrideCol] = valueToStore;
+    payload.updated_at = new Date().toISOString();
+
+    const { error: upsertErr } = await sb
+      .from("business_override")
+      .upsert(payload, { onConflict: "source_id,source_record_id" });
+    if (upsertErr) { alert("שגיאת שמירה: " + upsertErr.message); return; }
+  }
+
+  const { error: resolveErr } = await sb
+    .from("business_anomaly")
+    .update({ status, resolved_at: new Date().toISOString() })
+    .eq("id", anomaly.id);
+  if (resolveErr) { alert("שגיאה בעדכון סטטוס: " + resolveErr.message); return; }
+
+  await loadAnomalies();
+}
+
+// Separate, simpler flow for businesses that couldn't be found online
+// at all: there's no per-field resolution here (see migration 006's
+// comment on why), just an acknowledgement so the admin doesn't keep
+// re-seeing the same "not found" flag every session. Acknowledging
+// writes a fresh 'matched'-style check is wrong (nothing was matched) -
+// instead this just records a note on the existing check row so it's
+// not silently lost, and stops surfacing it here by relying on a fresh
+// business_sanity_check row from any future re-check to take over as
+// "most recent".
+async function loadNotFound() {
+  const { data, error } = await sb
+    .from("business_sanity_check")
+    .select("id, source_id, source_record_id, checked_at, notes")
+    .eq("match_status", "not_found")
+    .is("notes", null)
+    .order("checked_at", { ascending: true });
+  if (error) { return; }
+
+  const listEl = document.getElementById("not-found-list");
+  listEl.innerHTML = "";
+  if (data.length === 0) {
+    listEl.innerHTML = '<div class="empty-state">אין עסקים שלא נמצאו</div>';
+    return;
+  }
+
+  const pairKeys = data.map(r => `${r.source_id}|${r.source_record_id}`);
+  const businesses = await fetchBusinesses(pairKeys);
+
+  for (const check of data) {
+    const biz = businesses[`${check.source_id}|${check.source_record_id}`];
+    const row = document.createElement("div");
+    row.className = "not-found-row";
+    row.innerHTML = `<span>${biz ? biz.name_raw : check.source_record_id} — ${biz ? biz.address_raw + ", " + biz.city : ""}</span>`;
+    const btn = document.createElement("button");
+    btn.textContent = "אישור (נבדק)";
+    btn.onclick = async () => {
+      const { error: err } = await sb
+        .from("business_sanity_check")
+        .update({ notes: "acknowledged" })
+        .eq("id", check.id);
+      if (err) { alert("שגיאה: " + err.message); return; }
+      loadNotFound();
+    };
+    row.appendChild(btn);
+    listEl.appendChild(row);
+  }
+}
+
+initAdminAuth(() => { loadAnomalies(); });
+</script>
+</body>
+</html>
