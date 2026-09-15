@@ -38,22 +38,28 @@ def record_check(
     match_status: MatchStatus,
     external_url: str | None = None,
     notes: str | None = None,
+    external_category: str | None = None,
 ) -> int:
     """Record that a business was checked against an outside source.
     Always call this once per business checked, whether or not
     anything was wrong - a 'matched' check with no anomalies recorded
     against it is exactly how "verified clean" is represented. Returns
     the new check's id, for passing to record_anomaly().
+
+    `external_category` is the source's own free-text category label
+    (e.g. Google Maps' subheading, "מסעדה איטלקית") - kept for later
+    use, not compared against our category_canonical (see migration
+    007 for why that's not an anomaly field).
     """
     with conn.cursor() as cur:
         cur.execute(
             """
             insert into business_sanity_check
-                (source_id, source_record_id, match_status, external_url, notes)
-            values (%s, %s, %s, %s, %s)
+                (source_id, source_record_id, match_status, external_url, notes, external_category)
+            values (%s, %s, %s, %s, %s, %s)
             returning id
             """,
-            (source_id, source_record_id, match_status, external_url, notes),
+            (source_id, source_record_id, match_status, external_url, notes, external_category),
         )
         check_id = cur.fetchone()[0]
     conn.commit()

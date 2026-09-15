@@ -1,0 +1,12 @@
+-- Capture the outside source's own category text (e.g. Google Maps'
+-- subheading under a business's name, "מסעדה איטלקית" / "Italian
+-- restaurant") alongside each sanity check, for later use - same
+-- reasoning as recording external_url itself: gathered once while
+-- researching anyway, cheap to keep, no use for it yet defined.
+--
+-- Deliberately NOT a business_anomaly field: our own category_canonical
+-- is a closed, curated enum (see collectors/*/mappings.py) that a free-
+-- text source label can't be diffed against or resolved into via the
+-- accepted_external/kept_ours/manual_fix flow - there's no reversible,
+-- well-defined "correction" here, just supplementary context.
+alter table business_sanity_check add column if not exists external_category text;

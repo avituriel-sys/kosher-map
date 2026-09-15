@@ -76,6 +76,17 @@ def test_record_check_not_found_must_not_have_a_url(conn, source_id):
     conn.rollback()
 
 
+def test_record_check_stores_external_category(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    check_id = record_check(
+        conn, source_id, "biz-1", "matched",
+        external_url="https://example.test/biz-1", external_category="Italian restaurant",
+    )
+    with conn.cursor() as cur:
+        cur.execute("select external_category from business_sanity_check where id = %s", (check_id,))
+        assert cur.fetchone()[0] == "Italian restaurant"
+
+
 def test_record_anomaly_defaults_to_pending(conn, source_id):
     _insert_business(conn, source_id, "biz-1")
     check_id = record_check(conn, source_id, "biz-1", "matched", external_url="https://example.test/biz-1")
