@@ -31,9 +31,17 @@
   .actions input[type=text] { font-size: 13px; padding: 6px; flex: 1; min-width: 160px; }
   .source-link { font-size: 12px; }
   .empty-state { text-align: center; color: #888; padding: 40px 0; }
-  .not-found-section { margin-top: 28px; }
-  .not-found-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: #fff; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
-  .not-found-row button { font-size: 12px; padding: 4px 10px; cursor: pointer; }
+  .review-section { margin-top: 28px; }
+  .review-row { padding: 10px 14px; background: #fff; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
+  .review-row .review-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .review-row .status-badge {
+    font-size: 11px; padding: 2px 7px; border-radius: 4px; white-space: nowrap;
+    background: #fef3c7; color: #92400e;
+  }
+  .review-row .status-badge.ambiguous { background: #ede9fe; color: #5b21b6; }
+  .review-row .notes { font-size: 12px; color: #555; margin-top: 6px; }
+  .review-row .review-actions { margin-top: 8px; display: flex; gap: 10px; align-items: center; }
+  .review-row button { font-size: 12px; padding: 4px 10px; cursor: pointer; }
   h2 { font-size: 16px; margin: 24px 0 10px; }
 </style>
 </head>
@@ -61,9 +69,9 @@
   <h2>אנומליות ממתינות</h2>
   <div id="groups"></div>
 
-  <div class="not-found-section">
-    <h2>עסקים שלא נמצאו במקור חיצוני</h2>
-    <div id="not-found-list"></div>
+  <div class="review-section">
+    <h2>בדיקות הדורשות סקירה (לא נמצא / מעורפל)</h2>
+    <div id="review-list"></div>
   </div>
 </div>
 
@@ -91,7 +99,7 @@ async function loadAnomalies() {
   renderProgress(anomalies, businessIds);
   renderGroups(anomalies, businesses);
 
-  await loadNotFound();
+  await loadNeedsReview();
 }
 
 async function fetchBusinesses(pairKeys) {
@@ -223,28 +231,30 @@ async function resolveAnomaly(anomaly, biz, status, valueToStore) {
   await loadAnomalies();
 }
 
-// Separate, simpler flow for businesses that couldn't be found online
-// at all: there's no per-field resolution here (see migration 006's
-// comment on why), just an acknowledgement so the admin doesn't keep
-// re-seeing the same "not found" flag every session. Acknowledging
-// writes a fresh 'matched'-style check is wrong (nothing was matched) -
-// instead this just records a note on the existing check row so it's
-// not silently lost, and stops surfacing it here by relying on a fresh
-// business_sanity_check row from any future re-check to take over as
-// "most recent".
-async function loadNotFound() {
+const MATCH_STATUS_LABELS = { not_found: "לא נמצא", ambiguous: "מעורפל" };
+
+// Shared, simpler flow for the two check outcomes that skip the
+// field-by-field anomaly flow entirely (see migration 006's comment on
+// why 'not_found' has no anomaly rows, and the BBB case for why
+// 'ambiguous' needs a human read rather than an automatic name fix):
+// just show the research notes/link and let the admin acknowledge it,
+// so it doesn't keep resurfacing every session. acknowledged_at
+// (migration 008) is a dedicated column, not a repurposed `notes` field -
+// notes needs to stay free for real research context (what was tried,
+// why it's ambiguous) without that being mistaken for "already handled".
+async function loadNeedsReview() {
   const { data, error } = await sb
     .from("business_sanity_check")
-    .select("id, source_id, source_record_id, checked_at, notes")
-    .eq("match_status", "not_found")
-    .is("notes", null)
+    .select("id, source_id, source_record_id, checked_at, match_status, external_url, notes")
+    .in("match_status", ["not_found", "ambiguous"])
+    .is("acknowledged_at", null)
     .order("checked_at", { ascending: true });
   if (error) { return; }
 
-  const listEl = document.getElementById("not-found-list");
+  const listEl = document.getElementById("review-list");
   listEl.innerHTML = "";
   if (data.length === 0) {
-    listEl.innerHTML = '<div class="empty-state">אין עסקים שלא נמצאו</div>';
+    listEl.innerHTML = '<div class="empty-state">אין בדיקות הממתינות לסקירה</div>';
     return;
   }
 
@@ -254,19 +264,29 @@ async function loadNotFound() {
   for (const check of data) {
     const biz = businesses[`${check.source_id}|${check.source_record_id}`];
     const row = document.createElement("div");
-    row.className = "not-found-row";
-    row.innerHTML = `<span>${biz ? biz.name_raw : check.source_record_id} — ${biz ? biz.address_raw + ", " + biz.city : ""}</span>`;
-    const btn = document.createElement("button");
-    btn.textContent = "אישור (נבדק)";
-    btn.onclick = async () => {
+    row.className = "review-row";
+    row.innerHTML = `
+      <div class="review-top">
+        <div>
+          <strong>${biz ? escapeHtml(biz.name_raw) : escapeHtml(check.source_record_id)}</strong>
+          <div class="hint">${biz ? escapeHtml(biz.address_raw + ", " + biz.city) : ""} — ${check.source_id} / ${check.source_record_id}</div>
+        </div>
+        <span class="status-badge ${check.match_status}">${MATCH_STATUS_LABELS[check.match_status] || check.match_status}</span>
+      </div>
+      ${check.notes ? `<div class="notes">${escapeHtml(check.notes)}</div>` : ""}
+      <div class="review-actions">
+        <button data-action="ack">אישור (נבדק)</button>
+        ${check.external_url ? `<a class="source-link" href="${check.external_url}" target="_blank" rel="noopener">מקור ↗</a>` : ""}
+      </div>
+    `;
+    row.querySelector('[data-action="ack"]').onclick = async () => {
       const { error: err } = await sb
         .from("business_sanity_check")
-        .update({ notes: "acknowledged" })
+        .update({ acknowledged_at: new Date().toISOString() })
         .eq("id", check.id);
       if (err) { alert("שגיאה: " + err.message); return; }
-      loadNotFound();
+      loadNeedsReview();
     };
-    row.appendChild(btn);
     listEl.appendChild(row);
   }
 }
