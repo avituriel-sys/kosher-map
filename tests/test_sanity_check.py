@@ -154,6 +154,8 @@ def test_deleting_business_cascades_to_check_and_anomaly(conn, source_id):
         ("מסעדה איטלקית", "italian"),
         ("מסעדת המבורגרים", "burger"),
         ("בית קפה", "cafe_bakery"),
+        ("קונדיטוריה", "cafe_bakery"),
+        ("מסעדה אתיופית", "ethiopian"),
         (None, None),
         ("", None),
         ("סוג חדש שלא ראינו", None),  # unmapped - left None, not guessed

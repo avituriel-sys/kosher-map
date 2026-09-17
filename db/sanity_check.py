@@ -41,7 +41,7 @@ EATERY_CATEGORIES = [
 # fall back to cuisine_type for "restaurant"/"cafe".
 CUISINE_TYPES = {
     "burger", "italian", "asian", "middle_eastern", "grill_meat",
-    "seafood", "cafe_bakery", "generic",
+    "seafood", "cafe_bakery", "ethiopian", "generic",
 }
 
 # Maps Google Maps' own subheading text (business_sanity_check.
@@ -61,6 +61,8 @@ CUISINE_TYPE_MAP = {
     "פיצרייה": "italian",
     "בית קפה": "cafe_bakery",
     "מאפייה": "cafe_bakery",
+    "קונדיטוריה": "cafe_bakery",
+    "מסעדה אתיופית": "ethiopian",
 }
 
 
