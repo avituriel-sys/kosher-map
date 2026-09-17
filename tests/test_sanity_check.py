@@ -155,6 +155,8 @@ def test_deleting_business_cascades_to_check_and_anomaly(conn, source_id):
         ("מסעדת המבורגרים", "burger"),
         ("בית קפה", "cafe_bakery"),
         ("קונדיטוריה", "cafe_bakery"),
+        ("פטיסרי", "cafe_bakery"),
+        ("חנות עוגות", "cafe_bakery"),
         ("מסעדה אתיופית", "ethiopian"),
         (None, None),
         ("", None),

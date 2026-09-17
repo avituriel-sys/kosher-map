@@ -62,6 +62,8 @@ CUISINE_TYPE_MAP = {
     "בית קפה": "cafe_bakery",
     "מאפייה": "cafe_bakery",
     "קונדיטוריה": "cafe_bakery",
+    "פטיסרי": "cafe_bakery",
+    "חנות עוגות": "cafe_bakery",
     "מסעדה אתיופית": "ethiopian",
 }
 
