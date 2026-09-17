@@ -22,6 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # A re-run of an old workflow run (as opposed to a fresh dispatch)
+      # replays against that run's *original* commit, not master's
+      # current tip - and even a fresh dispatch can go stale if other
+      # pushes land before this job starts. Sync to the real tip before
+      # generating anything, so the export below is always diffed
+      # against current master and the push at the end can't be
+      # rejected as non-fast-forward for a reason this workflow could
+      # have avoided.
+      - name: Sync to latest master
+        run: |
+          git fetch origin master
+          git reset --hard origin/master
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
