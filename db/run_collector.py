@@ -46,10 +46,17 @@ def _tlv_revoked():
     return SOURCE_ID, collect_revoked(), False
 
 
+def _raanana():
+    from collectors.raanana.collector import SOURCE_ID, collect
+
+    return SOURCE_ID, collect(), True
+
+
 SOURCES = {
     "netanya": _netanya,
     "tlv": _tlv,
     "tlv_revoked": _tlv_revoked,
+    "raanana": _raanana,
 }
 
 
