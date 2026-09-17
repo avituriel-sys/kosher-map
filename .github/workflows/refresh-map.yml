@@ -1,10 +1,10 @@
 name: Refresh public map data
 
 # Regenerates web/businesses.json from the current database (picks up
-# any business_override correction - see scripts/export_map_data.py)
-# and pushes it if it changed. A push touching web/** is what
-# deploy-pages.yml already watches for, so this alone is enough to get
-# an admin's corrections live - no separate "deploy" step needed.
+# any business_override correction - see scripts/export_map_data.py),
+# pushes it if it changed, and deploys it directly (see the deploy step
+# below for why this workflow can't just rely on deploy-pages.yml's own
+# push trigger).
 #
 # Manual only (workflow_dispatch): triggered from this repo's Actions
 # tab ("Run workflow"), or `gh workflow run refresh-map.yml`, whenever
@@ -16,10 +16,22 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+# Same group as deploy-pages.yml - the two must never deploy to Pages
+# concurrently, so they serialize (and a newer run cancels a stale one)
+# against each other, not just against other runs of this workflow.
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       # A re-run of an old workflow run (as opposed to a fresh dispatch)
@@ -48,3 +60,16 @@ jobs:
           git add web/businesses.json
           git diff --cached --quiet || git commit -m "Refresh map data from admin corrections"
           git push
+      # A push authenticated with this workflow's own GITHUB_TOKEN does
+      # NOT trigger deploy-pages.yml's `on: push` listener - GitHub
+      # deliberately blocks the default token from starting other
+      # workflows, to prevent infinite trigger loops. Confirmed live
+      # 2026-09-17: two refresh runs pushed real data changes and
+      # neither produced a deploy-pages.yml run, so the site kept
+      # serving a stale snapshot indefinitely. Deploying directly here
+      # instead of hoping the other workflow fires.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4
