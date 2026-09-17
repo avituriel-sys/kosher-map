@@ -8,7 +8,7 @@ import uuid
 import pytest
 
 from db.connection import get_connection
-from db.sanity_check import get_next_batch, record_anomaly, record_check
+from db.sanity_check import get_next_batch, map_cuisine_type, record_anomaly, record_check
 
 
 @pytest.fixture
@@ -146,6 +146,21 @@ def test_deleting_business_cascades_to_check_and_anomaly(conn, source_id):
         assert cur.fetchone()[0] == 0
         cur.execute("select count(*) from business_anomaly where source_id = %s", (source_id,))
         assert cur.fetchone()[0] == 0
+
+
+@pytest.mark.parametrize(
+    "external_category, expected",
+    [
+        ("מסעדה איטלקית", "italian"),
+        ("מסעדת המבורגרים", "burger"),
+        ("בית קפה", "cafe_bakery"),
+        (None, None),
+        ("", None),
+        ("סוג חדש שלא ראינו", None),  # unmapped - left None, not guessed
+    ],
+)
+def test_map_cuisine_type(external_category, expected):
+    assert map_cuisine_type(external_category) == expected
 
 
 def test_get_next_batch_prioritizes_never_checked(conn, source_id):

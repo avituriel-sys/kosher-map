@@ -30,6 +30,52 @@ EATERY_CATEGORIES = [
     "sushi_asian", "ice_cream", "bakery_patisserie",
 ]
 
+# Cuisine type is prep for a future map-pin/list-view icon feature
+# (discussed 2026-09-17) - it only exists to subdivide the two big,
+# visually-uninformative category_canonical buckets ("restaurant",
+# "cafe") into something an icon can actually distinguish. It's
+# deliberately NOT a general-purpose cuisine taxonomy: category_canonical
+# already distinguishes pizzeria/sushi_asian/bakery_patisserie/
+# ice_cream/falafel_shawarma on its own, so those aren't repeated here -
+# a badge-rendering step would check category_canonical first and only
+# fall back to cuisine_type for "restaurant"/"cafe".
+CUISINE_TYPES = {
+    "burger", "italian", "asian", "middle_eastern", "grill_meat",
+    "seafood", "cafe_bakery", "generic",
+}
+
+# Maps Google Maps' own subheading text (business_sanity_check.
+# external_category - see migration 007) to a CUISINE_TYPES value.
+# Seeded from subheadings actually seen during real sanity-check
+# research batches (2026-09 pilot batches) - like every mapping table
+# in this project, deliberately incomplete: extend as new subheadings
+# turn up rather than guessing at a translation. A caller should treat
+# a miss here as "leave cuisine_type unset for now", not as license to
+# invent a mapping.
+CUISINE_TYPE_MAP = {
+    "מסעדה איטלקית": "italian",
+    "מסעדת המבורגרים": "burger",
+    "מסעדה יפנית": "asian",
+    "מסעדה אסייתית": "asian",
+    "מסעדה מזרח תיכונית": "middle_eastern",
+    "פיצרייה": "italian",
+    "בית קפה": "cafe_bakery",
+    "מאפייה": "cafe_bakery",
+}
+
+
+def map_cuisine_type(external_category: str | None) -> str | None:
+    """Best-effort translation of a Google Maps subheading into a
+    CUISINE_TYPES value, or None if unmapped/absent. Pure lookup - does
+    not write anything; whoever records the result (currently a batch
+    script, same as every other sanity-check write) decides whether and
+    where to store it, per this module's own no-writes-to-business*
+    boundary (see module docstring).
+    """
+    if not external_category:
+        return None
+    return CUISINE_TYPE_MAP.get(external_category.strip())
+
 
 def record_check(
     conn: psycopg.Connection,

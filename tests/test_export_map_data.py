@@ -28,7 +28,9 @@ _QUERY = """
         coalesce(o.address_raw, b.address_raw) as address_raw,
         coalesce(o.lat, b.lat) as lat,
         coalesce(o.lng, b.lng) as lng,
-        coalesce(o.phone, b.phone) as phone
+        coalesce(o.phone, b.phone) as phone,
+        o.cuisine_type,
+        o.cuisine_type_source
     from business b
     left join business_override o
         on o.source_id = b.source_id and o.source_record_id = b.source_record_id
@@ -110,6 +112,7 @@ def test_no_override_falls_back_to_business_values(conn, source_id):
         "source_id": source_id, "source_record_id": "biz-1", "name_raw": "Original Name",
         "category_canonical": "restaurant", "kosher_type": ["meat"], "supervision_level": "regular",
         "address_raw": "1 Test St", "lat": 32.0, "lng": 34.0, "phone": "050-0000000",
+        "cuisine_type": None, "cuisine_type_source": None,
     }]
 
 
@@ -130,6 +133,38 @@ def test_override_address_wins_over_scraped_address(conn, source_id):
     assert rows[0]["address_raw"] == "2 Test St"
     # Non-overridden fields still come from the scraped row.
     assert rows[0]["name_raw"] == "Original Name"
+
+
+def test_override_cuisine_type_has_no_raw_fallback(conn, source_id):
+    # Unlike every other override field, cuisine_type has no business.*
+    # counterpart to fall back to - the business table never has one at
+    # all, so it's simply null until something (a sanity-check batch,
+    # eventually an admin) sets it.
+    _insert_business(conn, source_id, "biz-1")
+    _insert_override(
+        conn, source_id, "biz-1",
+        cuisine_type="burger", cuisine_type_source="sanity_check", note="from Google subheading",
+    )
+    rows = _fetch(conn, source_id)
+    assert rows[0]["cuisine_type"] == "burger"
+    assert rows[0]["cuisine_type_source"] == "sanity_check"
+
+
+def test_cuisine_type_source_without_cuisine_type_is_rejected(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    with pytest.raises(Exception):
+        _insert_override(conn, source_id, "biz-1", cuisine_type_source="admin", note="dangling source")
+    conn.rollback()
+
+
+def test_cuisine_type_source_must_be_a_known_value(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    with pytest.raises(Exception):
+        _insert_override(
+            conn, source_id, "biz-1",
+            cuisine_type="burger", cuisine_type_source="made_up_source", note="bad source",
+        )
+    conn.rollback()
 
 
 def test_override_partial_fields_only_replaces_those_fields(conn, source_id):

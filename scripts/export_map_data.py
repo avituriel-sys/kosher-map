@@ -41,7 +41,9 @@ def export() -> int:
                     coalesce(o.lng, b.lng) as lng,
                     b.certifying_authority,
                     b.source_url,
-                    coalesce(o.phone, b.phone) as phone
+                    coalesce(o.phone, b.phone) as phone,
+                    o.cuisine_type,
+                    o.cuisine_type_source
                 from business b
                 left join business_override o
                     on o.source_id = b.source_id and o.source_record_id = b.source_record_id
