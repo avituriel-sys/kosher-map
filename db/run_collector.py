@@ -52,11 +52,47 @@ def _raanana():
     return SOURCE_ID, collect(), True
 
 
+def _givat_shmuel():
+    from collectors.drts.collector import collect
+    from collectors.drts.councils import GIVAT_SHMUEL
+
+    return GIVAT_SHMUEL.source_id, collect(GIVAT_SHMUEL), True
+
+
+def _petah_tikva():
+    from collectors.drts.collector import collect
+    from collectors.drts.councils import PETAH_TIKVA
+
+    return PETAH_TIKVA.source_id, collect(PETAH_TIKVA), True
+
+
+# 2026-09-23 pilot of the national m-datit portal: Tel Mond, Beit Shean,
+# Kfar Saba, Givat Shmuel (a "list B" council the survey expected to be
+# missing), and the three big zero-certificate councils (Petah Tikva,
+# Rishon LeZion, Ashdod). Deliberately NOT in the weekly workflow yet - run
+# by hand (python -m db.run_collector mdatit_pilot). The first run geocodes
+# ~1,800 addresses at 1/second, so it takes roughly half an hour.
+MDATIT_PILOT_AUTHORITY_IDS = [80, 72, 16, 56, 6, 5, 7]
+
+
+def _mdatit_pilot():
+    from collectors.mdatit.collector import collect
+
+    records = collect(MDATIT_PILOT_AUTHORITY_IDS)
+    by_source: dict[str, list[dict]] = {}
+    for record in records:
+        by_source.setdefault(record["source_id"], []).append(record)
+    return [(source_id, rows, True) for source_id, rows in sorted(by_source.items())]
+
+
 SOURCES = {
     "netanya": _netanya,
     "tlv": _tlv,
     "tlv_revoked": _tlv_revoked,
     "raanana": _raanana,
+    "givat_shmuel": _givat_shmuel,
+    "petah_tikva": _petah_tikva,
+    "mdatit_pilot": _mdatit_pilot,
 }
 
 
@@ -69,30 +105,38 @@ def main(source_name: str) -> int:
         return 2
 
     try:
-        source_id, records, is_full_census = SOURCES[source_name]()
+        collected = SOURCES[source_name]()
     except CollectorError as exc:
         logger.error("%s: collector failed before producing any records: %s", source_name, exc)
         return 1
 
-    conn = get_connection()
-    try:
-        result = apply_collection_run(conn, source_id, records, is_full_census)
-    except Exception:
-        logger.exception("%s: applying collection_run failed", source_name)
-        return 1
-    finally:
-        conn.close()
+    # Most sources are one (source_id, records, full_census) triple; the
+    # national portal yields one triple per council, each applied on its own
+    # so "absent" detection never crosses councils.
+    runs = collected if isinstance(collected, list) else [collected]
 
-    logger.info(
-        "%s: found=%d new=%d absent=%d notable_changes=%d (collection_run id=%d)",
-        source_name,
-        result.records_found,
-        result.records_new,
-        result.records_absent,
-        result.notable_changes,
-        result.run_id,
-    )
-    return 0
+    exit_code = 0
+    for source_id, records, is_full_census in runs:
+        conn = get_connection()
+        try:
+            result = apply_collection_run(conn, source_id, records, is_full_census)
+        except Exception:
+            logger.exception("%s: applying collection_run for %s failed", source_name, source_id)
+            exit_code = 1
+            continue
+        finally:
+            conn.close()
+
+        logger.info(
+            "%s: found=%d new=%d absent=%d notable_changes=%d (collection_run id=%d)",
+            source_id,
+            result.records_found,
+            result.records_new,
+            result.records_absent,
+            result.notable_changes,
+            result.run_id,
+        )
+    return exit_code
 
 
 if __name__ == "__main__":

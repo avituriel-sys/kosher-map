@@ -37,7 +37,7 @@ jobs:
         # must not stop the others, and each still fails its own job
         # (triggering GitHub's built-in failed-workflow email) rather
         # than being silently swallowed.
-        source: [netanya, tlv, tlv_revoked, raanana]
+        source: [netanya, tlv, tlv_revoked, raanana, givat_shmuel, petah_tikva]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

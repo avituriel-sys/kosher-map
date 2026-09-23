@@ -1,0 +1,679 @@
+{
+ "RetVal": [
+  {
+   "SiteName": "אוקי דאקי בע\"מ",
+   "SiteCompany": "אוקי דאקי בע\"מ",
+   "SiteDescription": "יצור קינוחים קפואים",
+   "CityName": "",
+   "SiteAddress": " דרך אפק 6 כפר סבא",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 83144,
+   "State": 1
+  },
+  {
+   "SiteName": "לה פסטה דלה קאזה",
+   "SiteCompany": "משה בראל",
+   "SiteDescription": "מפעל",
+   "CityName": "",
+   "SiteAddress": " דרך אפק 4 כפר סבא",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11954,
+   "State": 1
+  },
+  {
+   "SiteName": "SUMA | סומא",
+   "SiteCompany": "ערן עבד",
+   "SiteDescription": "מסעדה אסיאתית",
+   "CityName": "כפר סבא",
+   "SiteAddress": "שמר נעמי 15",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 167313,
+   "State": 1
+  },
+  {
+   "SiteName": "א.מ.ש מוצרי בשר",
+   "SiteCompany": "אבירם דניאל",
+   "SiteDescription": "איטליז ודגים",
+   "CityName": "כפר סבא",
+   "SiteAddress": "שאול המלך 111",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11816,
+   "State": 1
+  },
+  {
+   "SiteName": "א.ת.י פרצל בע\"מ",
+   "SiteCompany": "תמיר רונן",
+   "SiteDescription": "דוכן מאפים חלביים",
+   "CityName": "כפר סבא",
+   "SiteAddress": "ויצמן 207",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 93421,
+   "State": 1
+  },
+  {
+   "SiteName": "אגבבה",
+   "SiteCompany": "אלי פרטוש",
+   "SiteDescription": "שווארמה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "אנגל 78",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 93604,
+   "State": 1
+  },
+  {
+   "SiteName": "אדלה פירות וירקות",
+   "SiteCompany": "יאיר בר חי",
+   "SiteDescription": "פירות וירקות",
+   "CityName": "כפר סבא",
+   "SiteAddress": "מבצע יונתן 5",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 167805,
+   "State": 1
+  },
+  {
+   "SiteName": "אולמי וואלי אירועים",
+   "SiteCompany": "אלקיים משה",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "כפר סבא",
+   "SiteAddress": "בלפר זאב 27",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 14540,
+   "State": 1
+  },
+  {
+   "SiteName": "אולמי פבריקה",
+   "SiteCompany": "יעיש ביטון",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "כפר סבא",
+   "SiteAddress": "החרושת 14 אזור התעשיה",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11685,
+   "State": 1
+  },
+  {
+   "SiteName": "אונים ע''י שיבולת קייטרינג",
+   "SiteCompany": "רוני טובי",
+   "SiteDescription": "מטבח",
+   "CityName": "כפר סבא",
+   "SiteAddress": "סולד 5",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11946,
+   "State": 1
+  },
+  {
+   "SiteName": "אורבן סלייס",
+   "SiteCompany": "רון רוכמן,אסף אברהם ידידיה",
+   "SiteDescription": "פיצריה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "ויצמן 57",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 167612,
+   "State": 1
+  },
+  {
+   "SiteName": "אושי אושי",
+   "SiteCompany": "שרון מרום",
+   "SiteDescription": "מסעדת דגים",
+   "CityName": "כפר סבא",
+   "SiteAddress": "רפפורט 3",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11817,
+   "State": 1
+  },
+  {
+   "SiteName": "אושר עד-מרב מזון כל",
+   "SiteCompany": "אושר עד",
+   "SiteDescription": "מרכול",
+   "CityName": "כפר סבא",
+   "SiteAddress": "דרך קדומים 1",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 51051,
+   "State": 1
+  },
+  {
+   "SiteName": "איטליז בשר ניסים ביטון בן הקצב",
+   "SiteCompany": "ניסים ביטון",
+   "SiteDescription": "איטליז בשר",
+   "CityName": "כפר סבא",
+   "SiteAddress": "יחזקאל 5",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11818,
+   "State": 1
+  },
+  {
+   "SiteName": "אלוף הפלאפל והשניצל",
+   "SiteCompany": "אהרון זדה",
+   "SiteDescription": "מסעדה בשרית לממכר פלאפל ושניצל",
+   "CityName": "כפר סבא",
+   "SiteAddress": "הורביץ אלי 4",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 39455,
+   "State": 1
+  },
+  {
+   "SiteName": "אמריקן פיצה",
+   "SiteCompany": "מיכאל אשירוב",
+   "SiteDescription": "פיצריה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "ויצמן 42",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "מהדרין",
+      "ID": 2
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11904,
+   "State": 1
+  },
+  {
+   "SiteName": "ארטייסט אירועים בע''מ",
+   "SiteCompany": "יניב שבח",
+   "SiteDescription": "קייטרינג חלבי אבקת חלב נכרי",
+   "CityName": "כפר סבא",
+   "SiteAddress": "התע\"ש 24",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 13500,
+   "State": 1
+  },
+  {
+   "SiteName": "אריאנה בר יין בע\"מ",
+   "SiteCompany": "אריאנה",
+   "SiteDescription": "מסעדה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "עתירי ידע 2",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 113889,
+   "State": 1
+  },
+  {
+   "SiteName": "ארקפה",
+   "SiteCompany": "ארקפה",
+   "SiteDescription": "מסעדה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "ויצמן 301",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 40334,
+   "State": 1
+  },
+  {
+   "SiteName": "באבא ניסים",
+   "SiteCompany": "ניסים משה",
+   "SiteDescription": "מסעדת בשרים",
+   "CityName": "כפר סבא",
+   "SiteAddress": "טשרניחובסקי 24",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 156847,
+   "State": 1
+  },
+  {
+   "SiteName": "באליחומוס",
+   "SiteCompany": "גישרמו ברגר. אליהו בירן",
+   "SiteDescription": "מסעדת חומוס פול פרווה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "ויצמן 45",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 50768,
+   "State": 1
+  },
+  {
+   "SiteName": "באפלו",
+   "SiteCompany": "באפלו טורטיה בר בע\"מ",
+   "SiteDescription": "מסעדה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "ויצמן 43",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 27559,
+   "State": 1
+  },
+  {
+   "SiteName": "בהדונס החומוסיה והפול",
+   "SiteCompany": "סבסטיאן ישראל קיאסל",
+   "SiteDescription": "מסעדה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "דרך השרון 5 קניון שרונה",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11947,
+   "State": 1
+  },
+  {
+   "SiteName": "בהדונס חומוס",
+   "SiteCompany": "יאיר ארזי וצביקה נוי",
+   "SiteDescription": "מסעדה",
+   "CityName": "כפר סבא",
+   "SiteAddress": "התע\"ש 20",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11992,
+   "State": 1
+  },
+  {
+   "SiteName": "בוארון סלטים ביתיים",
+   "SiteCompany": "רחמים בוארון",
+   "SiteDescription": "מפעל",
+   "CityName": "כפר סבא",
+   "SiteAddress": "התוכנה 10",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1801346400000)/"
+    }
+   ],
+   "ID": 11968,
+   "State": 1
+  }
+ ]
+}

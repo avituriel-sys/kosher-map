@@ -1,0 +1,631 @@
+{
+ "RetVal": [
+  {
+   "SiteName": "אדם תל מונד",
+   "SiteCompany": "אביהו יעקב",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 83",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 156873,
+   "State": 1
+  },
+  {
+   "SiteName": "אמריקן פיצה",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 83",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39407,
+   "State": 1
+  },
+  {
+   "SiteName": "בוטיק בייקרי",
+   "SiteCompany": "יובל דרור ותום הראל",
+   "SiteDescription": "בית קפה",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 58",
+   "lstKosherCertificateIssued": [],
+   "ID": 40437,
+   "State": 1
+  },
+  {
+   "SiteName": "ביסקוטי",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 47",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 126026,
+   "State": 1
+  },
+  {
+   "SiteName": "דודא לפיצה",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 47",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39361,
+   "State": 1
+  },
+  {
+   "SiteName": "הבשרים של משה",
+   "SiteCompany": "משה חג'בי",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 47",
+   "lstKosherCertificateIssued": [],
+   "ID": 62818,
+   "State": 1
+  },
+  {
+   "SiteName": "הקוסקוס של גליה",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 56",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39365,
+   "State": 1
+  },
+  {
+   "SiteName": "ויקטורי",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "השקד 4",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 38991,
+   "State": 1
+  },
+  {
+   "SiteName": "זוהר",
+   "SiteCompany": "עמית בנימין",
+   "SiteDescription": "מכירת שווארמה ופלאפל",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 41",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 93546,
+   "State": 1
+  },
+  {
+   "SiteName": "חומוס הבוסתן",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 83",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 156486,
+   "State": 1
+  },
+  {
+   "SiteName": "טאבון דוד",
+   "SiteCompany": "ברוך יוספוב",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 41",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 50750,
+   "State": 1
+  },
+  {
+   "SiteName": "טאבון הצועני",
+   "SiteCompany": "יאיר ריעני",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "השקד 2",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 28893,
+   "State": 1
+  },
+  {
+   "SiteName": "יאמיז",
+   "SiteCompany": "חלדאר כהן ליעד בשי",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 47",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39357,
+   "State": 1
+  },
+  {
+   "SiteName": "לחמה",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 41",
+   "lstKosherCertificateIssued": [],
+   "ID": 39362,
+   "State": 1
+  },
+  {
+   "SiteName": "מעדני עדן",
+   "SiteCompany": "רון סינטס",
+   "SiteDescription": "אטליז",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 52",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 52157,
+   "State": 1
+  },
+  {
+   "SiteName": "מקדולנדס",
+   "SiteCompany": "",
+   "SiteDescription": "אוכל",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 47",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 50586,
+   "State": 1
+  },
+  {
+   "SiteName": "מקור השפע",
+   "SiteCompany": "שלמה פלאח",
+   "SiteDescription": "פירות וירקות",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 54",
+   "lstKosherCertificateIssued": [],
+   "ID": 39249,
+   "State": 1
+  },
+  {
+   "SiteName": "מקור השפע",
+   "SiteCompany": "אבי אברהם פלח",
+   "SiteDescription": "פירות וירקות",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 54",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 83156,
+   "State": 1
+  },
+  {
+   "SiteName": "סומבררו",
+   "SiteCompany": "שמעון משה בן חמו",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 47",
+   "lstKosherCertificateIssued": [],
+   "ID": 51741,
+   "State": 1
+  },
+  {
+   "SiteName": "פיצה איטליאן",
+   "SiteCompany": "ליאור מאיר יהוד",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 19",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39401,
+   "State": 1
+  },
+  {
+   "SiteName": "פלאפל עומייסי",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 83",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39360,
+   "State": 1
+  },
+  {
+   "SiteName": "קדן בעיקר בשר",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 52",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39359,
+   "State": 1
+  },
+  {
+   "SiteName": "קליית יבגי",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 43",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39358,
+   "State": 1
+  },
+  {
+   "SiteName": "קרפור מרקט",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "אזור תעשייה",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 38992,
+   "State": 1
+  },
+  {
+   "SiteName": "שופרסל שלי",
+   "SiteCompany": "",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 49",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "1,2,3",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 39403,
+   "State": 1
+  },
+  {
+   "SiteName": "תסביח הפלאפל",
+   "SiteCompany": "עוז ברעם",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 48",
+   "lstKosherCertificateIssued": [
+    {
+     "SiteID": 0,
+     "KosherCertificateType": {
+      "Name": "קבוע",
+      "ID": 1
+     },
+     "KosherLevel": {
+      "Name": "רגיל",
+      "ID": 1
+     },
+     "KosherType": {
+      "Name": "2",
+      "ID": null
+     },
+     "ValidTo": "/Date(1808168400000)/"
+    }
+   ],
+   "ID": 167127,
+   "State": 1
+  },
+  {
+   "SiteName": "תסביח הפלאפל",
+   "SiteCompany": "גיא לוי",
+   "SiteDescription": "",
+   "CityName": "תל מונד",
+   "SiteAddress": "הדקל 48",
+   "lstKosherCertificateIssued": [],
+   "ID": 52258,
+   "State": 1
+  }
+ ]
+}

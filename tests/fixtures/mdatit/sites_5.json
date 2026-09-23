@@ -1,0 +1,404 @@
+{
+ "RetVal": [
+  {
+   "SiteName": "אולם - 360 איוונטס",
+   "SiteCompany": "לימור הפקות ותחזוקה",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "איתן 12",
+   "lstKosherCertificateIssued": [],
+   "ID": 83115,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - אדל",
+   "SiteCompany": "חגי + אלרון",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "פלוטיצקי 18",
+   "lstKosherCertificateIssued": [],
+   "ID": 446,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - אחוזת ים",
+   "SiteCompany": "שי נזרי",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "פרופ' חבוט 7",
+   "lstKosherCertificateIssued": [],
+   "ID": 445,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - בלוודר",
+   "SiteCompany": "מאיר רבינוביץ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "ישראלי שמעון 4",
+   "lstKosherCertificateIssued": [],
+   "ID": 449,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - בראשית כנסים ואירועים",
+   "SiteCompany": "יואל מושקוביץ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "דרך המכבים 56",
+   "lstKosherCertificateIssued": [],
+   "ID": 40363,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - גרייס",
+   "SiteCompany": "אורי + רומן",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "אצ\"ל 9",
+   "lstKosherCertificateIssued": [],
+   "ID": 13634,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - האוס ארועים",
+   "SiteCompany": "דרורי א.ג. השקעות בע\"מ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "פלטין נפתלי 3",
+   "lstKosherCertificateIssued": [],
+   "ID": 455,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - טאי",
+   "SiteCompany": "שירן ניסים",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "שלנג זאב 4",
+   "lstKosherCertificateIssued": [],
+   "ID": 460,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - לאו",
+   "SiteCompany": "ניסים + אביבה",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "ברשבסקי 12",
+   "lstKosherCertificateIssued": [],
+   "ID": 448,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - מון אירועים",
+   "SiteCompany": "מני כהן",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "פלוטיצקי 18",
+   "lstKosherCertificateIssued": [],
+   "ID": 461,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - מרקטו אירועים",
+   "SiteCompany": "שי נזרי",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "הכשרת הישוב 3",
+   "lstKosherCertificateIssued": [],
+   "ID": 51742,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - סיי ארועים",
+   "SiteCompany": "ניר פרץ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "שרת משה 19",
+   "lstKosherCertificateIssued": [],
+   "ID": 39030,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - סייטה",
+   "SiteCompany": "שגיא טרבלסי",
+   "SiteDescription": "אולם",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "לישנסקי יוסף 4",
+   "lstKosherCertificateIssued": [],
+   "ID": 14009,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - ספארק ארועים",
+   "SiteCompany": "שאולי אמירה",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "בקר 15",
+   "lstKosherCertificateIssued": [],
+   "ID": 466,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - ספליט אירועים",
+   "SiteCompany": "אברהם דנישמן",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "לזרוב 17",
+   "lstKosherCertificateIssued": [],
+   "ID": 39012,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - פלטין",
+   "SiteCompany": "מגן הזהב אחזקות כע\"מ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "פלטין נפתלי 3",
+   "lstKosherCertificateIssued": [],
+   "ID": 50613,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - פראיסו",
+   "SiteCompany": "חן פאר",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "רוז'נסקי מרדכי 12",
+   "lstKosherCertificateIssued": [],
+   "ID": 13632,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - קליספרה",
+   "SiteCompany": "רן + עמית",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "ילדי טהרן 12",
+   "lstKosherCertificateIssued": [],
+   "ID": 13633,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - ריין אירועים",
+   "SiteCompany": "אלירן טרבלסי",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "לזרוב 23",
+   "lstKosherCertificateIssued": [],
+   "ID": 459,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - שמוטקין 11",
+   "SiteCompany": "בועז חסן",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "שמוטקין בנימין 11",
+   "lstKosherCertificateIssued": [],
+   "ID": 51735,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - תיאטרו אירועים",
+   "SiteCompany": "דניאל פוזיילוב",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "לישנסקי יוסף 27",
+   "lstKosherCertificateIssued": [],
+   "ID": 471,
+   "State": 1
+  },
+  {
+   "SiteName": "אולם - תרין",
+   "SiteCompany": "מרדכי אביוב",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "סחרוב דוד 20",
+   "lstKosherCertificateIssued": [],
+   "ID": 457,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - אילן",
+   "SiteCompany": "אילן קצב",
+   "SiteDescription": "איטליזים",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "אבו חצירה 7",
+   "lstKosherCertificateIssued": [],
+   "ID": 13850,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - אלקוביס",
+   "SiteCompany": "אשר אלקובי",
+   "SiteDescription": "איטליזים",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "כהן אלי 1",
+   "lstKosherCertificateIssued": [],
+   "ID": 13851,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - בית הקצבים",
+   "SiteCompany": "בית הקצבים",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "החלוצים 13",
+   "lstKosherCertificateIssued": [],
+   "ID": 52174,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - בשר ושוק",
+   "SiteCompany": "ס.מ. מעיין 2009 בע\"מ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "שמוטקין בנימין 8",
+   "lstKosherCertificateIssued": [],
+   "ID": 62701,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - גבאי דגים ואדל קצבים",
+   "SiteCompany": "בן גבאי",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "יהודה 2",
+   "lstKosherCertificateIssued": [],
+   "ID": 62642,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - גרובר וקריחלי",
+   "SiteCompany": "גרובר את קריחלי",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "רוטשילד 90",
+   "lstKosherCertificateIssued": [],
+   "ID": 52368,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - הבשרייה",
+   "SiteCompany": "אור סבאג",
+   "SiteDescription": "איטליזים",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "מורשת ישראל 15",
+   "lstKosherCertificateIssued": [],
+   "ID": 13853,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - הבשרים של קונטנטו",
+   "SiteCompany": "עידן קונטנטו",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "האלוף דוד 6",
+   "lstKosherCertificateIssued": [],
+   "ID": 52321,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - הקצבייה",
+   "SiteCompany": "אלון לוי",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "יהודה לייב 6",
+   "lstKosherCertificateIssued": [],
+   "ID": 39007,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - הקצבייה של שמואל",
+   "SiteCompany": "שמואל אשרוב",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "רוטשילד 111",
+   "lstKosherCertificateIssued": [],
+   "ID": 62688,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - חד וחלק",
+   "SiteCompany": "א.ב. חד וחלק מעדני גורמה",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "מורדי הגטאות 42",
+   "lstKosherCertificateIssued": [],
+   "ID": 39009,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - מעדני הטלה",
+   "SiteCompany": "מעדני הטלה",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "הכשרת הישוב 5",
+   "lstKosherCertificateIssued": [],
+   "ID": 62415,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - נתח קצבים",
+   "SiteCompany": "יניב פחימה",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "לישנסקי יוסף 9",
+   "lstKosherCertificateIssued": [],
+   "ID": 39383,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - קצביית החברים",
+   "SiteCompany": "עומר אייזנברג",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "הסוכה 14",
+   "lstKosherCertificateIssued": [],
+   "ID": 13848,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - רום קצבים",
+   "SiteCompany": "שוק עם סופר בע\"מ",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "ירושלים 3",
+   "lstKosherCertificateIssued": [],
+   "ID": 50770,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - רומן",
+   "SiteCompany": "רומן מירזרייב",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "אחד העם 14",
+   "lstKosherCertificateIssued": [],
+   "ID": 62979,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - רפאל",
+   "SiteCompany": "רפאל מולא עיני",
+   "SiteDescription": "איטליזים",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "מורדי הגטאות 50",
+   "lstKosherCertificateIssued": [],
+   "ID": 13855,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז - שף הבשר והעוף",
+   "SiteCompany": "ארתור ליביאב",
+   "SiteDescription": "",
+   "CityName": "ראשון לציון",
+   "SiteAddress": "שניאור זלמן 18",
+   "lstKosherCertificateIssued": [],
+   "ID": 13856,
+   "State": 1
+  }
+ ]
+}

@@ -1,0 +1,204 @@
+{
+ "RetVal": [
+  {
+   "SiteName": "אולמי זמורה",
+   "SiteCompany": "משה בן חמו",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "",
+   "SiteAddress": " הספיר 1 עד הלום",
+   "lstKosherCertificateIssued": [],
+   "ID": 26837,
+   "State": 1
+  },
+  {
+   "SiteName": "מ.א.מ תעשיות מזון",
+   "SiteCompany": "משה רייפר",
+   "SiteDescription": "",
+   "CityName": "",
+   "SiteAddress": " א.ת עד הלום",
+   "lstKosherCertificateIssued": [],
+   "ID": 27491,
+   "State": 1
+  },
+  {
+   "SiteName": "נחמיה לחוביץ בע\"מ",
+   "SiteCompany": "נחמיה לחוביץ",
+   "SiteDescription": "",
+   "CityName": "",
+   "SiteAddress": " אזור תעשיה עד הלום",
+   "lstKosherCertificateIssued": [],
+   "ID": 27247,
+   "State": 1
+  },
+  {
+   "SiteName": "ניצני הדר",
+   "SiteCompany": "דיגמי מאיר",
+   "SiteDescription": "",
+   "CityName": "",
+   "SiteAddress": " יהלום 5 עד הלום",
+   "lstKosherCertificateIssued": [],
+   "ID": 27248,
+   "State": 1
+  },
+  {
+   "SiteName": "קייטרינג ביכורים",
+   "SiteCompany": "יעקב לבין-אולמי נוף עילית",
+   "SiteDescription": "",
+   "CityName": "",
+   "SiteAddress": " רח' האודם,אזור תעשייה עד הלום",
+   "lstKosherCertificateIssued": [],
+   "ID": 27286,
+   "State": 1
+  },
+  {
+   "SiteName": "א.א שיווק מוצרי בלדי",
+   "SiteCompany": "ארביב אילן",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "בעלי מלאכה 19",
+   "lstKosherCertificateIssued": [],
+   "ID": 27295,
+   "State": 1
+  },
+  {
+   "SiteName": "א.ד בועז טופ משפרי אפיה",
+   "SiteCompany": "בועז שרעבי",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "ההדרים 36",
+   "lstKosherCertificateIssued": [],
+   "ID": 27214,
+   "State": 1
+  },
+  {
+   "SiteName": "א.ד פירוק ושיווק",
+   "SiteCompany": "אורן דרזי",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "הקיטור 7 אזור תעשייה הצפוני",
+   "lstKosherCertificateIssued": [],
+   "ID": 27294,
+   "State": 1
+  },
+  {
+   "SiteName": "אדיס עלם",
+   "SiteCompany": "אפרת אספה דויט",
+   "SiteDescription": "מסעדה",
+   "CityName": "אשדוד",
+   "SiteAddress": "הבנאים 5",
+   "lstKosherCertificateIssued": [],
+   "ID": 26867,
+   "State": 1
+  },
+  {
+   "SiteName": "אהובת הספן",
+   "SiteCompany": "גל לוי",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "אשדוד",
+   "SiteAddress": "יונה הנביא 2",
+   "lstKosherCertificateIssued": [],
+   "ID": 26820,
+   "State": 1
+  },
+  {
+   "SiteName": "אולה-לה",
+   "SiteCompany": "אולגה וערן הסל",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "הבנאים 3 חנות מס 15",
+   "lstKosherCertificateIssued": [],
+   "ID": 27085,
+   "State": 1
+  },
+  {
+   "SiteName": "אולמי אילבן",
+   "SiteCompany": "רוי נחמיאס מסעדות בעמ",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "אשדוד",
+   "SiteAddress": "האורגים 35",
+   "lstKosherCertificateIssued": [],
+   "ID": 26832,
+   "State": 1
+  },
+  {
+   "SiteName": "אולמי בינג'מין",
+   "SiteCompany": "אבישי אלימלך",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "אשדוד",
+   "SiteAddress": "שד בני ברית שד' בני ברית א.ת הקלה",
+   "lstKosherCertificateIssued": [],
+   "ID": 26835,
+   "State": 1
+  },
+  {
+   "SiteName": "אולמי בלו קאסל",
+   "SiteCompany": "נוריאלי יוסף",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "אשדוד",
+   "SiteAddress": "נורדאו 20",
+   "lstKosherCertificateIssued": [],
+   "ID": 32,
+   "State": 1
+  },
+  {
+   "SiteName": "אולמי סהרה",
+   "SiteCompany": "נ.י.ר הסעדה בע\"מ",
+   "SiteDescription": "אולם אירועים",
+   "CityName": "אשדוד",
+   "SiteAddress": "התקשורת 24",
+   "lstKosherCertificateIssued": [],
+   "ID": 35,
+   "State": 1
+  },
+  {
+   "SiteName": "אור לישראל מ.ח בע\"מ",
+   "SiteCompany": "בן חמו משה",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "מאיר בעל הנס 1",
+   "lstKosherCertificateIssued": [],
+   "ID": 27299,
+   "State": 1
+  },
+  {
+   "SiteName": "אושי אושי אשדוד",
+   "SiteCompany": "שי ידין",
+   "SiteDescription": "מסעדת סושי",
+   "CityName": "אשדוד",
+   "SiteAddress": "הגדוד העברי 6",
+   "lstKosherCertificateIssued": [],
+   "ID": 26868,
+   "State": 1
+  },
+  {
+   "SiteName": "אושר עד",
+   "SiteCompany": "מרב מזון כל בע\"מ",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "בעלי מלאכה 6",
+   "lstKosherCertificateIssued": [],
+   "ID": 27348,
+   "State": 1
+  },
+  {
+   "SiteName": "אותנטי",
+   "SiteCompany": "מוסייב שטייל",
+   "SiteDescription": "",
+   "CityName": "אשדוד",
+   "SiteAddress": "הציונות 13",
+   "lstKosherCertificateIssued": [],
+   "ID": 27451,
+   "State": 1
+  },
+  {
+   "SiteName": "אטליז א.ב.י.מ. בשרית",
+   "SiteCompany": "ממרוד ברוך",
+   "SiteDescription": "אטליז",
+   "CityName": "אשדוד",
+   "SiteAddress": "יוספטל 99",
+   "lstKosherCertificateIssued": [],
+   "ID": 26838,
+   "State": 1
+  }
+ ]
+}
