@@ -35,6 +35,7 @@ _QUERY = """
     left join business_override o
         on o.source_id = b.source_id and o.source_record_id = b.source_record_id
     where b.status = 'active' and b.source_id = %s
+        and not coalesce(o.hidden, false)
     order by b.source_record_id
 """
 
@@ -165,6 +166,36 @@ def test_cuisine_type_source_must_be_a_known_value(conn, source_id):
             cuisine_type="burger", cuisine_type_source="made_up_source", note="bad source",
         )
     conn.rollback()
+
+
+def test_hidden_business_is_excluded_from_export(conn, source_id):
+    _insert_business(conn, source_id, "biz-hidden")
+    _insert_business(conn, source_id, "biz-visible")
+    _insert_override(conn, source_id, "biz-hidden", hidden=True, hidden_reason="closed", note="closed down")
+    rows = _fetch(conn, source_id)
+    assert [r["source_record_id"] for r in rows] == ["biz-visible"]
+
+
+def test_hidden_false_alone_is_an_empty_override(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    with pytest.raises(Exception):
+        _insert_override(conn, source_id, "biz-1", hidden=False, note="no actual change")
+    conn.rollback()
+
+
+def test_hidden_reason_requires_hidden(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    with pytest.raises(Exception):
+        _insert_override(conn, source_id, "biz-1", phone="050-1111111", hidden_reason="orphan reason")
+    conn.rollback()
+
+
+def test_hidden_export_query_matches_real_export():
+    # The mirrored _QUERY above is what the tests exercise; make sure the
+    # real script filters hidden rows too, so the two can't drift apart.
+    from scripts import export_map_data
+    import inspect
+    assert "coalesce(o.hidden, false)" in inspect.getsource(export_map_data.export)
 
 
 def test_override_partial_fields_only_replaces_those_fields(conn, source_id):

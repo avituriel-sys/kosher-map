@@ -101,6 +101,9 @@
       <label>מיקום (גררו את הסמן על המפה כדי לתקן)</label>
       <div class="hint" id="f-latlng"></div>
 
+      <label><input type="checkbox" id="f-hidden" /> הסתרה מהמפה הציבורית (העסק נסגר / רישום כפול)</label>
+      <input type="text" id="f-hidden-reason" placeholder="סיבת ההסתרה..." />
+
       <label>הערה (למה תוקן)</label>
       <textarea id="f-note"></textarea>
 
@@ -143,7 +146,7 @@ function initMap() {
     zoom: 10.5
   });
   map.addControl(new maplibregl.NavigationControl(), "top-left");
-  map.on("load", loadAllPins);
+  map.on("load", () => { loadAllPins(); openFromUrl(); });
 }
 
 // PostgREST defaults to capping a response at 1000 rows even without an
@@ -309,6 +312,8 @@ async function selectBusiness(row) {
   document.getElementById("f-address").value = currentOverride?.address_raw || row.address_raw || "";
   document.getElementById("f-phone").value = currentOverride?.phone || row.phone || "";
   document.getElementById("f-note").value = currentOverride?.note || "";
+  document.getElementById("f-hidden").checked = !!currentOverride?.hidden;
+  document.getElementById("f-hidden-reason").value = currentOverride?.hidden_reason || "";
   document.getElementById("clear-btn").style.display = currentOverride ? "inline-block" : "none";
 
   const lat = currentOverride?.lat ?? row.lat;
@@ -376,12 +381,18 @@ async function saveOverride() {
     name_clean: diffOrNull(document.getElementById("f-name").value, current.name_raw),
     address_raw: diffOrNull(document.getElementById("f-address").value, current.address_raw),
     phone: diffOrNull(document.getElementById("f-phone").value, current.phone),
+    hidden: document.getElementById("f-hidden").checked,
+    hidden_reason: document.getElementById("f-hidden").checked
+      ? (document.getElementById("f-hidden-reason").value.trim() || null) : null,
     note: document.getElementById("f-note").value || null,
     updated_at: new Date().toISOString()
   };
 
+  // cuisine_type is set by sanity-check batches, not by this form, so it
+  // isn't in the payload - but it still counts as override content, or
+  // saving a no-diff form would wrongly clear a row that holds only it.
   const hasAnyOverride = ["lat", "lng", "name_clean", "address_raw", "category_canonical", "kosher_type", "supervision_level", "phone"]
-    .some(k => payload[k] !== null);
+    .some(k => payload[k] !== null) || payload.hidden || !!currentOverride?.cuisine_type;
 
   if (!hasAnyOverride) {
     // Nothing actually differs from source anymore - clear any
@@ -391,19 +402,56 @@ async function saveOverride() {
     return;
   }
 
-  const { error } = await sb.from("business_override").upsert(payload, { onConflict: "source_id,source_record_id" });
+  // An existing row is updated in place rather than upserted: a form
+  // with only a cleared field would otherwise send an all-empty insert
+  // that trips the not-empty CHECK before the conflict is even resolved.
+  const { error } = currentOverride
+    ? await sb.from("business_override").update(payload)
+        .eq("source_id", current.source_id).eq("source_record_id", current.source_record_id)
+    : await sb.from("business_override").insert(payload);
   if (error) { setStatus("שגיאת שמירה: " + error.message, true); return; }
+  await resolveLinkedCheck(payload.hidden ? "closed" : "corrected");
   setStatus("נשמר בהצלחה ✓");
   selectBusiness(current); // refresh badge/state
 }
 
+// Opened from the anomalies page's review list with ?check=<id>: once a
+// correction (or a hide) is saved, mark that sanity check as handled so
+// it leaves the review list. A no-op when opened normally.
+const linkedCheckId = new URLSearchParams(location.search).get("check");
+async function resolveLinkedCheck(resolution) {
+  if (!linkedCheckId) return;
+  const { error } = await sb
+    .from("business_sanity_check")
+    .update({ acknowledged_at: new Date().toISOString(), resolution })
+    .eq("id", linkedCheckId);
+  if (error) setStatus("נשמר, אך סימון הבדיקה כטופלה נכשל: " + error.message, true);
+}
+
+async function openFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const sid = params.get("source_id"), rid = params.get("source_record_id");
+  if (!sid || !rid) return;
+  const { data, error } = await sb
+    .from("business")
+    .select("source_id, source_record_id, name_raw, address_raw, city, category_canonical, kosher_type, supervision_level, lat, lng, phone")
+    .eq("source_id", sid).eq("source_record_id", rid).maybeSingle();
+  if (error || !data) { setStatus("העסק לא נמצא", true); return; }
+  selectBusiness(data);
+}
+
 async function clearOverride() {
   if (!current) return;
-  const { error } = await sb
-    .from("business_override")
-    .delete()
-    .eq("source_id", current.source_id)
-    .eq("source_record_id", current.source_record_id);
+  // A row that also holds a cuisine_type keeps that value (it isn't part
+  // of this form) - blank the correction fields instead of deleting it.
+  const keys = { source_id: current.source_id, source_record_id: current.source_record_id };
+  const { error } = currentOverride?.cuisine_type
+    ? await sb.from("business_override").update({
+        lat: null, lng: null, name_clean: null, address_raw: null, category_canonical: null,
+        kosher_type: null, supervision_level: null, phone: null, hidden: false,
+        hidden_reason: null, note: null, updated_at: new Date().toISOString(),
+      }).match(keys)
+    : await sb.from("business_override").delete().match(keys);
   if (error) { setStatus("שגיאה באיפוס: " + error.message, true); return; }
   setStatus("התיקון אופס ✓");
   selectBusiness(current);

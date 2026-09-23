@@ -148,6 +148,33 @@ def test_deleting_business_cascades_to_check_and_anomaly(conn, source_id):
         assert cur.fetchone()[0] == 0
 
 
+def test_check_resolution_requires_acknowledgement(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    check_id = record_check(conn, source_id, "biz-1", "not_found")
+    with conn.cursor() as cur:
+        with pytest.raises(Exception):
+            cur.execute("update business_sanity_check set resolution = 'closed' where id = %s", (check_id,))
+    conn.rollback()
+    with conn.cursor() as cur:
+        cur.execute(
+            "update business_sanity_check set resolution = 'confirmed_exists', acknowledged_at = now() where id = %s",
+            (check_id,),
+        )
+    conn.commit()
+
+
+def test_check_resolution_must_be_a_known_value(conn, source_id):
+    _insert_business(conn, source_id, "biz-1")
+    check_id = record_check(conn, source_id, "biz-1", "not_found")
+    with conn.cursor() as cur:
+        with pytest.raises(Exception):
+            cur.execute(
+                "update business_sanity_check set resolution = 'whatever', acknowledged_at = now() where id = %s",
+                (check_id,),
+            )
+    conn.rollback()
+
+
 @pytest.mark.parametrize(
     "external_category, expected",
     [

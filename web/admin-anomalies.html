@@ -41,7 +41,9 @@
   .review-row .status-badge.ambiguous { background: #ede9fe; color: #5b21b6; }
   .review-row .notes { font-size: 12px; color: #555; margin-top: 6px; }
   .review-row .review-actions { margin-top: 8px; display: flex; gap: 10px; align-items: center; }
-  .review-row button { font-size: 12px; padding: 4px 10px; cursor: pointer; }
+  .review-row button, .review-row .btn-link { font-size: 12px; padding: 4px 10px; cursor: pointer; }
+  .review-row .review-actions { flex-wrap: wrap; }
+  .review-row .btn-link { border: 1px solid #767676; border-radius: 3px; background: #efefef; color: #000; text-decoration: none; }
   h2 { font-size: 16px; margin: 24px 0 10px; }
 </style>
 </head>
@@ -231,6 +233,17 @@ async function resolveAnomaly(anomaly, biz, status, valueToStore) {
   await loadAnomalies();
 }
 
+// resolution is null for the plain "reviewed, leave as is" acknowledgement
+// (the original behaviour); the other values record what was decided.
+async function resolveCheck(checkId, resolution, resolutionNote) {
+  const { error } = await sb
+    .from("business_sanity_check")
+    .update({ acknowledged_at: new Date().toISOString(), resolution, resolution_note: resolutionNote })
+    .eq("id", checkId);
+  if (error) { alert("שגיאה: " + error.message); return; }
+  loadNeedsReview();
+}
+
 const MATCH_STATUS_LABELS = { not_found: "לא נמצא", ambiguous: "מעורפל" };
 
 // Shared, simpler flow for the two check outcomes that skip the
@@ -275,18 +288,29 @@ async function loadNeedsReview() {
       </div>
       ${check.notes ? `<div class="notes">${escapeHtml(check.notes)}</div>` : ""}
       <div class="review-actions">
-        <button data-action="ack">אישור (נבדק)</button>
+        <button data-action="exists">קיים - ללא שינוי</button>
+        <a class="btn-link" href="admin.html?source_id=${encodeURIComponent(check.source_id)}&source_record_id=${encodeURIComponent(check.source_record_id)}&check=${check.id}">קיים - עבר / שינה שם (עריכה במפה)</a>
+        <button data-action="closed">נסגר / לא קיים - הסתרה</button>
+        <button data-action="ack">נבדק - להשאיר כך</button>
         ${check.external_url ? `<a class="source-link" href="${check.external_url}" target="_blank" rel="noopener">מקור ↗</a>` : ""}
       </div>
     `;
-    row.querySelector('[data-action="ack"]').onclick = async () => {
-      const { error: err } = await sb
-        .from("business_sanity_check")
-        .update({ acknowledged_at: new Date().toISOString() })
-        .eq("id", check.id);
-      if (err) { alert("שגיאה: " + err.message); return; }
-      loadNeedsReview();
+    row.querySelector('[data-action="exists"]').onclick = async () => {
+      const note = prompt("מקור האימות (למשל: ביקור אישי, אתר העסק):");
+      if (note === null) return;
+      await resolveCheck(check.id, "confirmed_exists", note.trim() || null);
     };
+    row.querySelector('[data-action="closed"]').onclick = async () => {
+      const reason = prompt("סיבת ההסתרה (למשל: נסגר, רישום כפול):");
+      if (reason === null) return;
+      const { error: hideErr } = await sb.from("business_override").upsert({
+        source_id: check.source_id, source_record_id: check.source_record_id,
+        hidden: true, hidden_reason: reason.trim() || null, updated_at: new Date().toISOString(),
+      }, { onConflict: "source_id,source_record_id" });
+      if (hideErr) { alert("שגיאת הסתרה: " + hideErr.message); return; }
+      await resolveCheck(check.id, "closed", reason.trim() || null);
+    };
+    row.querySelector('[data-action="ack"]').onclick = () => resolveCheck(check.id, null, null);
     listEl.appendChild(row);
   }
 }

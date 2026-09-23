@@ -48,6 +48,7 @@ def export() -> int:
                 left join business_override o
                     on o.source_id = b.source_id and o.source_record_id = b.source_record_id
                 where b.status = 'active'
+                    and not coalesce(o.hidden, false)
                     and coalesce(o.lat, b.lat) is not null
                     and coalesce(o.lng, b.lng) is not null
             """)
