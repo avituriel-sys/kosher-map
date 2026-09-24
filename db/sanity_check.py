@@ -30,6 +30,16 @@ EATERY_CATEGORIES = [
     "sushi_asian", "ice_cream", "bakery_patisserie",
 ]
 
+# "other" is included on purpose (2026-09-24): sources that publish no
+# business type at all (Petah Tikva's council site, most of the m-datit
+# portal) leave most of their listings as "other", and Google's own
+# subheading for the place is the best cheap signal we have for what they
+# really are. Checking them records that subheading in external_category
+# (and confirms they exist); a matched check can then be used to give the
+# business a real category. Genuine non-eateries stay excluded via their
+# own categories (hotel, factory, catering, event_hall, ...).
+SANITY_CHECK_CATEGORIES = EATERY_CATEGORIES + ["other"]
+
 # Cuisine type is prep for a future map-pin/list-view icon feature
 # (discussed 2026-09-17) - it only exists to subdivide the two big,
 # visually-uninformative category_canonical buckets ("restaurant",
@@ -149,7 +159,8 @@ def record_anomaly(
 def get_next_batch(
     conn: psycopg.Connection, limit: int = 30, source_id: str | None = None
 ) -> list[dict]:
-    """Return up to `limit` eatery-category active businesses to check
+    """Return up to `limit` eatery-category (or "other" - see
+    SANITY_CHECK_CATEGORIES) active businesses to check
     next: never-checked ones first, then whichever were checked
     longest ago. Doesn't mark anything as "in progress" - re-running
     this before recording results for the previous batch will return
@@ -165,7 +176,8 @@ def get_next_batch(
         cur.execute(
             """
             select b.source_id, b.source_record_id, b.name_raw, b.address_raw,
-                   b.city, b.phone, last_check.checked_at as last_checked_at
+                   b.city, b.phone, b.category_canonical,
+                   last_check.checked_at as last_checked_at
             from business b
             left join lateral (
                 select checked_at from business_sanity_check sc
@@ -178,7 +190,7 @@ def get_next_batch(
             order by last_check.checked_at asc nulls first
             limit %s
             """,
-            (EATERY_CATEGORIES, source_id, source_id, limit),
+            (SANITY_CHECK_CATEGORIES, source_id, source_id, limit),
         )
         cols = [d.name for d in cur.description]
         return [dict(zip(cols, row)) for row in cur.fetchall()]

@@ -205,6 +205,17 @@ def test_get_next_batch_prioritizes_never_checked(conn, source_id):
     assert ids.index("biz-unchecked") < ids.index("biz-checked")
 
 
+def test_get_next_batch_includes_other_so_untyped_listings_get_reviewed(conn, source_id):
+    _insert_business(conn, source_id, "biz-other", category_canonical="other")
+    _insert_business(conn, source_id, "biz-factory", category_canonical="factory")
+
+    batch = get_next_batch(conn, limit=1000, source_id=source_id)
+    by_id = {r["source_record_id"]: r for r in batch}
+    assert "biz-other" in by_id
+    assert by_id["biz-other"]["category_canonical"] == "other"
+    assert "biz-factory" not in by_id
+
+
 def test_get_next_batch_excludes_non_eatery_categories(conn, source_id):
     _insert_business(conn, source_id, "biz-hotel", category_canonical="hotel")
     _insert_business(conn, source_id, "biz-cafe", category_canonical="cafe")
