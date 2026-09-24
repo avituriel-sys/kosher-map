@@ -8,7 +8,14 @@ import uuid
 import pytest
 
 from db.connection import get_connection
-from db.sanity_check import get_next_batch, map_cuisine_type, record_anomaly, record_check
+from db.sanity_check import (
+    category_from_subheading,
+    get_next_batch,
+    map_cuisine_type,
+    record_anomaly,
+    record_category_from_subheading,
+    record_check,
+)
 
 
 @pytest.fixture
@@ -192,6 +199,82 @@ def test_check_resolution_must_be_a_known_value(conn, source_id):
 )
 def test_map_cuisine_type(external_category, expected):
     assert map_cuisine_type(external_category) == expected
+
+
+@pytest.mark.parametrize(
+    "subheading, expected",
+    [
+        ("מסעדה", "restaurant"),
+        ("בית קפה", "cafe"),
+        ("פיצרייה", "pizzeria"),
+        ("מסעדת שווארמה", "restaurant"),
+        ("קייטרינג", "catering"),
+        ("חנות סלטים", None),          # nothing recognisable - not guessed
+        ("", None),
+        (None, None),
+    ],
+)
+def test_category_from_subheading(subheading, expected):
+    assert category_from_subheading(subheading) == expected
+
+
+def _override_row(conn, source_id, source_record_id):
+    with conn.cursor() as cur:
+        cur.execute(
+            "select category_canonical, note from business_override where source_id=%s and source_record_id=%s",
+            (source_id, source_record_id),
+        )
+        return cur.fetchone()
+
+
+def test_other_business_gets_a_real_category_from_the_subheading(conn, source_id):
+    _insert_business(conn, source_id, "biz-1", category_canonical="other")
+    assert record_category_from_subheading(conn, source_id, "biz-1", "מסעדה") == "restaurant"
+    category, note = _override_row(conn, source_id, "biz-1")
+    assert category == "restaurant"
+    assert "Google subheading" in note and "מסעדה" in note
+
+
+def test_business_with_a_real_category_is_never_changed(conn, source_id):
+    _insert_business(conn, source_id, "biz-1", category_canonical="cafe")
+    assert record_category_from_subheading(conn, source_id, "biz-1", "מסעדה") is None
+    assert _override_row(conn, source_id, "biz-1") is None
+
+
+def test_an_admin_set_category_is_never_overwritten(conn, source_id):
+    _insert_business(conn, source_id, "biz-1", category_canonical="other")
+    with conn.cursor() as cur:
+        cur.execute(
+            "insert into business_override (source_id, source_record_id, category_canonical, note) "
+            "values (%s, %s, 'butcher', 'set by admin')",
+            (source_id, "biz-1"),
+        )
+    conn.commit()
+    assert record_category_from_subheading(conn, source_id, "biz-1", "מסעדה") is None
+    assert _override_row(conn, source_id, "biz-1") == ("butcher", "set by admin")
+
+
+def test_existing_note_is_kept_and_extended(conn, source_id):
+    _insert_business(conn, source_id, "biz-1", category_canonical="other")
+    with conn.cursor() as cur:
+        cur.execute(
+            "insert into business_override (source_id, source_record_id, phone, note) "
+            "values (%s, %s, '050-1111111', 'phone filled')",
+            (source_id, "biz-1"),
+        )
+    conn.commit()
+    assert record_category_from_subheading(conn, source_id, "biz-1", "בית קפה") == "cafe"
+    category, note = _override_row(conn, source_id, "biz-1")
+    assert category == "cafe"
+    assert note.startswith("phone filled | Category from Google subheading")
+
+
+def test_unrecognised_or_blank_subheading_changes_nothing(conn, source_id):
+    _insert_business(conn, source_id, "biz-1", category_canonical="other")
+    assert record_category_from_subheading(conn, source_id, "biz-1", "חנות סלטים") is None
+    assert record_category_from_subheading(conn, source_id, "biz-1", "") is None
+    assert record_category_from_subheading(conn, source_id, "biz-1", None) is None
+    assert _override_row(conn, source_id, "biz-1") is None
 
 
 def test_get_next_batch_prioritizes_never_checked(conn, source_id):

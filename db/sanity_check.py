@@ -6,8 +6,10 @@ This module doesn't do the actual lookup - there's no automated
 scraper here by design (see that migration's comments, and the
 conversation that shaped it): a human/Claude researches each business
 and calls record_check()/record_anomaly() with the findings. Nothing
-here writes to `business` or `business_override` directly; resolving
-an anomaly (via the admin UI, not this module) is what does that.
+here writes to `business`; resolving an anomaly (via the admin UI, not
+this module) is what writes corrections. The one deliberate exception is
+record_category_from_subheading() below, which gives an "other" business a
+real category from Google's own label for the place.
 """
 
 from __future__ import annotations
@@ -15,6 +17,8 @@ from __future__ import annotations
 from typing import Literal
 
 import psycopg
+
+from collectors.common.category_keywords import map_category
 
 MatchStatus = Literal["matched", "not_found", "ambiguous"]
 FieldName = Literal["name", "address", "phone"]
@@ -89,6 +93,72 @@ def map_cuisine_type(external_category: str | None) -> str | None:
     if not external_category:
         return None
     return CUISINE_TYPE_MAP.get(external_category.strip())
+
+
+def category_from_subheading(external_category: str | None) -> str | None:
+    """Translate Google's subheading text into a real category_canonical,
+    or None when it is blank or doesn't clearly match one. Uses only the
+    subheading - never the business's name, which is what left it "other"
+    in the first place.
+    """
+    text = (external_category or "").strip()
+    if not text:
+        return None
+    canonical, matched = map_category(text, None)
+    return canonical if matched and canonical != "other" else None
+
+
+def record_category_from_subheading(
+    conn: psycopg.Connection,
+    source_id: str,
+    source_record_id: str,
+    external_category: str | None,
+) -> str | None:
+    """Give a business whose category is "other" a real one, taken from
+    Google's subheading, by writing business_override.category_canonical
+    (with a note saying where it came from). Returns the new category, or
+    None if nothing was changed.
+
+    Call it only for a `matched` check (an ambiguous or not_found listing
+    isn't reliably this business). It never touches a business that
+    already has a real category - from its source or from an admin - so it
+    can only ever fill a gap, never overrule anyone.
+    """
+    new_category = category_from_subheading(external_category)
+    if new_category is None:
+        return None
+
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            select coalesce(o.category_canonical, b.category_canonical)
+            from business b
+            left join business_override o
+                on o.source_id = b.source_id and o.source_record_id = b.source_record_id
+            where b.source_id = %s and b.source_record_id = %s
+            """,
+            (source_id, source_record_id),
+        )
+        row = cur.fetchone()
+        if row is None or row[0] != "other":
+            return None
+
+        note = f"Category from Google subheading '{external_category.strip()}'"
+        cur.execute(
+            """
+            insert into business_override
+                (source_id, source_record_id, category_canonical, note, updated_at)
+            values (%s, %s, %s, %s, now())
+            on conflict (source_id, source_record_id) do update set
+                category_canonical = excluded.category_canonical,
+                note = case when business_override.note is null then excluded.note
+                            else business_override.note || ' | ' || excluded.note end,
+                updated_at = now()
+            """,
+            (source_id, source_record_id, new_category, note),
+        )
+    conn.commit()
+    return new_category
 
 
 def record_check(
