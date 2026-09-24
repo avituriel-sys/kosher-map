@@ -22,8 +22,15 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.15); direction: rtl; font-size: 14px;
     max-width: 270px; max-height: calc(100vh - 40px); overflow-y: auto;
   }
-  #panel h1 { font-size: 16px; margin: 0 0 6px; }
-  #panel .count { color: #555; margin-bottom: 8px; }
+  #panel-toggle {
+    display: flex; align-items: center; gap: 8px; width: 100%; border: 0; padding: 0;
+    background: none; cursor: pointer; font: inherit; direction: rtl; text-align: right;
+  }
+  #panel-toggle .title { font-size: 16px; font-weight: 700; }
+  #panel-toggle .count { color: #555; font-size: 12.5px; }
+  #panel-toggle .chevron { margin-inline-start: auto; color: #555; }
+  #panel-body { margin-top: 8px; }
+  #panel-body[hidden] { display: none; }
   .filter-title { font-weight: 700; font-size: 13px; margin: 10px 0 4px; cursor: pointer; }
   .legend-row { display: flex; align-items: center; gap: 6px; margin: 3px 0; cursor: pointer; user-select: none; }
   .legend-row.inactive { opacity: 0.35; }
@@ -50,9 +57,13 @@
 <body>
 <div id="map"></div>
 <div id="panel">
-  <h1>עסקים כשרים</h1>
-  <div class="count" id="count">טוען...</div>
+  <button type="button" id="panel-toggle" aria-expanded="false" aria-controls="panel-body">
+    <span class="title">עסקים כשרים</span>
+    <span class="count" id="count">טוען...</span>
+    <span class="chevron" id="panel-chevron">▾</span>
+  </button>
 
+  <div id="panel-body" hidden>
   <div class="filter-title">סוג כשרות</div>
   <div class="legend-row" data-kosher="meat"><span class="dot" style="background:#dc2626"></span> בשרי</div>
   <div class="legend-row" data-kosher="dairy_parve"><span class="dot" style="background:#2563eb"></span> חלבי / פרווה</div>
@@ -62,11 +73,13 @@
   <details open>
     <summary class="filter-title">קטגוריה ▾</summary>
     <div class="category-actions">
+      <button type="button" id="cat-eateries-only">אוכל בלבד</button>
       <button type="button" id="cat-select-all">בחר הכל</button>
       <button type="button" id="cat-clear-all">נקה הכל</button>
     </div>
     <div id="category-list"></div>
   </details>
+  </div>
 </div>
 <script>
 // Hebrew/Arabic text otherwise renders in logical (unreordered) order -
@@ -100,9 +113,33 @@ function businessPopupHtml(p) {
   `;
 }
 
+// The panel starts collapsed (the map is the point) - the header button
+// opens it.
+(function wirePanelToggle() {
+  const toggle = document.getElementById("panel-toggle");
+  const body = document.getElementById("panel-body");
+  toggle.addEventListener("click", () => {
+    const opening = body.hidden;
+    body.hidden = !opening;
+    toggle.setAttribute("aria-expanded", String(opening));
+    document.getElementById("panel-chevron").textContent = opening ? "▴" : "▾";
+  });
+})();
+
+// The categories a visitor is shown by default: places you can walk in and
+// eat (the same seven the sanity checks treat as eateries - see
+// EATERY_CATEGORIES in db/sanity_check.py). Groceries, butchers, caterers,
+// halls, hotels, factories and unclassified ("other") listings are one
+// tick away in the filter list.
+const DEFAULT_CATEGORIES = new Set([
+  "restaurant", "cafe", "pizzeria", "falafel_shawarma",
+  "sushi_asian", "ice_cream", "bakery_patisserie"
+]);
+
 // Filter state - kosher-type colors and categories currently shown.
-// Both start "everything on"; populated for real once businesses.json
-// loads and we know which categories actually occur in the data.
+// Kosher colors start "all on"; categories start as eateries only, and are
+// populated for real once businesses.json loads and we know which
+// categories actually occur in the data.
 const activeKosherColors = new Set(["meat", "dairy_parve", "mixed", "unknown"]);
 let activeCategories = new Set();
 let fullGeojson = null; // the unfiltered FeatureCollection, kept so filtering never needs to re-fetch
@@ -145,7 +182,8 @@ function wireKosherToggles(map) {
 // though every one of the ~18 actual category_canonical values here is
 // its own filter, not just the four broad shapes.
 function buildCategoryFilterUI(map, presentCategories) {
-  activeCategories = new Set(presentCategories);
+  const eateriesOnly = () => new Set(presentCategories.filter(c => DEFAULT_CATEGORIES.has(c)));
+  activeCategories = eateriesOnly();
 
   const presentSet = new Set(presentCategories);
   const groups = new Map(); // emoji -> [category, ...]
@@ -167,9 +205,10 @@ function buildCategoryFilterUI(map, presentCategories) {
     for (const cat of cats) {
       const label = document.createElement("label");
       label.className = "category-row";
+      label.dataset.cat = cat;
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
-      checkbox.checked = true;
+      checkbox.checked = activeCategories.has(cat);
       checkbox.addEventListener("change", () => {
         if (checkbox.checked) activeCategories.add(cat); else activeCategories.delete(cat);
         applyFilters(map);
@@ -180,6 +219,17 @@ function buildCategoryFilterUI(map, presentCategories) {
     }
   }
 
+  const syncCheckboxes = () => {
+    container.querySelectorAll("label.category-row").forEach(label => {
+      const box = label.querySelector("input");
+      box.checked = activeCategories.has(label.dataset.cat);
+    });
+  };
+  document.getElementById("cat-eateries-only").addEventListener("click", () => {
+    activeCategories = eateriesOnly();
+    syncCheckboxes();
+    applyFilters(map);
+  });
   document.getElementById("cat-select-all").addEventListener("click", () => {
     activeCategories = new Set(presentCategories);
     container.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = true);
@@ -242,6 +292,7 @@ fetch("businesses.json")
       const presentCategories = [...new Set(rows.map(r => r.category_canonical))];
       buildCategoryFilterUI(map, presentCategories);
       wireKosherToggles(map);
+      applyFilters(map); // start on the default (eateries-only) filter
 
       map.on("click", "clusters", (e) => {
         const features = map.queryRenderedFeatures(e.point, { layers: ["clusters"] });

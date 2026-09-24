@@ -4,7 +4,7 @@
 // and unbounded/large, so they're left to the browser's normal HTTP
 // cache rather than intercepted here; a fully offline map is a separate,
 // bigger project than "PWA basics".
-const CACHE_NAME = "kosher-map-v1";
+const CACHE_NAME = "kosher-map-v2";
 const APP_SHELL = [
   "index.html",
   "map-common.js",
