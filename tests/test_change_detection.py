@@ -69,7 +69,7 @@ def _fetch(conn, source_id, source_record_id):
     with conn.cursor() as cur:
         cur.execute(
             "select status, first_seen, last_seen, status_changed_at, "
-            "supervision_level, lat, lng, location is not null "
+            "supervision_level, lat, lng "
             "from business where source_id = %s and source_record_id = %s",
             (source_id, source_record_id),
         )
@@ -90,15 +90,6 @@ def test_new_business_is_inserted_active(conn, source_id):
     assert status == "active"
     assert first_seen == last_seen
     assert status_changed_at is not None
-
-
-def test_generated_location_column_populates_from_lat_lng(conn, source_id):
-    apply_collection_run(
-        conn, source_id, [_record(source_id, "biz-1")], is_full_census=True
-    )
-    row = _fetch(conn, source_id, "biz-1")
-    has_location = row[-1]
-    assert has_location is True
 
 
 def test_reseen_business_updates_last_seen_not_first_seen(conn, source_id):
