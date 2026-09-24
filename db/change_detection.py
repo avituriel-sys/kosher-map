@@ -39,6 +39,25 @@ import psycopg
 
 logger = logging.getLogger(__name__)
 
+# Guard against a source that returns a valid-looking but far smaller list
+# than usual (a site redesign that hides most listings, a paginated fetch
+# that quietly stops early, a portal that starts truncating). A full-census
+# run marks everything it doesn't see as "absent", and only "active"
+# businesses reach the public map - so one bad fetch would silently wipe a
+# whole council off the map. Instead the run is rejected (recorded as a
+# failed collection_run, nothing written) and the weekly job fails loudly.
+# Sources with a tiny baseline are exempt so a genuinely small list can
+# still change by a few entries. A real, large cleanup on the source's side
+# is applied deliberately with allow_large_drop=True.
+MIN_RETAINED_FRACTION = 0.7
+MIN_BASELINE_FOR_GUARD = 20
+
+
+class SuspiciousDropError(Exception):
+    """A full-census run found far fewer businesses than the source had
+    before; refused rather than mass-marking the rest absent."""
+
+
 # Columns compared to decide whether a change is worth a log line, per
 # spec section 6.3: "if supervision_level or kosher_type changed, log it
 # as a notable change."
@@ -84,6 +103,7 @@ def apply_collection_run(
     source_id: str,
     records: list[dict],
     is_full_census: bool,
+    allow_large_drop: bool = False,
 ) -> CollectionRunResult:
     """Apply one collector's output to the database as a single
     collection_run. Commits internally; raises and rolls back on error
@@ -99,6 +119,8 @@ def apply_collection_run(
 
     try:
         with conn.cursor() as cur:
+            if is_full_census and not allow_large_drop:
+                _refuse_suspicious_drop(cur, source_id, len(records))
             for chunk in _chunked(records, _BATCH_SIZE):
                 for record in chunk:
                     seen_source_record_ids.add(record["source_record_id"])
@@ -157,6 +179,21 @@ def apply_collection_run(
         records_absent=records_absent,
         notable_changes=notable_changes,
     )
+
+
+def _refuse_suspicious_drop(cur: psycopg.Cursor, source_id: str, found: int) -> None:
+    cur.execute(
+        "select count(*) from business where source_id = %s and status = 'active'",
+        (source_id,),
+    )
+    previous_active = cur.fetchone()[0]
+    if previous_active >= MIN_BASELINE_FOR_GUARD and found < previous_active * MIN_RETAINED_FRACTION:
+        raise SuspiciousDropError(
+            f"{source_id}: this run found {found} businesses but {previous_active} are "
+            f"currently active (less than {MIN_RETAINED_FRACTION:.0%}); refusing to mark "
+            f"the rest absent. If the source really shrank this much, re-run with "
+            f"allow_large_drop (env ALLOW_LARGE_DROP=1)."
+        )
 
 
 # Keeps individual statements a reasonable size and stays well clear of

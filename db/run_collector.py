@@ -18,6 +18,7 @@ what spec section 10's "run failed or did not run at all" check is for.
 from __future__ import annotations
 
 import logging
+import os
 import sys
 
 from collectors.common.schema import CollectorError
@@ -119,7 +120,10 @@ def main(source_name: str) -> int:
     for source_id, records, is_full_census in runs:
         conn = get_connection()
         try:
-            result = apply_collection_run(conn, source_id, records, is_full_census)
+            result = apply_collection_run(
+                conn, source_id, records, is_full_census,
+                allow_large_drop=os.environ.get("ALLOW_LARGE_DROP") == "1",
+            )
         except Exception:
             logger.exception("%s: applying collection_run for %s failed", source_name, source_id)
             exit_code = 1

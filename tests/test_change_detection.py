@@ -9,7 +9,7 @@ import uuid
 
 import pytest
 
-from db.change_detection import apply_collection_run
+from db.change_detection import SuspiciousDropError, apply_collection_run
 from db.change_detection import _BATCH_SIZE
 from db.connection import get_connection
 
@@ -227,3 +227,72 @@ def test_failed_run_rolls_back_and_records_failure(conn, source_id):
         outcome, error_detail = cur.fetchone()
     assert outcome == "failed"
     assert error_detail
+
+
+# ---------------------------------------------------------- suspicious-drop guard
+
+def _seed(conn, source_id, n):
+    apply_collection_run(
+        conn, source_id, [_record(source_id, f"biz-{i}") for i in range(n)], is_full_census=True
+    )
+
+
+def _count(conn, source_id, status):
+    with conn.cursor() as cur:
+        cur.execute(
+            "select count(*) from business where source_id = %s and status = %s", (source_id, status)
+        )
+        return cur.fetchone()[0]
+
+
+def test_far_smaller_full_census_run_is_refused_and_writes_nothing(conn, source_id):
+    _seed(conn, source_id, 30)
+    with pytest.raises(SuspiciousDropError, match="refusing to mark"):
+        apply_collection_run(
+            conn, source_id, [_record(source_id, f"biz-{i}") for i in range(10)], is_full_census=True
+        )
+    assert _count(conn, source_id, "active") == 30
+    assert _count(conn, source_id, "absent") == 0
+    with conn.cursor() as cur:
+        cur.execute(
+            "select outcome, error_detail from collection_run where source_id = %s order by id desc limit 1",
+            (source_id,),
+        )
+        outcome, detail = cur.fetchone()
+    assert outcome == "failed" and "refusing to mark" in detail
+
+
+def test_a_modest_shrink_is_still_applied(conn, source_id):
+    _seed(conn, source_id, 30)
+    result = apply_collection_run(
+        conn, source_id, [_record(source_id, f"biz-{i}") for i in range(26)], is_full_census=True
+    )
+    assert result.records_absent == 4
+    assert _count(conn, source_id, "active") == 26
+
+
+def test_large_drop_can_be_allowed_deliberately(conn, source_id):
+    _seed(conn, source_id, 30)
+    result = apply_collection_run(
+        conn, source_id, [_record(source_id, f"biz-{i}") for i in range(10)],
+        is_full_census=True, allow_large_drop=True,
+    )
+    assert result.records_absent == 20
+    assert _count(conn, source_id, "active") == 10
+
+
+def test_tiny_sources_are_exempt_from_the_guard(conn, source_id):
+    _seed(conn, source_id, 5)
+    result = apply_collection_run(
+        conn, source_id, [_record(source_id, "biz-0")], is_full_census=True
+    )
+    assert result.records_absent == 4
+
+
+def test_partial_feeds_are_never_guarded(conn, source_id):
+    _seed(conn, source_id, 30)
+    result = apply_collection_run(
+        conn, source_id, [_record(source_id, "biz-0")], is_full_census=False
+    )
+    assert result.records_absent == 0
+    assert _count(conn, source_id, "active") == 30
