@@ -5032,5 +5032,17 @@
     "lng": null,
     "confidence": null,
     "out_of_bounds": false
+  },
+  "אבן גבירול 33, תל אביב-יפו, ישראל": {
+    "lat": 32.0753536,
+    "lng": 34.7814947,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דיזינגוף 43, תל אביב-יפו, ישראל": {
+    "lat": 32.0881389,
+    "lng": 34.7752044,
+    "confidence": "medium",
+    "out_of_bounds": false
   }
 }
