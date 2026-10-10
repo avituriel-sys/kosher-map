@@ -67,6 +67,15 @@ def _petah_tikva():
     return PETAH_TIKVA.source_id, collect(PETAH_TIKVA), True
 
 
+def _tzohar():
+    # Refuses to run unless TZOHAR_PERMISSION_CONFIRMED=1 (Tzohar's terms
+    # forbid automated retrieval without written consent). Deliberately
+    # NOT in the weekly workflow matrix.
+    from collectors.tzohar.collector import SOURCE_ID, collect
+
+    return SOURCE_ID, collect(), True
+
+
 # 2026-09-23 pilot of the national m-datit portal: Tel Mond, Beit Shean,
 # Kfar Saba, Givat Shmuel (a "list B" council the survey expected to be
 # missing), and the three big zero-certificate councils (Petah Tikva,
@@ -93,6 +102,7 @@ SOURCES = {
     "raanana": _raanana,
     "givat_shmuel": _givat_shmuel,
     "petah_tikva": _petah_tikva,
+    "tzohar": _tzohar,
     "mdatit_pilot": _mdatit_pilot,
 }
 

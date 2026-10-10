@@ -70,6 +70,12 @@
   <div class="legend-row" data-kosher="mixed"><span class="dot" style="background:#f97316"></span> בשרי וחלבי (מטבח מעורב)</div>
   <div class="legend-row" data-kosher="unknown"><span class="dot" style="background:#9ca3af"></span> לא ידוע</div>
 
+  <div id="body-filter" hidden>
+    <div class="filter-title">גוף משגיח</div>
+    <div class="legend-row" data-body="rabbinate">🏛️ רבנות / מועצה דתית מקומית</div>
+    <div class="legend-row" data-body="tzohar">✡️ השגחת צהר</div>
+  </div>
+
   <details open>
     <summary class="filter-title">קטגוריה ▾</summary>
     <div class="category-actions">
@@ -141,11 +147,18 @@ const DEFAULT_CATEGORIES = new Set([
 // populated for real once businesses.json loads and we know which
 // categories actually occur in the data.
 const activeKosherColors = new Set(["meat", "dairy_parve", "mixed", "unknown"]);
+// Who supervises: the local rabbinate / religious council (every municipal
+// source) or Tzohar, a private hechsher. Keyed off certifying_authority.
+const activeBodies = new Set(["rabbinate", "tzohar"]);
+function supervisingBodyKey(properties) {
+  return (properties.certifying_authority || "").includes("צהר") ? "tzohar" : "rabbinate";
+}
 let activeCategories = new Set();
 let fullGeojson = null; // the unfiltered FeatureCollection, kept so filtering never needs to re-fetch
 
 function passesFilters(properties) {
   return activeKosherColors.has(kosherColorKey(properties.kosher_type))
+    && activeBodies.has(supervisingBodyKey(properties))
     && activeCategories.has(properties.category_canonical);
 }
 
@@ -169,6 +182,28 @@ function wireKosherToggles(map) {
         row.classList.add("inactive");
       } else {
         activeKosherColors.add(key);
+        row.classList.remove("inactive");
+      }
+      applyFilters(map);
+    });
+  });
+}
+
+// The supervising-body filter only appears once the data actually holds more
+// than one body (i.e. once Tzohar listings are published alongside the
+// rabbinate ones); with a single body there is nothing to choose between.
+function wireBodyFilter(map, rows) {
+  const present = new Set(rows.map(supervisingBodyKey));
+  if (present.size < 2) return;
+  document.getElementById("body-filter").hidden = false;
+  document.querySelectorAll(".legend-row[data-body]").forEach(row => {
+    row.addEventListener("click", () => {
+      const key = row.dataset.body;
+      if (activeBodies.has(key)) {
+        activeBodies.delete(key);
+        row.classList.add("inactive");
+      } else {
+        activeBodies.add(key);
         row.classList.remove("inactive");
       }
       applyFilters(map);
@@ -292,6 +327,7 @@ fetch("businesses.json")
       const presentCategories = [...new Set(rows.map(r => r.category_canonical))];
       buildCategoryFilterUI(map, presentCategories);
       wireKosherToggles(map);
+      wireBodyFilter(map, rows);
       applyFilters(map); // start on the default (eateries-only) filter
 
       map.on("click", "clusters", (e) => {
