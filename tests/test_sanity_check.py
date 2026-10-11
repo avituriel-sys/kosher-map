@@ -209,6 +209,10 @@ def test_map_cuisine_type(external_category, expected):
         ("פיצרייה", "pizzeria"),
         ("מסעדת שווארמה", "restaurant"),
         ("קייטרינג", "catering"),
+        ("דיור מוגן", "institutional_kitchen"),
+        ("חנות בשר", "butcher"),
+        ("חנות לגבינות", "delicatessen"),
+        ("יקב", "winery"),
         ("חנות סלטים", None),          # nothing recognisable - not guessed
         ("", None),
         (None, None),
