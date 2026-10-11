@@ -1,0 +1,45 @@
+name: Keep Supabase awake
+
+# Supabase's free plan pauses a project after about a week without activity,
+# and a paused project takes the weekly collection, the admin pages and the
+# map refresh down with it (it happened in October 2026). The weekly collection
+# alone is not enough margin, so this pings the project every three days with
+# the two kinds of traffic Supabase can count: a request to its REST API and a
+# plain database connection.
+#
+# This only reads - it never writes. If it ever starts failing the project is
+# already paused: restore it from the Supabase dashboard (Restore project).
+on:
+  schedule:
+    - cron: "17 6 */3 * *"
+  workflow_dispatch: {}
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The URL and anon key are the public ones already shipped in the admin
+      # pages (web/admin-common.js), so nothing secret is needed for this step.
+      # The table is protected by row-level security, so an anonymous request
+      # gets an empty list - it still counts as API activity.
+      - name: Ping the REST API
+        run: |
+          url=$(grep -oE 'SUPABASE_URL = "[^"]+"' web/admin-common.js | cut -d'"' -f2)
+          key=$(grep -oE 'SUPABASE_ANON_KEY = "[^"]+"' web/admin-common.js | cut -d'"' -f2)
+          test -n "$url" -a -n "$key"
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: $key" -H "Authorization: Bearer $key" \
+            "$url/rest/v1/business?select=source_id&limit=1")
+          echo "REST API answered HTTP $code"
+          test "$code" = "200"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Open a database connection
+        run: python -c "from db.connection import get_connection; c = get_connection(); cur = c.cursor(); cur.execute('select count(*) from business'); print('database answered:', cur.fetchone()[0], 'businesses'); c.close()"
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
