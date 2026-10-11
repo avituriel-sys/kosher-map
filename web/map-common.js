@@ -16,6 +16,7 @@ const CATEGORY_ICONS_MAP = {
   institutional_kitchen: "🍴", event_hall: "🍴",
   bakery_patisserie: "🥐",
   hotel: "🛏️",
+  winery: "🍷",
   butcher: "🛒", fishmonger: "🛒", delicatessen: "🛒",
   grocery_supermarket: "🛒", greengrocer: "🛒", nuts_dried_fruit: "🛒",
   factory: "🛒",
@@ -32,7 +33,7 @@ const CATEGORY_HE = {
   fishmonger: "חנות דגים", delicatessen: "מעדנייה", grocery_supermarket: "מרכול",
   greengrocer: "ירקות ופירות", nuts_dried_fruit: "פיצוחים", catering: "קייטרינג",
   event_hall: "אולם אירועים", hotel: "בית מלון", institutional_kitchen: "מטבח מוסדי",
-  factory: "מפעל", other: "אחר"
+  winery: "יקב", factory: "מפעל", other: "אחר"
 };
 const SUPERVISION_HE = { regular: "רגילה", mehadrin: "מהדרין", badatz: 'בד"ץ', unknown: "לא ידוע" };
 

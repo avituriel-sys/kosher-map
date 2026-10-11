@@ -217,11 +217,108 @@ def parse_stores(stores: list[dict]) -> list[dict]:
             "tzohar: skipped %d store(s) with no name, address or city",
             skipped,
         )
-    result = list(records.values())
+    result = merge_duplicate_records(list(records.values()))
     if not result:
         raise CollectorError("Tzohar returned zero usable stores; refusing to treat as a census")
     for record in result:
         validate_record(record)
+    return result
+
+
+def _name_tokens(name: str) -> frozenset[str]:
+    """Lower-cased word set of a business name, ignoring punctuation, so
+    'יקב פאמילי באום ווינרי' and 'פאמילי באום ווינרי Family Baum Winery'
+    can be compared."""
+    stripped = re.sub(r"['\"״׳]", "", name.lower())
+    return frozenset(re.findall(r"\w+", stripped))
+
+
+def _address_key(record: dict) -> tuple[str, str]:
+    squash = lambda s: re.sub(r"[\s\-–]+", "", s or "").lower()
+    return squash(record["address_raw"]), squash(record["city"])
+
+
+def find_duplicate_clusters(records: list[dict]) -> list[list[dict]]:
+    """Group records that are the same business listed more than once.
+
+    Tzohar lists a business once per certificate, so the same place turns up
+    several times, often under slightly different names. Two records are the
+    same business when they share an address and city AND one name's words
+    are all contained in the other's ('אוסול' / 'אוסול ראש פינה').
+    Different businesses in one building (a tower with three cafés, a kibbutz
+    resort and its kitchen) share an address but not their name words, so
+    they stay separate. Returns only clusters of two or more records.
+    """
+    tokens = [_name_tokens(r["name_raw"]) for r in records]
+    parent = list(range(len(records)))
+
+    def find(i: int) -> int:
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    # "Same place" means the same address text or the same published
+    # coordinates (the address text sometimes differs only by a repeated
+    # town name); the name rule below decides whether it is the same business.
+    buckets: dict[tuple, list[int]] = {}
+    for i, record in enumerate(records):
+        buckets.setdefault(("addr",) + _address_key(record), []).append(i)
+        if record.get("lat") is not None and record.get("lng") is not None:
+            buckets.setdefault(
+                ("geo", round(float(record["lat"]), 5), round(float(record["lng"]), 5)), []
+            ).append(i)
+
+    for indexes in buckets.values():
+        for x in range(len(indexes)):
+            for y in range(x + 1, len(indexes)):
+                a, b = tokens[indexes[x]], tokens[indexes[y]]
+                if a and b and (a <= b or b <= a):
+                    parent[find(indexes[x])] = find(indexes[y])
+
+    members: dict[int, list[dict]] = {}
+    for i, record in enumerate(records):
+        members.setdefault(find(i), []).append(record)
+    return [c for c in members.values() if len(c) > 1]
+
+
+def _id_order(record: dict):
+    sid = record["source_record_id"]
+    return (0, int(sid)) if sid.isdigit() else (1, sid)
+
+
+def pick_survivor(cluster: list[dict]) -> dict:
+    """The record that stands for a cluster: the lowest (oldest) store id, so
+    the id stays stable from one run to the next."""
+    return min(cluster, key=_id_order)
+
+
+def merge_duplicate_records(records: list[dict]) -> list[dict]:
+    """Collapse each duplicate cluster into its survivor, taking the most
+    descriptive (longest) name and the union of the kosher types. The other
+    ids simply stop being listed, so change detection marks them absent."""
+    dropped: set[str] = set()
+    merged: dict[str, dict] = {}
+    for cluster in find_duplicate_clusters(records):
+        survivor = dict(pick_survivor(cluster))
+        longest = max(cluster, key=lambda r: len(r["name_raw"]))
+        survivor["name_raw"] = survivor["name_clean"] = longest["name_raw"]
+        types = {t for r in cluster for t in (r["kosher_type"] or [])}
+        survivor["kosher_type"] = sorted(types) or None
+        merged[survivor["source_record_id"]] = survivor
+        dropped.update(r["source_record_id"] for r in cluster)
+        logger.info(
+            "tzohar: merged %d duplicate listings of %r (ids %s)",
+            len(cluster), survivor["name_raw"],
+            sorted((r["source_record_id"] for r in cluster), key=lambda s: (len(s), s)),
+        )
+    result = []
+    for record in records:
+        sid = record["source_record_id"]
+        if sid in merged:
+            result.append(merged[sid])
+        elif sid not in dropped:
+            result.append(record)
     return result
 
 

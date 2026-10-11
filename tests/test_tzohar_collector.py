@@ -140,7 +140,10 @@ def test_category_comes_from_the_name_when_recognisable():
 
 
 def test_overlapping_circles_are_deduplicated_by_id(permitted):
-    session = _FakeSession([[_store(1), _store(2)], [_store(2), _store(3)]])
+    a = _store(1, store="קפה אלף", address="הרצל 1")
+    b = _store(2, store="פיצה בית", address="דיזנגוף 2")
+    c = _store(3, store="סושי גמל", address="אלנבי 3")
+    session = _FakeSession([[a, b], [b, c]])
     records = collector.collect(session=session, centres=[(32.0, 34.8), (32.1, 34.9)])
     assert sorted(r["source_record_id"] for r in records) == ["1", "2", "3"]
     assert len(session.requests) == 2
@@ -189,13 +192,69 @@ def test_zero_stores_is_not_a_census(permitted):
         ("בריא בריבוע בן גוריון", "institutional_kitchen"),
         ("מלון אינדיגו", "hotel"),
         ("עוגות דה לה פה אשדוד", "bakery_patisserie"),
-        ("יקב כהנוב", "other"),          # a winery is not an eatery
+        ("יקב כהנוב", "winery"),
+        ("Family Baum Winery", "winery"),
         ("שם בלי רמז", "other"),
         ("פיצה הדוגמה", "pizzeria"),     # shared table still wins first
     ],
 )
 def test_extra_name_keywords(name, expected):
     assert collector.category_for_name(name) == expected
+
+
+def _rec(id_, name, address="שעל 1", city="שעל", terms="פרווה", lat="32.0650"):
+    return collector.to_canonical_record(
+        _store(id_, store=name, address=address, city=city, terms=terms, lat=lat)
+    )
+
+
+def test_same_business_listed_twice_is_merged_into_the_oldest_id():
+    records = [_rec(60196, "יקב פאמילי באום ווינרי Family Baum Winery"),
+               _rec(58180, "פאמילי באום ווינרי Family Baum Winery"),
+               _rec(58388, "יקב פאמילי באום ווינרי")]
+    merged = collector.merge_duplicate_records(records)
+    assert [r["source_record_id"] for r in merged] == ["58180"]
+    assert merged[0]["name_raw"] == "יקב פאמילי באום ווינרי Family Baum Winery"  # longest
+    assert merged[0]["category_canonical"] == "winery"
+
+
+def test_name_contained_in_the_other_counts_as_duplicate():
+    merged = collector.merge_duplicate_records([_rec(2, "אוסול ראש פינה"), _rec(1, "אוסול")])
+    assert [r["source_record_id"] for r in merged] == ["1"]
+    assert merged[0]["name_raw"] == "אוסול ראש פינה"
+
+
+def test_address_text_variants_at_the_same_coordinates_are_merged():
+    a = _rec(1, "יקב צ'יטה Cheetah winery", address="טכנו פארק ביתן 204", city="אבן יהודה")
+    b = _rec(2, "יקב צ'יטה", address="אבן יהודה טכנו פארק ביתן 204", city="אבן יהודה")
+    assert [r["source_record_id"] for r in collector.merge_duplicate_records([a, b])] == ["1"]
+
+
+def test_different_businesses_at_one_address_are_not_merged():
+    records = [_rec(1, "קיטשן 94"), _rec(2, "מקסימום קונספט – פסאדור"), _rec(3, "ארקפה מגדלי אלון")]
+    assert len(collector.merge_duplicate_records(records)) == 3
+
+
+def test_same_name_at_different_addresses_is_not_merged():
+    records = [_rec(1, "ארומה", address="הרצל 1"),
+               _rec(2, "ארומה", address="דיזנגוף 5", lat="32.0900")]
+    assert len(collector.merge_duplicate_records(records)) == 2
+
+
+def test_merging_unions_the_kosher_types():
+    merged = collector.merge_duplicate_records(
+        [_rec(1, "מסעדת הדוגמה", terms="חלבי"), _rec(2, "מסעדת הדוגמה", terms="בשרי")]
+    )
+    assert merged[0]["kosher_type"] == ["dairy", "meat"]
+
+
+def test_parse_stores_merges_duplicates():
+    records = collector.parse_stores([
+        _store(2, store="יקב כהנוב", address="גדרה", city="גדרה"),
+        _store(1, store="יקב כהנוב", address="גדרה", city="גדרה"),
+        _store(3, store="קפה אחר", address="הרצל 9", city="גדרה", lat="32.2000"),
+    ])
+    assert sorted(r["source_record_id"] for r in records) == ["1", "3"]
 
 
 def test_every_centre_is_inside_israel_and_spaced_for_coverage():
