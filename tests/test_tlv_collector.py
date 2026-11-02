@@ -338,17 +338,56 @@ def test_pages_that_repeat_businesses_are_tolerated(monkeypatch, fake_collect_en
     assert len({r["source_record_id"] for r in records}) == len(records)
 
 
-def test_too_many_missing_listings_refuses_to_hammer_the_site(monkeypatch, fake_collect_env):
+def test_lookups_are_capped_to_stay_under_the_rate_limit(monkeypatch, fake_collect_env):
     real = _fake_get_all_pages()
+    lookups = []
 
     def get(session, url):
         html = real(session, url)
-        if "?business_id=" not in url and ("/page/3/" in url or "/page/4/" in url):
-            return _drop_cards(html, 0, 112)
+        if "?business_id=" in url:
+            lookups.append(url)
+        elif "/page/3/" in url or "/page/4/" in url:
+            return _drop_cards(html, 0, 60)  # far more skipped than the budget
         return html
 
-    with pytest.raises(CollectorError, match="too many listings to recover"):
+    # ~120 skipped of 1120 is over 5%, so the run is refused - but only after
+    # making no more than the budgeted number of lookups.
+    with pytest.raises(CollectorError, match="too incomplete"):
         _run(monkeypatch, fake_collect_env, get)
+    assert len(lookups) == collector.MAX_LOOKUPS_PER_RUN
+
+
+def test_a_small_shortfall_is_a_warning_not_a_failure(monkeypatch, fake_collect_env, caplog):
+    real = _fake_get_all_pages()
+
+    def get(session, url):
+        if "?business_id=" in url:
+            return "<html><body></body></html>"  # none of the lookups find anything
+        html = real(session, url)
+        return _drop_cards(html, 10, 20) if url.endswith("/page/5/") else html
+
+    with caplog.at_level("WARNING"):
+        records = _run(monkeypatch, fake_collect_env, get)
+    assert len(records) == 1116 - 20  # the 20 the paging skipped stay missing
+    assert any("could not be found" in m for m in caplog.messages)
+
+
+def test_the_lookups_stop_quietly_when_the_site_keeps_refusing(monkeypatch, fake_collect_env, caplog):
+    real = _fake_get_all_pages()
+    seen = []
+
+    def get(session, url):
+        if "?business_id=" in url:
+            seen.append(url)
+            raise CollectorError("failed to fetch: 429 Too Many Requests")
+        html = real(session, url)
+        return _drop_cards(html, 10, 10) if url.endswith("/page/5/") else html
+
+    with caplog.at_level("WARNING"):
+        records = _run(monkeypatch, fake_collect_env, get)
+    assert len(seen) == 1  # gave up at the first refusal
+    assert len(records) == 1116 - 10
+    assert any("stopping the lookups early" in m for m in caplog.messages)
 
 
 def test_dropdown_entries_that_cannot_be_found_fail_loudly(monkeypatch, fake_collect_env):
@@ -358,9 +397,9 @@ def test_dropdown_entries_that_cannot_be_found_fail_loudly(monkeypatch, fake_col
         if "?business_id=" in url:
             return "<html><body></body></html>"  # lookups find nothing
         html = real(session, url)
-        return _drop_cards(html, 10, 20) if url.endswith("/page/5/") else html
+        return _drop_cards(html, 0, 70) if url.endswith("/page/5/") else html
 
-    with pytest.raises(CollectorError, match="could not be found"):
+    with pytest.raises(CollectorError, match="too incomplete"):
         _run(monkeypatch, fake_collect_env, get)
 
 

@@ -77,12 +77,14 @@ every business (`select[name=business_id]`, 987 entries on that date) and
 `?business_id=<id>` returns that one business's card. So the collector now
 (1) crawls the pages as before, tolerating repeats and empty pages;
 (2) compares the businesses found with the dropdown and looks up each missing
-one individually (about 100 extra requests, 10 seconds apart - the dropdown is
-not a list of live listings, it only supplies ids to look up); (3) reads the מהדרין level from
+one individually (at most 45 extra requests, 10 seconds apart - the dropdown is
+not a list of live listings, it only supplies ids to look up, and most of what
+is left unrecoverable is simply not in it); (3) reads the מהדרין level from
 its own filtered list, which fits on one page and so isn't affected, and treats
 everything else as רגילה (the רגילה list shares the broken paging and is no
-longer crawled); and (4) fails loudly if the recovered list is still short of the number of
-listings the site's own pages account for.
+longer crawled); and (4) accepts a small shortfall against the number of listings the site's own
+pages account for (warning; the missing ones are marked absent until a later
+run sees them) but fails loudly beyond 5%.
 The portal at shirathayam.m-datit.org.il lists only 34 Tel Aviv businesses with
 no certificates, so it is no help here.
 
@@ -272,18 +274,19 @@ def _name_key(name: str) -> str:
     return " ".join(name.split()).lower()
 
 
-# How many single-business fetches one run may make to recover listings the
-# paging skipped. A normal run needs roughly 100 (104 on 2026-11-03); far more
-# than that means the paging has got worse (or the dropdown and the listings
-# have diverged), and hammering the site with hundreds of requests is not the
-# answer.
-MAX_RECOVERY_FETCHES = 200
-# How far short of the site's own total the recovered list may still be: a
-# few listings (a business moved between two page requests) is tolerated, more
-# means the data can't be trusted. Whichever is larger of a fixed count and a
-# share of the total.
-MAX_SHORTFALL = 5
-MAX_SHORTFALL_FRACTION = 0.01
+# How many single-business lookups one run may make to recover listings the
+# paging skipped. On 2026-11-03 104 dropdown entries were candidates, about 80
+# of them (the names at the end of the alphabet) with no public listing at
+# all, and Cloudflare started answering 429 after roughly 70 requests in ten
+# minutes. The candidates are tried in dropdown (alphabetical) order, so the
+# budget is spent before the end-of-alphabet block of inactive entries.
+MAX_LOOKUPS_PER_RUN = 45
+# How far short of the site's own total the recovered list may be before the
+# run is refused. Some shortfall is expected - listings the paging skipped that
+# are not in the dropdown cannot be found by id - so up to this share of the
+# total is only a warning, and the missing ones are marked absent until a later
+# run's crawl happens to include them. Beyond it something is badly wrong.
+MAX_SHORTFALL_FRACTION = 0.05
 
 
 def _complete_from_dropdown(
@@ -304,8 +307,8 @@ def _complete_from_dropdown(
     add its card if it has one.
 
     Completeness is judged against `listed_total`, the number of listings the
-    site's own pages account for: the recovered list must reach it, give or
-    take MAX_SHORTFALL.
+    site's own pages account for: a small shortfall is a warning, a large one
+    (MAX_SHORTFALL_FRACTION) refuses the run.
     """
     have: dict[str, int] = {}
     for card in cards:
@@ -320,20 +323,29 @@ def _complete_from_dropdown(
     for key, ids in ids_by_name.items():
         if have.get(key, 0) < len(ids):
             to_fetch.extend((business_id, key) for business_id in ids)
-    if len(to_fetch) > MAX_RECOVERY_FETCHES:
-        raise CollectorError(
-            f"the paged crawl is missing too many listings to recover "
-            f"({len(to_fetch)} lookups needed, limit {MAX_RECOVERY_FETCHES}); "
-            f"refusing to hit the site that hard"
+    if len(to_fetch) > MAX_LOOKUPS_PER_RUN:
+        logger.warning(
+            "tlv: %d dropdown entries are candidates for lookup; trying the "
+            "first %d (alphabetical) to stay under the site's rate limit",
+            len(to_fetch), MAX_LOOKUPS_PER_RUN,
         )
+        to_fetch = to_fetch[:MAX_LOOKUPS_PER_RUN]
 
     known = {card.identity for card in cards}
     recovered = 0
     empty = 0  # dropdown entries with no public listing
+    looked_up = 0
     for business_id, _key in to_fetch:
         time.sleep(LOOKUP_DELAY_SECONDS)
-        soup = BeautifulSoup(_get(session, f"{BASE_URL}?business_id={business_id}"), "lxml")
-        found = _parse_cards(soup)
+        try:
+            html = _get(session, f"{BASE_URL}?business_id={business_id}")
+        except CollectorError as exc:
+            # Out of patience with the site's rate limit: carry on with what
+            # was recovered so far rather than lose the whole run.
+            logger.warning("tlv: stopping the lookups early: %s", exc)
+            break
+        looked_up += 1
+        found = _parse_cards(BeautifulSoup(html, "lxml"))
         if not found:
             empty += 1
         for card in found:
@@ -347,13 +359,20 @@ def _complete_from_dropdown(
         "tlv: the site's pages account for %d listings; %d found by crawling, "
         "%d recovered by looking up %d dropdown entries (%d had no public "
         "listing); %d still unaccounted for",
-        listed_total, len(cards) - recovered, recovered, len(to_fetch), empty, shortfall,
+        listed_total, len(cards) - recovered, recovered, looked_up, empty, shortfall,
     )
-    if shortfall > max(MAX_SHORTFALL, int(listed_total * MAX_SHORTFALL_FRACTION)):
+    if shortfall:
+        logger.warning(
+            "tlv: %d listing(s) the site's pages account for could not be found "
+            "(skipped by the paging and not recoverable by id); they will be "
+            "marked absent until a later run sees them", shortfall,
+        )
+    if shortfall > int(listed_total * MAX_SHORTFALL_FRACTION):
         raise CollectorError(
             f"{shortfall} of the {listed_total} listings the site's pages "
             f"account for could not be found even after looking up the missing "
-            f"businesses individually - the data is incomplete"
+            f"businesses individually - more than {MAX_SHORTFALL_FRACTION:.0%}, "
+            f"so the data is too incomplete to use"
         )
     return cards
 
