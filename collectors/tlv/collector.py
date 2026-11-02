@@ -77,11 +77,12 @@ every business (`select[name=business_id]`, 987 entries on that date) and
 `?business_id=<id>` returns that one business's card. So the collector now
 (1) crawls the pages as before, tolerating repeats and empty pages;
 (2) compares the businesses found with the dropdown and looks up each missing
-one individually (about 100 extra requests, 6 seconds apart - the dropdown is
-not a complete list, it only supplies ids); (3) reads the מהדרין level from
+one individually (about 100 extra requests, 10 seconds apart - the dropdown is
+not a list of live listings, it only supplies ids to look up); (3) reads the מהדרין level from
 its own filtered list, which fits on one page and so isn't affected, and treats
 everything else as רגילה (the רגילה list shares the broken paging and is no
-longer crawled); and (4) fails loudly if too many lookups find no listing.
+longer crawled); and (4) fails loudly if the recovered list is still short of the number of
+listings the site's own pages account for.
 The portal at shirathayam.m-datit.org.il lists only 34 Tel Aviv businesses with
 no certificates, so it is no help here.
 
@@ -164,8 +165,8 @@ def collect(
     session = session or requests.Session()
     session.headers["User-Agent"] = USER_AGENT
     try:
-        cards, dropdown = _fetch_all_cards(session)
-        cards = _complete_from_dropdown(session, cards, dropdown)
+        cards, dropdown, listed_total = _fetch_all_cards(session)
+        cards = _complete_from_dropdown(session, cards, dropdown, listed_total)
         mehadrin_ids = _fetch_mehadrin_ids(session)
     finally:
         if owns_session:
@@ -208,17 +209,23 @@ DUPLICATE_WARN_THRESHOLD = 20
 
 def _fetch_all_cards(
     session: requests.Session,
-) -> tuple[list[_RawCard], list[tuple[str, str]]]:
-    """Crawl the unfiltered list. Returns (cards, dropdown) where `dropdown`
-    is the search form's own list of every business, as (id, name) pairs.
+) -> tuple[list[_RawCard], list[tuple[str, str]], int]:
+    """Crawl the unfiltered list. Returns (cards, dropdown, listed_total).
+
+    `dropdown` is the search form's own list of businesses, as (id, name)
+    pairs. `listed_total` is how many cards the pages showed in all, repeats
+    included - the pages are fixed-size windows over the site's result set, so
+    their combined size is the number of listings the site says it has (987 on
+    2026-11-03) even when the windows overlap and skip.
 
     Since 2026-10 the site's paging is unreliable (see the module docstring),
-    so this crawl can both repeat and skip businesses; the dropdown, read off
-    the first page, is what tells `_complete_from_dropdown` what is missing.
+    so this crawl can both repeat and skip businesses; `_complete_from_dropdown`
+    uses the dropdown and `listed_total` to recover what was skipped.
     """
     cards: list[_RawCard] = []
     seen: set[str] = set()
     duplicate_count = 0
+    listed_total = 0
     dropdown: list[tuple[str, str]] = []
     for page_number, soup in enumerate(_iter_pages(session, BASE_URL), start=1):
         if page_number == 1:
@@ -237,6 +244,7 @@ def _fetch_all_cards(
             # skipped is recovered by _complete_from_dropdown.
             logger.warning("tlv: listing page %d returned zero cards", page_number)
             continue
+        listed_total += len(page_cards)
         for card in page_cards:
             if card.identity in seen:
                 duplicate_count += 1
@@ -249,7 +257,7 @@ def _fetch_all_cards(
             "deduped, first occurrence kept",
             duplicate_count,
         )
-    return cards, dropdown
+    return cards, dropdown, listed_total
 
 
 def _parse_dropdown(soup: BeautifulSoup) -> list[tuple[str, str]]:
@@ -270,26 +278,34 @@ def _name_key(name: str) -> str:
 # have diverged), and hammering the site with hundreds of requests is not the
 # answer.
 MAX_RECOVERY_FETCHES = 200
-# Dropdown entries that still can't be matched to a listing after the recovery
-# fetches. A handful is tolerated (a business listed in the form but with no
-# card of its own); more means the data can't be trusted.
-MAX_UNRESOLVED = 5
+# How far short of the site's own total the recovered list may still be: a
+# few listings (a business moved between two page requests) is tolerated, more
+# means the data can't be trusted. Whichever is larger of a fixed count and a
+# share of the total.
+MAX_SHORTFALL = 5
+MAX_SHORTFALL_FRACTION = 0.01
 
 
 def _complete_from_dropdown(
     session: requests.Session,
     cards: list[_RawCard],
     dropdown: list[tuple[str, str]],
+    listed_total: int,
 ) -> list[_RawCard]:
     """Add the listings the paged crawl skipped.
 
     The search form's business dropdown (987 entries on 2026-11-03) knows
-    about businesses the paged crawl skipped (945 distinct found). It is not
-    a complete list - 46 businesses that do have listings are not in it - so
-    it only supplies ids to look up, never a total to match. For every name
-    the dropdown has more times than the crawl found (104 entries on that
-    date), fetch that business's own single-result page
-    (`?business_id=<id>`) and add its card.
+    about businesses the paged crawl skipped (945 distinct found), but it is
+    not a list of the live listings: 46 listed businesses are not in it, and
+    about 60 of its entries have no public listing at all (their lookup comes
+    back empty). So it only supplies ids to look up. For every name the
+    dropdown has more times than the crawl found (104 entries on that date),
+    fetch that business's own single-result page (`?business_id=<id>`) and
+    add its card if it has one.
+
+    Completeness is judged against `listed_total`, the number of listings the
+    site's own pages account for: the recovered list must reach it, give or
+    take MAX_SHORTFALL.
     """
     have: dict[str, int] = {}
     for card in cards:
@@ -304,8 +320,6 @@ def _complete_from_dropdown(
     for key, ids in ids_by_name.items():
         if have.get(key, 0) < len(ids):
             to_fetch.extend((business_id, key) for business_id in ids)
-    if not to_fetch:
-        return cards
     if len(to_fetch) > MAX_RECOVERY_FETCHES:
         raise CollectorError(
             f"the paged crawl is missing too many listings to recover "
@@ -315,28 +329,31 @@ def _complete_from_dropdown(
 
     known = {card.identity for card in cards}
     recovered = 0
-    unresolved = 0  # lookups that came back with no listing at all
+    empty = 0  # dropdown entries with no public listing
     for business_id, _key in to_fetch:
         time.sleep(LOOKUP_DELAY_SECONDS)
         soup = BeautifulSoup(_get(session, f"{BASE_URL}?business_id={business_id}"), "lxml")
         found = _parse_cards(soup)
         if not found:
-            unresolved += 1
+            empty += 1
         for card in found:
             if card.identity not in known:
                 known.add(card.identity)
                 cards.append(card)
                 recovered += 1
 
+    shortfall = max(0, listed_total - len(cards))
     logger.info(
-        "tlv: recovered %d listing(s) the paged crawl skipped (%d looked up, "
-        "%d dropdown entries still unmatched)", recovered, len(to_fetch), unresolved,
+        "tlv: the site's pages account for %d listings; %d found by crawling, "
+        "%d recovered by looking up %d dropdown entries (%d had no public "
+        "listing); %d still unaccounted for",
+        listed_total, len(cards) - recovered, recovered, len(to_fetch), empty, shortfall,
     )
-    if unresolved > MAX_UNRESOLVED:
+    if shortfall > max(MAX_SHORTFALL, int(listed_total * MAX_SHORTFALL_FRACTION)):
         raise CollectorError(
-            f"{unresolved} businesses in the site's own list could not be "
-            f"found as listings even after looking each up - the data is "
-            f"incomplete"
+            f"{shortfall} of the {listed_total} listings the site's pages "
+            f"account for could not be found even after looking up the missing "
+            f"businesses individually - the data is incomplete"
         )
     return cards
 
@@ -383,12 +400,16 @@ def _iter_pages(session: requests.Session, start_url: str):
 # requests in an afternoon of testing). Honour its Retry-After and try again
 # rather than failing the whole run on the first 429.
 MAX_RATE_LIMIT_RETRIES = 3
+# Cloudflare's Retry-After is no use here (it comes back as "now"), and the
+# limit looks like roughly 100 requests per ten minutes, so the wait grows
+# with each retry instead: at least this long before the 1st, 2nd, 3rd retry.
+RATE_LIMIT_BACKOFF_SECONDS = (60, 120, 240)
 RETRY_AFTER_MIN_SECONDS = 5
 RETRY_AFTER_MAX_SECONDS = 90
 RETRY_AFTER_DEFAULT_SECONDS = 30
 # One-by-one lookups are many requests in a row; space them out more than the
 # page crawl so a normal run stays well under any rate limit.
-LOOKUP_DELAY_SECONDS = 6.0
+LOOKUP_DELAY_SECONDS = 10.0
 
 
 def _retry_after_seconds(response: requests.Response) -> float:
@@ -414,7 +435,7 @@ def _get(session: requests.Session, url: str) -> str:
         for attempt in range(MAX_RATE_LIMIT_RETRIES + 1):
             response = session.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
             if response.status_code == 429 and attempt < MAX_RATE_LIMIT_RETRIES:
-                wait = _retry_after_seconds(response)
+                wait = max(_retry_after_seconds(response), RATE_LIMIT_BACKOFF_SECONDS[attempt])
                 logger.warning(
                     "tlv: rate limited (429) fetching %s - waiting %.0fs (retry %d/%d)",
                     url, wait, attempt + 1, MAX_RATE_LIMIT_RETRIES,

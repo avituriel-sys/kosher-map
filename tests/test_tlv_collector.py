@@ -281,9 +281,15 @@ def test_missing_address_raises():
 
 
 def _drop_cards(html: str, start: int, count: int) -> str:
+    """The page shows `count` of its businesses again instead of the ones at
+    `start`: what the live paging does, so the page still has the same number
+    of cards (the site's own total stays right) but some businesses are absent."""
     soup = BeautifulSoup(html, "lxml")
-    for item in soup.select("div.post_col.kosher_item")[start : start + count]:
-        item.decompose()
+    items = soup.select("div.post_col.kosher_item")
+    replacements = [str(it) for i, it in enumerate(items) if not start <= i < start + count]
+    for n, old in enumerate(items[start : start + count]):
+        new = replacements[n % len(replacements)]
+        old.replace_with(BeautifulSoup(new, "lxml").select_one("div.post_col.kosher_item"))
     return str(soup)
 
 
@@ -354,7 +360,7 @@ def test_dropdown_entries_that_cannot_be_found_fail_loudly(monkeypatch, fake_col
         html = real(session, url)
         return _drop_cards(html, 10, 20) if url.endswith("/page/5/") else html
 
-    with pytest.raises(CollectorError, match="could not be found as listings"):
+    with pytest.raises(CollectorError, match="could not be found"):
         _run(monkeypatch, fake_collect_env, get)
 
 
@@ -370,7 +376,10 @@ def test_a_mid_crawl_empty_page_is_not_fatal_but_an_empty_first_page_is(monkeypa
 
     def empty_first(session, url):
         if "?business_id=" not in url and "kashrut" not in url and "/page/" not in url:
-            return _drop_cards(real(session, url), 0, 120)
+            soup = BeautifulSoup(real(session, url), "lxml")
+            for item in soup.select("div.post_col.kosher_item"):
+                item.decompose()
+            return str(soup)
         return real(session, url)
 
     with pytest.raises(CollectorError, match="zero cards"):
@@ -435,9 +444,11 @@ class _SeqSession:
 def test_a_429_is_retried_after_the_requested_wait(monkeypatch):
     waits = []
     monkeypatch.setattr(collector.time, "sleep", waits.append)
-    session = _SeqSession([_Resp(429, retry_after="12"), _Resp(200, "<html>hi</html>")])
+    session = _SeqSession([_Resp(429, retry_after="12"), _Resp(429, retry_after="500"), _Resp(200, "<html>hi</html>")])
     assert collector._get(session, "https://x/") == "<html>hi</html>"
-    assert waits == [12.0] and session.calls == 2
+    # Waits at least the escalating minimum each time, more if the server asks
+    # for more (capped).
+    assert waits == [60.0, 120.0] and session.calls == 3
 
 
 def test_a_persistent_429_eventually_fails_loudly(monkeypatch):
