@@ -77,10 +77,11 @@ every business (`select[name=business_id]`, 987 entries on that date) and
 `?business_id=<id>` returns that one business's card. So the collector now
 (1) crawls the pages as before, tolerating repeats and empty pages;
 (2) compares the businesses found with the dropdown and looks up each missing
-one individually (about 40 extra requests); (3) reads the מהדרין level from
+one individually (about 100 extra requests, 6 seconds apart - the dropdown is
+not a complete list, it only supplies ids); (3) reads the מהדרין level from
 its own filtered list, which fits on one page and so isn't affected, and treats
 everything else as רגילה (the רגילה list shares the broken paging and is no
-longer crawled); and (4) fails loudly if the dropdown still can't be matched.
+longer crawled); and (4) fails loudly if too many lookups find no listing.
 The portal at shirathayam.m-datit.org.il lists only 34 Tel Aviv businesses with
 no certificates, so it is no help here.
 
@@ -264,10 +265,11 @@ def _name_key(name: str) -> str:
 
 
 # How many single-business fetches one run may make to recover listings the
-# paging skipped. A normal run needs roughly 40; far more than that means the
-# paging has got worse (or the dropdown and the listings have diverged), and
-# hammering the site with hundreds of requests is not the answer.
-MAX_RECOVERY_FETCHES = 150
+# paging skipped. A normal run needs roughly 100 (104 on 2026-11-03); far more
+# than that means the paging has got worse (or the dropdown and the listings
+# have diverged), and hammering the site with hundreds of requests is not the
+# answer.
+MAX_RECOVERY_FETCHES = 200
 # Dropdown entries that still can't be matched to a listing after the recovery
 # fetches. A handful is tolerated (a business listed in the form but with no
 # card of its own); more means the data can't be trusted.
@@ -281,10 +283,13 @@ def _complete_from_dropdown(
 ) -> list[_RawCard]:
     """Add the listings the paged crawl skipped.
 
-    The search form's business dropdown lists every business (987 on
-    2026-11-03) while the paged crawl found only 945 distinct ones. For every
-    name the dropdown has more times than the crawl found, fetch that
-    business's own single-result page (`?business_id=<id>`) and add its card.
+    The search form's business dropdown (987 entries on 2026-11-03) knows
+    about businesses the paged crawl skipped (945 distinct found). It is not
+    a complete list - 46 businesses that do have listings are not in it - so
+    it only supplies ids to look up, never a total to match. For every name
+    the dropdown has more times than the crawl found (104 entries on that
+    date), fetch that business's own single-result page
+    (`?business_id=<id>`) and add its card.
     """
     have: dict[str, int] = {}
     for card in cards:
@@ -310,20 +315,19 @@ def _complete_from_dropdown(
 
     known = {card.identity for card in cards}
     recovered = 0
+    unresolved = 0  # lookups that came back with no listing at all
     for business_id, _key in to_fetch:
         time.sleep(LOOKUP_DELAY_SECONDS)
         soup = BeautifulSoup(_get(session, f"{BASE_URL}?business_id={business_id}"), "lxml")
-        for card in _parse_cards(soup):
+        found = _parse_cards(soup)
+        if not found:
+            unresolved += 1
+        for card in found:
             if card.identity not in known:
                 known.add(card.identity)
                 cards.append(card)
-                have[_name_key(card.name_raw)] = have.get(_name_key(card.name_raw), 0) + 1
                 recovered += 1
 
-    # Judged by count, not name: a business can carry a slightly different
-    # title in the dropdown than on its card, which would otherwise look like
-    # both a missing and an unexpected listing.
-    unresolved = max(0, len(dropdown) - len(cards))
     logger.info(
         "tlv: recovered %d listing(s) the paged crawl skipped (%d looked up, "
         "%d dropdown entries still unmatched)", recovered, len(to_fetch), unresolved,
@@ -384,7 +388,7 @@ RETRY_AFTER_MAX_SECONDS = 90
 RETRY_AFTER_DEFAULT_SECONDS = 30
 # One-by-one lookups are many requests in a row; space them out more than the
 # page crawl so a normal run stays well under any rate limit.
-LOOKUP_DELAY_SECONDS = 3.0
+LOOKUP_DELAY_SECONDS = 6.0
 
 
 def _retry_after_seconds(response: requests.Response) -> float:

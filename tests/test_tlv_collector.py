@@ -68,6 +68,16 @@ def _business_pages_by_dropdown_id() -> dict[str, str]:
                 continue
             seen.add(identity)
             html_by_name.setdefault(collector._name_key(name), []).append(str(item))
+    dropdown_names = {collector._name_key(name) for _, name in dropdown}
+    # Cards whose title the dropdown spells differently (or lacks): a lookup
+    # for a dropdown entry with no same-named card returns one of these, like
+    # the live site returning a business under a slightly different title.
+    leftover_cards = [
+        html
+        for key, cards in html_by_name.items()
+        if key not in dropdown_names
+        for html in cards
+    ]
     used: dict[str, int] = {}
     pages = {}
     for business_id, name in dropdown:
@@ -75,7 +85,12 @@ def _business_pages_by_dropdown_id() -> dict[str, str]:
         index = used.get(key, 0)
         used[key] = index + 1
         candidates = html_by_name.get(key, [])
-        card = candidates[index] if index < len(candidates) else ""
+        if index < len(candidates):
+            card = candidates[index]
+        elif leftover_cards:
+            card = leftover_cards.pop(0)
+        else:
+            card = ""
         pages[business_id] = f"<html><body>{card}</body></html>"
     return pages
 
