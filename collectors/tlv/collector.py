@@ -66,6 +66,24 @@ collect and validate fine (schema.py allows a record with no location
 data at all) - per spec section 7 they're exactly what the not-yet-built
 manual review queue is for, not something to force onto the map.
 
+UPDATE 2026-11 - the site's paging became unreliable. From October 2026 the
+unfiltered list's pages (120 cards each, ~9 pages) overlap at some page
+boundaries and skip a block at others, and a page occasionally comes back
+empty: on 2026-11-03 the crawl returned 987 cards but only 945 distinct
+businesses, with the alphabetical block between "ר.ל. ברכת הכהנים" and
+"שמעון מלך המרקים" absent from every page (the weekly runs of Oct 12 and 19
+failed on this). The site's own search form, however, carries a dropdown of
+every business (`select[name=business_id]`, 987 entries on that date) and
+`?business_id=<id>` returns that one business's card. So the collector now
+(1) crawls the pages as before, tolerating repeats and empty pages;
+(2) compares the businesses found with the dropdown and looks up each missing
+one individually (about 40 extra requests); (3) reads the מהדרין level from
+its own filtered list, which fits on one page and so isn't affected, and treats
+everything else as רגילה (the רגילה list shares the broken paging and is no
+longer crawled); and (4) fails loudly if the dropdown still can't be matched.
+The portal at shirathayam.m-datit.org.il lists only 34 Tel Aviv businesses with
+no certificates, so it is no help here.
+
 Collector contract (spec section 6.1): this module performs no database
 writes and makes no judgement about what changed since the last run. It
 either returns a complete list of canonical business records, or raises
@@ -77,6 +95,8 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import requests
@@ -98,7 +118,6 @@ CERTIFYING_AUTHORITY = "המועצה הדתית תל אביב-יפו"
 CITY = "תל אביב-יפו"
 BASE_URL = "https://rabanut.co.il/%D7%97%D7%99%D7%A4%D7%95%D7%A9-%D7%A2%D7%A1%D7%A7%D7%99%D7%9D-%D7%9B%D7%A9%D7%A8%D7%99%D7%9D/"
 MEHADRIN_URL = f"{BASE_URL}?kashrut=318"
-REGULAR_URL = f"{BASE_URL}?kashrut=322"
 
 USER_AGENT = (
     "KosherMapBot/0.1 (public kashrut directory aggregator; "
@@ -144,15 +163,15 @@ def collect(
     session = session or requests.Session()
     session.headers["User-Agent"] = USER_AGENT
     try:
-        cards = _fetch_all_cards(session)
-        mehadrin_ids = _fetch_identity_set(session, MEHADRIN_URL)
-        regular_ids = _fetch_identity_set(session, REGULAR_URL)
+        cards, dropdown = _fetch_all_cards(session)
+        cards = _complete_from_dropdown(session, cards, dropdown)
+        mehadrin_ids = _fetch_mehadrin_ids(session)
     finally:
         if owns_session:
             session.close()
 
-    supervision_by_identity = _verify_supervision_partition(
-        {c.identity for c in cards}, mehadrin_ids, regular_ids
+    supervision_by_identity = _assign_supervision(
+        {c.identity for c in cards}, mehadrin_ids
     )
 
     geocoder = geocoder or NominatimGeocoder()
@@ -186,56 +205,155 @@ def collect(
 DUPLICATE_WARN_THRESHOLD = 20
 
 
-def _fetch_all_cards(session: requests.Session) -> list[_RawCard]:
+def _fetch_all_cards(
+    session: requests.Session,
+) -> tuple[list[_RawCard], list[tuple[str, str]]]:
+    """Crawl the unfiltered list. Returns (cards, dropdown) where `dropdown`
+    is the search form's own list of every business, as (id, name) pairs.
+
+    Since 2026-10 the site's paging is unreliable (see the module docstring),
+    so this crawl can both repeat and skip businesses; the dropdown, read off
+    the first page, is what tells `_complete_from_dropdown` what is missing.
+    """
     cards: list[_RawCard] = []
     seen: set[str] = set()
     duplicate_count = 0
-    for soup in _iter_pages(session, BASE_URL):
+    dropdown: list[tuple[str, str]] = []
+    for page_number, soup in enumerate(_iter_pages(session, BASE_URL), start=1):
+        if page_number == 1:
+            dropdown = _parse_dropdown(soup)
+            if not dropdown:
+                raise CollectorError(
+                    "the search form's business list is missing or empty; "
+                    "markup likely changed"
+                )
         page_cards = _parse_cards(soup)
         if not page_cards:
-            raise CollectorError("a listing page returned zero cards; markup likely changed")
+            if page_number == 1:
+                raise CollectorError("a listing page returned zero cards; markup likely changed")
+            # An empty page in the middle used to be a hard failure. The site now
+            # sometimes answers a page with nothing, so carry on - whatever it
+            # skipped is recovered by _complete_from_dropdown.
+            logger.warning("tlv: listing page %d returned zero cards", page_number)
+            continue
         for card in page_cards:
             if card.identity in seen:
                 duplicate_count += 1
                 continue
             seen.add(card.identity)
             cards.append(card)
-    _check_duplicate_count(duplicate_count)
+    if duplicate_count:
+        logger.warning(
+            "tlv: paging repeated %d listing(s) across page boundaries - "
+            "deduped, first occurrence kept",
+            duplicate_count,
+        )
+    return cards, dropdown
+
+
+def _parse_dropdown(soup: BeautifulSoup) -> list[tuple[str, str]]:
+    return [
+        (option["value"], " ".join(option.get_text().split()))
+        for option in soup.select("select[name=business_id] option")
+        if option.get("value")
+    ]
+
+
+def _name_key(name: str) -> str:
+    return " ".join(name.split()).lower()
+
+
+# How many single-business fetches one run may make to recover listings the
+# paging skipped. A normal run needs roughly 40; far more than that means the
+# paging has got worse (or the dropdown and the listings have diverged), and
+# hammering the site with hundreds of requests is not the answer.
+MAX_RECOVERY_FETCHES = 150
+# Dropdown entries that still can't be matched to a listing after the recovery
+# fetches. A handful is tolerated (a business listed in the form but with no
+# card of its own); more means the data can't be trusted.
+MAX_UNRESOLVED = 5
+
+
+def _complete_from_dropdown(
+    session: requests.Session,
+    cards: list[_RawCard],
+    dropdown: list[tuple[str, str]],
+) -> list[_RawCard]:
+    """Add the listings the paged crawl skipped.
+
+    The search form's business dropdown lists every business (987 on
+    2026-11-03) while the paged crawl found only 945 distinct ones. For every
+    name the dropdown has more times than the crawl found, fetch that
+    business's own single-result page (`?business_id=<id>`) and add its card.
+    """
+    have: dict[str, int] = {}
+    for card in cards:
+        key = _name_key(card.name_raw)
+        have[key] = have.get(key, 0) + 1
+
+    ids_by_name: dict[str, list[str]] = {}
+    for business_id, name in dropdown:
+        ids_by_name.setdefault(_name_key(name), []).append(business_id)
+
+    to_fetch: list[tuple[str, str]] = []
+    for key, ids in ids_by_name.items():
+        if have.get(key, 0) < len(ids):
+            to_fetch.extend((business_id, key) for business_id in ids)
+    if not to_fetch:
+        return cards
+    if len(to_fetch) > MAX_RECOVERY_FETCHES:
+        raise CollectorError(
+            f"the paged crawl is missing too many listings to recover "
+            f"({len(to_fetch)} lookups needed, limit {MAX_RECOVERY_FETCHES}); "
+            f"refusing to hit the site that hard"
+        )
+
+    known = {card.identity for card in cards}
+    recovered = 0
+    for business_id, _key in to_fetch:
+        time.sleep(LOOKUP_DELAY_SECONDS)
+        soup = BeautifulSoup(_get(session, f"{BASE_URL}?business_id={business_id}"), "lxml")
+        for card in _parse_cards(soup):
+            if card.identity not in known:
+                known.add(card.identity)
+                cards.append(card)
+                have[_name_key(card.name_raw)] = have.get(_name_key(card.name_raw), 0) + 1
+                recovered += 1
+
+    # Judged by count, not name: a business can carry a slightly different
+    # title in the dropdown than on its card, which would otherwise look like
+    # both a missing and an unexpected listing.
+    unresolved = max(0, len(dropdown) - len(cards))
+    logger.info(
+        "tlv: recovered %d listing(s) the paged crawl skipped (%d looked up, "
+        "%d dropdown entries still unmatched)", recovered, len(to_fetch), unresolved,
+    )
+    if unresolved > MAX_UNRESOLVED:
+        raise CollectorError(
+            f"{unresolved} businesses in the site's own list could not be "
+            f"found as listings even after looking each up - the data is "
+            f"incomplete"
+        )
     return cards
 
 
-def _fetch_identity_set(session: requests.Session, start_url: str) -> set[str]:
-    identities: set[str] = set()
-    duplicate_count = 0
-    for soup in _iter_pages(session, start_url):
-        page_identities = _parse_identities_only(soup)
-        if not page_identities:
-            raise CollectorError(
-                f"a filtered listing page ({start_url}) returned zero cards; "
-                f"markup likely changed"
-            )
-        new_ids = page_identities - identities
-        duplicate_count += len(page_identities) - len(new_ids)
-        identities.update(new_ids)
-    _check_duplicate_count(duplicate_count)
-    return identities
-
-
-def _check_duplicate_count(duplicate_count: int) -> None:
-    if duplicate_count == 0:
-        return
-    if duplicate_count > DUPLICATE_WARN_THRESHOLD:
+def _fetch_mehadrin_ids(session: requests.Session) -> set[str]:
+    """Identities of the מהדרין-supervised businesses, from the site's own
+    filtered list. That list is a single page (112 on 2026-11-03, page size
+    120), so the paging problem doesn't touch it; if it ever outgrows one page
+    this refuses rather than trust the broken paging."""
+    soup = BeautifulSoup(_get(session, MEHADRIN_URL), "lxml")
+    identities = _parse_identities_only(soup)
+    if not identities:
         raise CollectorError(
-            f"pagination re-returned {duplicate_count} already-seen records, "
-            f"well above the {DUPLICATE_WARN_THRESHOLD} expected from "
-            f"ordinary result-set drift - treating this as untrustworthy"
+            f"the מהדרין list ({MEHADRIN_URL}) returned zero cards; markup likely changed"
         )
-    logger.warning(
-        "tlv: pagination re-returned %d already-seen record(s), likely the "
-        "result set shifting between page requests - deduped, first "
-        "occurrence kept",
-        duplicate_count,
-    )
+    if _find_next_page_url(soup) is not None:
+        raise CollectorError(
+            "the מהדרין list now spans more than one page, and the site's "
+            "paging is unreliable - the collector needs a new way to read it"
+        )
+    return identities
 
 
 def _iter_pages(session: requests.Session, start_url: str):
@@ -256,9 +374,50 @@ def _iter_pages(session: requests.Session, start_url: str):
             time.sleep(POLITE_DELAY_SECONDS)
 
 
+# The site sits behind Cloudflare, which answers "429 Too Many Requests" when
+# it thinks we are going too fast (seen on 2026-11-03 after a few hundred
+# requests in an afternoon of testing). Honour its Retry-After and try again
+# rather than failing the whole run on the first 429.
+MAX_RATE_LIMIT_RETRIES = 3
+RETRY_AFTER_MIN_SECONDS = 5
+RETRY_AFTER_MAX_SECONDS = 90
+RETRY_AFTER_DEFAULT_SECONDS = 30
+# One-by-one lookups are many requests in a row; space them out more than the
+# page crawl so a normal run stays well under any rate limit.
+LOOKUP_DELAY_SECONDS = 3.0
+
+
+def _retry_after_seconds(response: requests.Response) -> float:
+    """Seconds to wait before retrying, from a Retry-After header that is either
+    a number of seconds or an HTTP date; clamped so a bad value can neither
+    skip the wait nor stall the run."""
+    value = (response.headers.get("Retry-After") or "").strip()
+    seconds: float = RETRY_AFTER_DEFAULT_SECONDS
+    if value:
+        try:
+            seconds = float(value)
+        except ValueError:
+            try:
+                when = parsedate_to_datetime(value)
+                seconds = (when - datetime.now(timezone.utc)).total_seconds()
+            except (TypeError, ValueError):
+                seconds = RETRY_AFTER_DEFAULT_SECONDS
+    return min(max(seconds, RETRY_AFTER_MIN_SECONDS), RETRY_AFTER_MAX_SECONDS)
+
+
 def _get(session: requests.Session, url: str) -> str:
     try:
-        response = session.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
+        for attempt in range(MAX_RATE_LIMIT_RETRIES + 1):
+            response = session.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
+            if response.status_code == 429 and attempt < MAX_RATE_LIMIT_RETRIES:
+                wait = _retry_after_seconds(response)
+                logger.warning(
+                    "tlv: rate limited (429) fetching %s - waiting %.0fs (retry %d/%d)",
+                    url, wait, attempt + 1, MAX_RATE_LIMIT_RETRIES,
+                )
+                time.sleep(wait)
+                continue
+            break
         response.raise_for_status()
     except requests.RequestException as exc:
         raise CollectorError(f"failed to fetch {url}: {exc}") from exc
@@ -323,64 +482,20 @@ def _parse_identities_only(soup: BeautifulSoup) -> set[str]:
     return identities
 
 
-def _verify_supervision_partition(
-    all_ids: set[str], mehadrin_ids: set[str], regular_ids: set[str]
-) -> dict[str, str]:
-    """Reconcile the two supervision-filtered crawls against the
-    unfiltered one. In an ideal world מהדרין and רגילה partition the full
-    set exactly (and the survey found they do, almost always: 1120 =
-    130 + 990). But the three crawls are three separate sequential trips
-    over a live site, seconds to tens of seconds apart, and the survey
-    also caught a single business appearing in *both* filtered crawls -
-    most likely its level was edited mid-survey, not a scraping bug.
-    Small mismatches get logged and resolved to supervision_level
-    "unknown" (an honest answer given the source's own filters
-    disagreed, per schema.py's SUPERVISION_LEVELS) rather than failing
-    the whole run; a mismatch too large to plausibly be page-to-page
-    drift raises instead, per section 6.1's fail-loud requirement.
-    """
-    overlap = mehadrin_ids & regular_ids
-    covered = mehadrin_ids | regular_ids
-    missing = all_ids - covered  # in the unfiltered crawl, in neither filtered one
-    extra = covered - all_ids  # in a filtered crawl, absent from the unfiltered one
-
-    total_anomalies = len(overlap) + len(missing) + len(extra)
-    if total_anomalies > DUPLICATE_WARN_THRESHOLD:
-        raise CollectorError(
-            f"supervision-level crawls don't reconcile with the unfiltered "
-            f"crawl: {len(overlap)} in both filters, {len(missing)} in "
-            f"neither, {len(extra)} in a filter but not the unfiltered "
-            f"crawl - {total_anomalies} total, well above the "
-            f"{DUPLICATE_WARN_THRESHOLD} expected from ordinary drift"
-        )
-    if overlap:
-        logger.warning(
-            "tlv: %d business(es) matched both מהדרין and רגילה filters - "
-            "supervision_level set to 'unknown' for these: %s",
-            len(overlap),
-            sorted(overlap)[:10],
-        )
-    if missing:
-        logger.warning(
-            "tlv: %d business(es) from the unfiltered crawl matched "
-            "neither supervision filter - supervision_level set to "
-            "'unknown' for these: %s",
-            len(missing),
-            sorted(missing)[:10],
-        )
+def _assign_supervision(all_ids: set[str], mehadrin_ids: set[str]) -> dict[str, str]:
+    """A business is מהדרין if it is on the site's מהדרין list and רגילה
+    otherwise. (The רגילה list is no longer crawled: it is eight pages long
+    and suffers the same unreliable paging as the full list. When both were
+    crawled in August 2026 they partitioned the full list almost exactly:
+    130 מהדרין + 990 רגילה = 1,120.)"""
+    extra = mehadrin_ids - all_ids
     if extra:
         logger.warning(
-            "tlv: %d business(es) matched a supervision filter but weren't "
-            "in the unfiltered crawl - no listing data for these, so "
-            "they're dropped rather than fabricated: %s",
-            len(extra),
-            sorted(extra)[:10],
+            "tlv: %d business(es) are on the מהדרין list but have no listing "
+            "of their own - dropped rather than fabricated: %s",
+            len(extra), sorted(extra)[:10],
         )
-
-    result = {identity: "mehadrin" for identity in mehadrin_ids - overlap}
-    result.update({identity: "regular" for identity in regular_ids - overlap})
-    result.update({identity: "unknown" for identity in overlap | missing})
-    return result
+    return {identity: ("mehadrin" if identity in mehadrin_ids else "regular") for identity in all_ids}
 
 
 def _map_category(category_raw: str) -> str:
@@ -400,8 +515,7 @@ def _map_kosher_type(category_raw: str) -> list[str] | None:
 
 
 def _map_supervision(bucket: str) -> str:
-    # bucket is already "mehadrin" / "regular" / "unknown" -
-    # _verify_supervision_partition assigns these directly.
+    # bucket is already "mehadrin" / "regular" - _assign_supervision sets it.
     assert bucket in ("mehadrin", "regular", "unknown")
     return bucket
 

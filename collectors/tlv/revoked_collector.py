@@ -92,12 +92,11 @@ def collect_revoked(session: requests.Session | None = None) -> list[dict]:
 
 
 def _get(session: requests.Session, url: str) -> str:
-    try:
-        response = session.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
-        response.raise_for_status()
-    except requests.RequestException as exc:
-        raise CollectorError(f"failed to fetch {url}: {exc}") from exc
-    return response.text
+    # Same site, same Cloudflare rate limit: share the main collector's
+    # fetch, which waits out a 429 instead of failing on it.
+    from collectors.tlv.collector import _get as fetch
+
+    return fetch(session, url)
 
 
 def _parse_cards(soup: BeautifulSoup) -> list[tuple[str, str]]:

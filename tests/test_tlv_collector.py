@@ -7,6 +7,7 @@ records). Tests run entirely offline - nothing here hits the live site
 or the live geocoder.
 """
 
+import functools
 import re
 from pathlib import Path
 
@@ -36,16 +37,55 @@ class _FakeGeocoder(Geocoder):
         return GeocodeResult(lat=32.08, lng=34.78, confidence="high", out_of_bounds=False)
 
 
+def _single_page(html: str) -> str:
+    """The live מהדרין list fits on one page; the August fixture has two, so
+    drop the "next" link to match what the collector now relies on."""
+    soup = BeautifulSoup(html, "lxml")
+    for link in soup.select("a.next.page-numbers"):
+        link.decompose()
+    return str(soup)
+
+
+@functools.lru_cache(maxsize=1)
+def _business_pages_by_dropdown_id() -> dict[str, str]:
+    """For every dropdown entry in the fixture, the one-card page the live
+    site would give for `?business_id=<id>`, rebuilt from the fixture cards
+    (same-named businesses are matched up in order). Entries with no card in
+    the fixture - the businesses the August crawl itself repeated or missed -
+    get an empty page, like an unknown id."""
+    dropdown = collector._parse_dropdown(
+        BeautifulSoup(_fixture_text("all_p1.html"), "lxml")
+    )
+    html_by_name: dict[str, list[str]] = {}
+    seen: set[str] = set()
+    for n in range(1, 11):
+        soup = BeautifulSoup(_fixture_text(f"all_p{n}.html"), "lxml")
+        for item in soup.select("div.post_col.kosher_item"):
+            name = item.select_one(".post_title").get_text(strip=True)
+            address = item.select_one(".wrap_address").get_text(strip=True)
+            identity = collector.hash_identity(name, address)
+            if identity in seen:
+                continue
+            seen.add(identity)
+            html_by_name.setdefault(collector._name_key(name), []).append(str(item))
+    used: dict[str, int] = {}
+    pages = {}
+    for business_id, name in dropdown:
+        key = collector._name_key(name)
+        index = used.get(key, 0)
+        used[key] = index + 1
+        candidates = html_by_name.get(key, [])
+        card = candidates[index] if index < len(candidates) else ""
+        pages[business_id] = f"<html><body>{card}</body></html>"
+    return pages
+
+
 def _fake_get_all_pages():
     def fake_get(session, url):
+        if "?business_id=" in url:
+            return _business_pages_by_dropdown_id()[url.rsplit("=", 1)[1]]
         if "kashrut=318" in url:
-            m = re.search(r"/page/(\d+)/", url)
-            n = m.group(1) if m else "1"
-            return _fixture_text(f"mehadrin_p{n}.html")
-        if "kashrut=322" in url:
-            m = re.search(r"/page/(\d+)/", url)
-            n = m.group(1) if m else "1"
-            return _fixture_text(f"regular_p{n}.html")
+            return _single_page(_fixture_text("mehadrin_p1.html"))
         m = re.search(r"/page/(\d+)/", url)
         n = m.group(1) if m else "1"
         return _fixture_text(f"all_p{n}.html")
@@ -89,30 +129,19 @@ def test_full_collection_counts_and_partition(fake_collect_env):
         session=requests.Session(), geocoder=geocoder, geocode_cache_path=cache_path
     )
 
-    # 1120 raw cards across the 10 unfiltered pages, minus a handful the
-    # survey found genuinely duplicated by result-set drift between
-    # sequential page fetches (see DUPLICATE_WARN_THRESHOLD) - so this is
-    # deliberately not hardcoded to the raw page-count total, which
-    # would make the test as fragile as the live site's own pagination.
-    raw_card_count = sum(
-        len(collector._parse_cards(BeautifulSoup(_fixture_text(f"all_p{n}.html"), "lxml")))
-        for n in range(1, 11)
-    )
-    assert len(records) < raw_card_count
-    assert raw_card_count - len(records) <= collector.DUPLICATE_WARN_THRESHOLD
+    # 1120 raw cards across the 10 unfiltered pages; the August crawl itself
+    # repeated four of them, so 1116 distinct businesses.
+    assert len(records) == 1116
 
     ids = [r["source_record_id"] for r in records]
     assert len(ids) == len(set(ids))
 
-    by_level = {"mehadrin": 0, "regular": 0, "unknown": 0}
+    # Every business is מהדרין (on the מהדרין list) or רגילה (everything else);
+    # there is no "unknown" bucket any more.
+    by_level = {"mehadrin": 0, "regular": 0}
     for r in records:
         by_level[r["supervision_level"]] += 1
     assert sum(by_level.values()) == len(records)
-    # The survey's מהדרין+רגילה filtered crawls reconciled almost, but
-    # not quite, perfectly against the unfiltered one (see
-    # _verify_supervision_partition) - a small "unknown" bucket is the
-    # expected, honest outcome, not a bug.
-    assert by_level["unknown"] <= collector.DUPLICATE_WARN_THRESHOLD
     assert by_level["mehadrin"] > 0
     assert by_level["regular"] > 0
 
@@ -231,3 +260,184 @@ def test_missing_address_raises():
     soup = BeautifulSoup(html, "lxml")
     with pytest.raises(CollectorError, match="no address"):
         collector._parse_cards(soup)
+
+
+# --- the unreliable-paging cases (site behaviour since 2026-10) ------------
+
+
+def _drop_cards(html: str, start: int, count: int) -> str:
+    soup = BeautifulSoup(html, "lxml")
+    for item in soup.select("div.post_col.kosher_item")[start : start + count]:
+        item.decompose()
+    return str(soup)
+
+
+def _run(monkeypatch, fake_collect_env, get):
+    geocoder, cache_path = fake_collect_env
+    monkeypatch.setattr(collector, "_get", get)
+    return collector.collect(
+        session=requests.Session(), geocoder=geocoder, geocode_cache_path=cache_path
+    )
+
+
+def test_listings_skipped_by_the_paging_are_recovered_from_the_dropdown(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+    lookups = []
+
+    def get(session, url):
+        if "?business_id=" in url:
+            lookups.append(url)
+        html = real(session, url)
+        if url.endswith("/page/5/"):
+            return _drop_cards(html, 10, 30)  # the paging "skips" 30 businesses
+        return html
+
+    records = _run(monkeypatch, fake_collect_env, get)
+    assert len(records) == 1116  # nothing lost
+    assert 30 <= len(lookups) <= 45  # about the skipped ones, not a re-crawl
+
+
+def test_pages_that_repeat_businesses_are_tolerated(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+
+    def get(session, url):
+        if url.endswith("/page/3/"):
+            # Like the live site: page 3 opens with the last 20 businesses of
+            # page 2 again (and so loses its own first 20 - recovered later).
+            page2 = BeautifulSoup(real(session, url.replace("/page/3/", "/page/2/")), "lxml")
+            repeated = page2.select("div.post_col.kosher_item")[-20:]
+            page3 = BeautifulSoup(real(session, url), "lxml")
+            for old, new in zip(page3.select("div.post_col.kosher_item")[:20], repeated):
+                old.replace_with(new)
+            return str(page3)
+        return real(session, url)
+
+    records = _run(monkeypatch, fake_collect_env, get)
+    assert len(records) == 1116
+    assert len({r["source_record_id"] for r in records}) == len(records)
+
+
+def test_too_many_missing_listings_refuses_to_hammer_the_site(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+
+    def get(session, url):
+        html = real(session, url)
+        if "?business_id=" not in url and ("/page/3/" in url or "/page/4/" in url):
+            return _drop_cards(html, 0, 112)
+        return html
+
+    with pytest.raises(CollectorError, match="too many listings to recover"):
+        _run(monkeypatch, fake_collect_env, get)
+
+
+def test_dropdown_entries_that_cannot_be_found_fail_loudly(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+
+    def get(session, url):
+        if "?business_id=" in url:
+            return "<html><body></body></html>"  # lookups find nothing
+        html = real(session, url)
+        return _drop_cards(html, 10, 20) if url.endswith("/page/5/") else html
+
+    with pytest.raises(CollectorError, match="could not be found as listings"):
+        _run(monkeypatch, fake_collect_env, get)
+
+
+def test_a_few_unmatched_dropdown_entries_are_tolerated(monkeypatch, fake_collect_env):
+    # The fixture itself has four dropdown entries with no card anywhere
+    # (see test_full_collection_counts_and_partition) - within MAX_UNRESOLVED.
+    records = _run(monkeypatch, fake_collect_env, _fake_get_all_pages())
+    assert len(records) == 1116
+
+
+def test_a_mid_crawl_empty_page_is_not_fatal_but_an_empty_first_page_is(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+
+    def empty_first(session, url):
+        if "?business_id=" not in url and "kashrut" not in url and "/page/" not in url:
+            return _drop_cards(real(session, url), 0, 120)
+        return real(session, url)
+
+    with pytest.raises(CollectorError, match="zero cards"):
+        _run(monkeypatch, fake_collect_env, empty_first)
+
+
+def test_missing_business_dropdown_fails_loudly(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+
+    def get(session, url):
+        html = real(session, url)
+        if "?business_id=" not in url and "kashrut" not in url and "/page/" not in url:
+            soup = BeautifulSoup(html, "lxml")
+            for select in soup.select("select[name=business_id]"):
+                select.decompose()
+            return str(soup)
+        return html
+
+    with pytest.raises(CollectorError, match="business list is missing"):
+        _run(monkeypatch, fake_collect_env, get)
+
+
+def test_mehadrin_list_outgrowing_one_page_is_refused(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+
+    def get(session, url):
+        if "kashrut=318" in url:
+            return _fixture_text("mehadrin_p1.html")  # still has its "next" link
+        return real(session, url)
+
+    with pytest.raises(CollectorError, match="more than one page"):
+        _run(monkeypatch, fake_collect_env, get)
+
+
+def test_assign_supervision_marks_everything_not_mehadrin_as_regular():
+    levels = collector._assign_supervision({"a", "b", "c"}, {"b", "zzz"})
+    assert levels == {"a": "regular", "b": "mehadrin", "c": "regular"}
+
+
+# --- rate limiting (Cloudflare 429) ----------------------------------------
+
+
+class _Resp:
+    def __init__(self, status, text="ok", retry_after=None):
+        self.status_code, self.text = status, text
+        self.headers = {"Retry-After": retry_after} if retry_after else {}
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise requests.HTTPError(f"{self.status_code} error")
+
+
+class _SeqSession:
+    def __init__(self, responses):
+        self.responses, self.calls = list(responses), 0
+
+    def get(self, url, timeout=None):
+        self.calls += 1
+        return self.responses.pop(0)
+
+
+def test_a_429_is_retried_after_the_requested_wait(monkeypatch):
+    waits = []
+    monkeypatch.setattr(collector.time, "sleep", waits.append)
+    session = _SeqSession([_Resp(429, retry_after="12"), _Resp(200, "<html>hi</html>")])
+    assert collector._get(session, "https://x/") == "<html>hi</html>"
+    assert waits == [12.0] and session.calls == 2
+
+
+def test_a_persistent_429_eventually_fails_loudly(monkeypatch):
+    monkeypatch.setattr(collector.time, "sleep", lambda *_: None)
+    session = _SeqSession([_Resp(429)] * (collector.MAX_RATE_LIMIT_RETRIES + 1))
+    with pytest.raises(CollectorError, match="429"):
+        collector._get(session, "https://x/")
+    assert session.calls == collector.MAX_RATE_LIMIT_RETRIES + 1
+
+
+@pytest.mark.parametrize(
+    "header, expected",
+    [("20", 20.0), ("0", collector.RETRY_AFTER_MIN_SECONDS), ("9999", collector.RETRY_AFTER_MAX_SECONDS),
+     (None, collector.RETRY_AFTER_DEFAULT_SECONDS), ("garbage", collector.RETRY_AFTER_DEFAULT_SECONDS),
+     ("Mon, 02 Nov 2000 22:30:19 +0000", collector.RETRY_AFTER_MIN_SECONDS)],
+)
+def test_retry_after_is_parsed_and_clamped(header, expected):
+    assert collector._retry_after_seconds(_Resp(429, retry_after=header)) == expected
