@@ -14,6 +14,8 @@ comments).
 """
 
 CATEGORY_MAP = {
+    # New since the August survey: the supermarket chains (Carrefour branches).
+    "רשתות שיווק": "grocery_supermarket",
     "בית קפה": "cafe",
     "מסעדה בשרית": "restaurant",
     "מזנון בשרי": "restaurant",

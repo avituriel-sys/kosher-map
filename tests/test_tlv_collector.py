@@ -21,6 +21,11 @@ from collectors.tlv import collector
 
 FIXTURES = Path(__file__).parent / "fixtures" / "tlv"
 
+# The August fixture's unfiltered crawl showed 1,116 distinct businesses (it
+# repeated four and missed some); with the מהדרין list's own cards added,
+# which is what the collector now does, the full set is 1,119.
+FULL_COUNT = 1119
+
 
 def _fixture_text(name: str) -> str:
     return (FIXTURES / name).read_text(encoding="utf-8")
@@ -144,9 +149,9 @@ def test_full_collection_counts_and_partition(fake_collect_env):
         session=requests.Session(), geocoder=geocoder, geocode_cache_path=cache_path
     )
 
-    # 1120 raw cards across the 10 unfiltered pages; the August crawl itself
-    # repeated four of them, so 1116 distinct businesses.
-    assert len(records) == 1116
+    # 1120 raw cards across the 10 unfiltered pages (four repeated, so 1116
+    # distinct), plus three businesses only the מהדרין list had: 1119.
+    assert len(records) == FULL_COUNT
 
     ids = [r["source_record_id"] for r in records]
     assert len(ids) == len(set(ids))
@@ -314,7 +319,7 @@ def test_listings_skipped_by_the_paging_are_recovered_from_the_dropdown(monkeypa
         return html
 
     records = _run(monkeypatch, fake_collect_env, get)
-    assert len(records) == 1116  # nothing lost
+    assert len(records) == FULL_COUNT  # nothing lost
     assert 30 <= len(lookups) <= 45  # about the skipped ones, not a re-crawl
 
 
@@ -334,7 +339,7 @@ def test_pages_that_repeat_businesses_are_tolerated(monkeypatch, fake_collect_en
         return real(session, url)
 
     records = _run(monkeypatch, fake_collect_env, get)
-    assert len(records) == 1116
+    assert len(records) == FULL_COUNT
     assert len({r["source_record_id"] for r in records}) == len(records)
 
 
@@ -368,7 +373,8 @@ def test_a_small_shortfall_is_a_warning_not_a_failure(monkeypatch, fake_collect_
 
     with caplog.at_level("WARNING"):
         records = _run(monkeypatch, fake_collect_env, get)
-    assert len(records) == 1116 - 20  # the 20 the paging skipped stay missing
+    # up to 20 stay missing (those on the מהדרין list are recovered from it)
+    assert FULL_COUNT - 20 <= len(records) <= FULL_COUNT
     assert any("could not be found" in m for m in caplog.messages)
 
 
@@ -386,7 +392,7 @@ def test_the_lookups_stop_quietly_when_the_site_keeps_refusing(monkeypatch, fake
     with caplog.at_level("WARNING"):
         records = _run(monkeypatch, fake_collect_env, get)
     assert len(seen) == 1  # gave up at the first refusal
-    assert len(records) == 1116 - 10
+    assert FULL_COUNT - 10 <= len(records) <= FULL_COUNT
     assert any("stopping the lookups early" in m for m in caplog.messages)
 
 
@@ -407,7 +413,7 @@ def test_a_few_unmatched_dropdown_entries_are_tolerated(monkeypatch, fake_collec
     # The fixture itself has four dropdown entries with no card anywhere
     # (see test_full_collection_counts_and_partition) - within MAX_UNRESOLVED.
     records = _run(monkeypatch, fake_collect_env, _fake_get_all_pages())
-    assert len(records) == 1116
+    assert len(records) == FULL_COUNT
 
 
 def test_a_mid_crawl_empty_page_is_not_fatal_but_an_empty_first_page_is(monkeypatch, fake_collect_env):
@@ -506,3 +512,33 @@ def test_a_persistent_429_eventually_fails_loudly(monkeypatch):
 )
 def test_retry_after_is_parsed_and_clamped(header, expected):
     assert collector._retry_after_seconds(_Resp(429, retry_after=header)) == expected
+
+
+def test_businesses_the_paging_skipped_are_recovered_from_the_mehadrin_list(monkeypatch, fake_collect_env):
+    real = _fake_get_all_pages()
+    mehadrin_page = _single_page(_fixture_text("mehadrin_p1.html"))
+    mehadrin_names = [
+        c.name_raw for c in collector._parse_cards(BeautifulSoup(mehadrin_page, "lxml"))
+    ]
+    assert mehadrin_names
+
+    def get(session, url):
+        html = real(session, url)
+        # the paging skips 15 businesses on page 6; some of them are on the מהדרין list
+        return _drop_cards(html, 0, 15) if url.endswith("/page/6/") else html
+
+    lookups = []
+
+    def counting_get(session, url):
+        if "?business_id=" in url:
+            lookups.append(url)
+        return get(session, url)
+
+    records = _run(monkeypatch, fake_collect_env, counting_get)
+    # nothing lost, and the מהדרין ones were found without needing a lookup each
+    assert len(records) == FULL_COUNT
+    assert len(lookups) <= 15 + 9
+
+
+def test_new_retail_chain_category_is_mapped():
+    assert collector._map_category("רשתות שיווק") == "grocery_supermarket"

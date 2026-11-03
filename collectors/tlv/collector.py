@@ -168,8 +168,10 @@ def collect(
     session.headers["User-Agent"] = USER_AGENT
     try:
         cards, dropdown, listed_total = _fetch_all_cards(session)
+        mehadrin_cards = _fetch_mehadrin_cards(session)
+        cards = _add_cards_missing_from_mehadrin_list(cards, mehadrin_cards)
         cards = _complete_from_dropdown(session, cards, dropdown, listed_total)
-        mehadrin_ids = _fetch_mehadrin_ids(session)
+        mehadrin_ids = {card.identity for card in mehadrin_cards}
     finally:
         if owns_session:
             session.close()
@@ -377,14 +379,14 @@ def _complete_from_dropdown(
     return cards
 
 
-def _fetch_mehadrin_ids(session: requests.Session) -> set[str]:
-    """Identities of the מהדרין-supervised businesses, from the site's own
-    filtered list. That list is a single page (112 on 2026-11-03, page size
+def _fetch_mehadrin_cards(session: requests.Session) -> list[_RawCard]:
+    """The מהדרין-supervised businesses, as full listing cards, from the site's
+    own filtered list. That list is a single page (112 on 2026-11-03, page size
     120), so the paging problem doesn't touch it; if it ever outgrows one page
     this refuses rather than trust the broken paging."""
     soup = BeautifulSoup(_get(session, MEHADRIN_URL), "lxml")
-    identities = _parse_identities_only(soup)
-    if not identities:
+    cards = _parse_cards(soup)
+    if not cards:
         raise CollectorError(
             f"the מהדרין list ({MEHADRIN_URL}) returned zero cards; markup likely changed"
         )
@@ -393,7 +395,23 @@ def _fetch_mehadrin_ids(session: requests.Session) -> set[str]:
             "the מהדרין list now spans more than one page, and the site's "
             "paging is unreliable - the collector needs a new way to read it"
         )
-    return identities
+    return cards
+
+
+def _add_cards_missing_from_mehadrin_list(
+    cards: list[_RawCard], mehadrin_cards: list[_RawCard]
+) -> list[_RawCard]:
+    """The מהדרין list is downloaded in full anyway, so any of its businesses
+    the paged crawl skipped (11 on 2026-11-03) can be added from it directly,
+    with no extra request."""
+    known = {card.identity for card in cards}
+    added = [card for card in mehadrin_cards if card.identity not in known]
+    if added:
+        logger.info(
+            "tlv: %d listing(s) the paged crawl skipped were recovered from the "
+            "מהדרין list", len(added),
+        )
+    return cards + added
 
 
 def _iter_pages(session: requests.Session, start_url: str):
