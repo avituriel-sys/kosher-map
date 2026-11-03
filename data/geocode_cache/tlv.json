@@ -5044,5 +5044,71 @@
     "lng": 34.7752044,
     "confidence": "medium",
     "out_of_bounds": false
+  },
+  "ויצמן 1, תל אביב-יפו, ישראל": {
+    "lat": 32.0772216,
+    "lng": 34.7878335,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך בן צבי 84 מחלבה, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "הירקון 136, תל אביב-יפו, ישראל": {
+    "lat": 32.0826718,
+    "lng": 34.7688097,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "שפר רבינוביץ 10, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "השומר 10, תל אביב-יפו, ישראל": {
+    "lat": 32.068167,
+    "lng": 34.769861,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "המבשר 15, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "איתן אלוני 30, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "ארלוזורוב 17, תל אביב-יפו, ישראל": {
+    "lat": 32.087309,
+    "lng": 34.773958,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "הצנחנים 9, תל אביב-יפו, ישראל": {
+    "lat": 32.117065,
+    "lng": 34.840192,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בוגרשוב 61, תל אביב-יפו, ישראל": {
+    "lat": 32.075516,
+    "lng": 34.772786,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "אצ\"ל 65, תל אביב-יפו, ישראל": {
+    "lat": 32.050412,
+    "lng": 34.791994,
+    "confidence": "high",
+    "out_of_bounds": false
   }
 }
