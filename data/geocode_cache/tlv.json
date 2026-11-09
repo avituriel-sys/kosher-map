@@ -5110,5 +5110,47 @@
     "lng": 34.791994,
     "confidence": "high",
     "out_of_bounds": false
+  },
+  "אבן גבירול 115, תל אביב-יפו, ישראל": {
+    "lat": 32.087354,
+    "lng": 34.782006,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "דרך בן צבי 84, תל אביב-יפו, ישראל": {
+    "lat": null,
+    "lng": null,
+    "confidence": null,
+    "out_of_bounds": false
+  },
+  "שינקין 26, תל אביב-יפו, ישראל": {
+    "lat": 32.069219,
+    "lng": 34.772956,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "בית לחם 3, תל אביב-יפו, ישראל": {
+    "lat": 32.07086,
+    "lng": 34.770941,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "ארלוזורוב 93, תל אביב-יפו, ישראל": {
+    "lat": 32.0856804,
+    "lng": 34.7841888,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "משה בראזני 4, תל אביב-יפו, ישראל": {
+    "lat": 32.126728,
+    "lng": 34.796868,
+    "confidence": "high",
+    "out_of_bounds": false
+  },
+  "יהודה הימית 55, תל אביב-יפו, ישראל": {
+    "lat": 32.049878,
+    "lng": 34.754251,
+    "confidence": "high",
+    "out_of_bounds": false
   }
 }
